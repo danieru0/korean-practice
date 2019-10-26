@@ -1,26 +1,18 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { withFirestore } from 'react-redux-firebase';
+import { test123 } from './actions/test';
+import { connect } from 'react-redux';
 
-function App() {
+function App({test123, firestore}) {
+	const test = () => {
+		test123(firestore);
+	}
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+		<button onClick={test}>click</button>
     </div>
   );
 }
 
-export default App;
+export default connect(null, {test123})(withFirestore(App));
