@@ -1,18 +1,21 @@
 import React from 'react';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import './App.css';
-import { withFirestore } from 'react-redux-firebase';
-import { test123 } from './actions/test';
-import { connect } from 'react-redux';
 
-function App({test123, firestore}) {
-	const test = () => {
-		test123(firestore);
-	}
-  return (
-    <div className="App">
-		<button onClick={test}>click</button>
-    </div>
-  );
+import Nav from './components/Nav/Nav';
+import Hello from './components/Hello/Hello';
+
+function App() {
+	return (
+		<BrowserRouter>
+		    <div className="App">
+				<Nav />
+				<Switch>
+					<Route exact path="/" component={Hello}/>
+				</Switch>
+			</div>
+		</BrowserRouter>
+  	);
 }
 
-export default connect(null, {test123})(withFirestore(App));
+export default App;
