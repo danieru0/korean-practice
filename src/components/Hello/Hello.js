@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import FontAwesome from 'react-fontawesome';
+import { Link } from 'react-router-dom';
 
 import Logo from '../../shared/Logo/Logo';
 import AuthBtn from '../../shared/AuthBtn/AuthBtn';
@@ -43,8 +44,12 @@ const Heart = styled(FontAwesome)`
 	color: #ff0000;
 `
 
-const Link = styled.a`
+const LinkA = styled.a`
 	color: ${props => props.theme.infoColor};
+`
+
+const StyledLink = styled(Link)`
+	color: ${props => props.theme.infoColor};	
 `
 
 const Hello = () => {
@@ -57,9 +62,9 @@ const Hello = () => {
 				<AuthBtn href="/register">Sign in</AuthBtn>
 			</ButtonsWrapper>
 			<Info>
-				Made with <Heart name="heart"/> by <Link href="https://github.com/elosiktv">Daniel Dąbrowski</Link> <br />
-				Based on <Link href="https://www.howtostudykorean.com/">howtostudykorean.com</Link> <br /><br />
-				<Link href="/faq">FAQ</Link>
+				Made with <Heart name="heart"/> by <LinkA href="https://github.com/elosiktv">Daniel Dąbrowski</LinkA> <br />
+				Based on <LinkA href="https://www.howtostudykorean.com/">howtostudykorean.com</LinkA> <br /><br />
+				<StyledLink to="/faq">FAQ</StyledLink>
 			</Info>
 		</Container>
 	);
