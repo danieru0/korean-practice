@@ -29,10 +29,6 @@ const StyledInput = styled.input`
 	&::placeholder {
 		color: ${props => props.theme.mainInputColor};
 	}
-
-	&::webkit-input-placeholder {
-		color: ${props => props.theme.mainInputColor};
-	}
 `
 
 const Input = ({label, placeholder, type, className, onChange}) => {

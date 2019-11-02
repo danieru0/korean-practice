@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
 
@@ -47,7 +47,7 @@ const StyledLink = styled(Link)`
 `
 
 
-const Register = ({firestore, authError, signUp}) => {
+const Register = ({firestore, authError, signUp, authStart, authSuccess}) => {
 	const [nickInput, setNickInput] = useState(null);
 	const [emailInput, setEmailInput] = useState(null);
 	const [passwordInput, setPasswordInput] = useState(null);
@@ -55,7 +55,14 @@ const Register = ({firestore, authError, signUp}) => {
 
 	const handleSignUpButton = e => {
 		e.preventDefault();
-		signUp(firestore, nickInput, emailInput, passwordInput, repeatPasswordInput);
+
+		if (authStart === false) {
+			signUp(firestore, nickInput, emailInput, passwordInput, repeatPasswordInput);
+		}
+	}
+
+	if (authSuccess === true) {
+		return <Redirect to="/login" />
 	}
  
 	return (

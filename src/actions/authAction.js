@@ -5,7 +5,9 @@ export const signUp = (firestore, nick, email, password1, password2) => {
 		dispatch({
 			type: 'AUTH_START',
 		});
-
+		dispatch({
+			type: 'MAIN_LOADER_SHOW'
+		});
 		dispatch({
 			type: 'AUTH_ERROR_CLEAR'
 		});
@@ -16,6 +18,12 @@ export const signUp = (firestore, nick, email, password1, password2) => {
 				what: 'nick',
 				message: 'Nick is required!'
 			});
+			dispatch({
+				type: 'AUTH_STOP'
+			});
+			dispatch({
+				type: 'MAIN_LOADER_HIDE'
+			});
 			return false;
 		} else if (nick.length > 15) {
 			dispatch({
@@ -23,13 +31,52 @@ export const signUp = (firestore, nick, email, password1, password2) => {
 				what: 'nick',
 				message: 'Nick is too long! Maximum length is: 15 characters'
 			});
+			dispatch({
+				type: 'AUTH_STOP'
+			});
+			dispatch({
+				type: 'MAIN_LOADER_HIDE'
+			});
 			return false;
 		}
-		if (password1 !== password2) {
+		if (!email) {
+			dispatch({
+				type: 'AUTH_SET_ERROR_MESSAGE',
+				what: 'email',
+				message: 'Email is required!'
+			});
+			dispatch({
+				type: 'AUTH_STOP'
+			});
+			dispatch({
+				type: 'MAIN_LOADER_HIDE'
+			});
+			return false;
+		}
+		if (!password1 && !password2) {
+			dispatch({
+				type: 'AUTH_SET_ERROR_MESSAGE',
+				what: 'password',
+				message: "Password is required!"
+			});
+			dispatch({
+				type: 'AUTH_STOP'
+			});
+			dispatch({
+				type: 'MAIN_LOADER_HIDE'
+			});
+			return false;
+		} else if (password1 !== password2) {
 			dispatch({
 				type: 'AUTH_SET_ERROR_MESSAGE',
 				what: 'password',
 				message: "Password doesn't match!"
+			});
+			dispatch({
+				type: 'AUTH_STOP'
+			});
+			dispatch({
+				type: 'MAIN_LOADER_HIDE'
 			});
 			return false;
 		}
@@ -43,6 +90,9 @@ export const signUp = (firestore, nick, email, password1, password2) => {
 			}).then(() => {
 				dispatch({
 					type: 'AUTH_STOP'
+				});
+				dispatch({
+					type: 'MAIN_LOADER_HIDE'
 				});
 				dispatch({
 					type: 'AUTH_SUCCESS'
@@ -60,13 +110,38 @@ export const signUp = (firestore, nick, email, password1, password2) => {
 					what: 'email',
 					message: err.message
 				});
+				dispatch({
+					type: 'MAIN_LOADER_HIDE'
+				});
+				dispatch({
+					type: 'AUTH_STOP'
+				});
 			} else if (err.code === 'auth/weak-password') {
 				dispatch({
 					type: 'AUTH_SET_ERROR_MESSAGE',
 					what: 'password',
 					message: err.message
 				});
+				dispatch({
+					type: 'MAIN_LOADER_HIDE'
+				});
+				dispatch({
+					type: 'AUTH_STOP'
+				});
+			} else if (err.code === 'auth/email-already-in-use') {
+				dispatch({
+					type: 'AUTH_SET_ERROR_MESSAGE',
+					what: 'email',
+					message: err.message
+				});
+				dispatch({
+					type: 'MAIN_LOADER_HIDE'
+				});
+				dispatch({
+					type: 'AUTH_STOP'
+				});
 			}
+			throw err;
 		})
 	}
 }

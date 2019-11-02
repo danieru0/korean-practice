@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-const Container = styled.a`
+const Container = styled(Link)`
 	color: ${props => props.theme.mainFontColor};
 	font-family: ${props => props.theme.mainFont};
 	text-decoration: none;
@@ -35,9 +36,9 @@ const SectionTwo = styled.p`
 	}}
 `
 
-const Logo = ({size}) => {
+const Logo = ({size, notClickable, className}) => {
 	return (
-		<Container href="/" size={size}>
+		<Container onClick={(e) => notClickable && e.preventDefault()} to="/" size={size} className={className}>
 			<SectionOne>Korean</SectionOne>
 			<SectionTwo size={size}>Practice</SectionTwo>
 		</Container>
