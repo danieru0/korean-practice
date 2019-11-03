@@ -43,6 +43,11 @@ const authReducer = (state = initState, action) => {
 					password: ''
 				}
 			}
+		case 'AUTH_STATUS_CLEAR':
+			return {
+				...state,
+				authSuccess: false
+			}
 		default: return state;
 	}
 }

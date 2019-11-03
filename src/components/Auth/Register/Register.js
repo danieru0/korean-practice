@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
 
-import { signUp } from '../../../actions/authAction';
+import { signUp, clearAuthState } from '../../../actions/authAction';
 
 import Input from '../../../shared/Input/Input';
 import AuthBtn from '../../../shared/AuthBtn/AuthBtn';
@@ -47,11 +47,17 @@ const StyledLink = styled(Link)`
 `
 
 
-const Register = ({firestore, authError, signUp, authStart, authSuccess}) => {
+const Register = ({firestore, authError, signUp, clearAuthState, authStart, authSuccess}) => {
 	const [nickInput, setNickInput] = useState(null);
 	const [emailInput, setEmailInput] = useState(null);
 	const [passwordInput, setPasswordInput] = useState(null);
 	const [repeatPasswordInput, setRepeatPasswordInput] = useState(null);
+
+	useEffect(() => {
+		return () => {
+			clearAuthState();
+		}
+	}, [clearAuthState]);
 
 	const handleSignUpButton = e => {
 		e.preventDefault();
@@ -76,7 +82,7 @@ const Register = ({firestore, authError, signUp, authStart, authSuccess}) => {
 			<StyledInput onChange={(value) => setRepeatPasswordInput(value)} label="Repeat password:" placeholder="Repeat password..." type="password"/>
 			<ErrorMessage>{authError.password}</ErrorMessage>
 			<Info>By clicking sign up button you accept the information <br />found in the <StyledLink to="/faq">FAQ</StyledLink> section</Info>
-			<AuthBtn onClick={handleSignUpButton}>Sign in</AuthBtn>
+			<AuthBtn onClick={handleSignUpButton}>Sign up</AuthBtn>
 		</Container>
 	);
 };
@@ -89,4 +95,4 @@ const mapStateToProps = state => {
 	}
 }
 
-export default connect(mapStateToProps, { signUp })(withFirestore(Register));
+export default connect(mapStateToProps, { signUp, clearAuthState })(withFirestore(Register));

@@ -59,7 +59,7 @@ const Hello = () => {
 			<HelloGreeting>안녕하세요!</HelloGreeting>
 			<ButtonsWrapper>
 				<AuthBtn href="/login">Log in</AuthBtn>
-				<AuthBtn href="/register">Sign in</AuthBtn>
+				<AuthBtn href="/register">Sign up</AuthBtn>
 			</ButtonsWrapper>
 			<Info>
 				Made with <Heart name="heart"/> by <LinkA href="https://github.com/elosiktv">Daniel Dąbrowski</LinkA> <br />

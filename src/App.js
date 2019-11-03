@@ -8,6 +8,7 @@ import MainLoader from './shared/MainLoader/MainLoader';
 import Nav from './components/Nav/Nav';
 import Hello from './components/Hello/Hello';
 import Register from './components/Auth/Register/Register';
+import Login from './components/Auth/Login/Login';
 
 function App() {
 	return (
@@ -19,6 +20,7 @@ function App() {
 				<Switch>
 					<Route exact path="/" component={Hello}/>
 					<Route path="/register" component={Register}/>
+					<Route path="/login" component={Login}/>
 				</Switch>
 			</div>
 		</BrowserRouter>

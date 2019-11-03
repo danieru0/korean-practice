@@ -1,5 +1,16 @@
 import { toast } from 'react-toastify';
 
+export const clearAuthState = () => {
+	return dispatch => {
+		dispatch({
+			type: 'AUTH_ERROR_CLEAR'
+		});
+		dispatch({
+			type: 'AUTH_STATUS_CLEAR'
+		});
+	}
+}
+
 export const signUp = (firestore, nick, email, password1, password2) => {
 	return async (dispatch, getState, { getFirebase }) => {
 		const firebase = getFirebase();
@@ -128,7 +139,14 @@ export const signUp = (firestore, nick, email, password1, password2) => {
 					type: 'AUTH_ERROR_CLEAR'
 				});
 			}).catch(err => {
-				throw err;
+				toast.error("Something went wrong!");
+				dispatch({
+					type: 'MAIN_LOADER_HIDE'
+				});
+				dispatch({
+					type: 'AUTH_STOP'
+				});
+				console.log('when making user: ' + err);
 			});
 		}).catch(err => {
 			if (err.code === 'auth/invalid-email') {
@@ -167,8 +185,105 @@ export const signUp = (firestore, nick, email, password1, password2) => {
 				dispatch({
 					type: 'AUTH_STOP'
 				});
+			} else {
+				toast.error("Something went wrong!");
+				dispatch({
+					type: 'MAIN_LOADER_HIDE'
+				});
+				dispatch({
+					type: 'AUTH_STOP'
+				});
+				console.log('when registering: ' + err);
 			}
-			throw err;
-		})
+		});
+	}
+}
+
+export const logIn = (email, password) => {
+	return (dispatch, getState, { getFirebase }) => {
+		const firebase = getFirebase();
+
+		dispatch({
+			type: 'AUTH_START',
+		});
+		dispatch({
+			type: 'MAIN_LOADER_SHOW'
+		});
+		dispatch({
+			type: 'AUTH_ERROR_CLEAR'
+		});
+
+		firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
+			toast.success("You have logged in! :D");
+			dispatch({
+				type: 'AUTH_STOP'
+			});
+			dispatch({
+				type: 'MAIN_LOADER_HIDE'
+			});
+			dispatch({
+				type: 'AUTH_SUCCESS'
+			});
+			dispatch({
+				type: 'AUTH_ERROR_CLEAR'
+			});
+		}).catch(err => {
+			if (err.code === 'auth/invalid-email') {
+				dispatch({
+					type: 'AUTH_SET_ERROR_MESSAGE',
+					what: 'email',
+					message: err.message
+				});
+				dispatch({
+					type: 'MAIN_LOADER_HIDE'
+				});
+				dispatch({
+					type: 'AUTH_STOP'
+				});
+			} else if (err.code === 'auth/user-not-found') {
+				dispatch({
+					type: 'AUTH_SET_ERROR_MESSAGE',
+					what: 'email',
+					message: 'Incorrect email or password.'
+				});
+				dispatch({
+					type: 'AUTH_SET_ERROR_MESSAGE',
+					what: 'password',
+					message: 'Incorrect email or password.'
+				});
+				dispatch({
+					type: 'MAIN_LOADER_HIDE'
+				});
+				dispatch({
+					type: 'AUTH_STOP'
+				});
+			} else if (err.code === 'auth/wrong-password') {
+				dispatch({
+					type: 'AUTH_SET_ERROR_MESSAGE',
+					what: 'email',
+					message: 'Incorrect email or password.'
+				});
+				dispatch({
+					type: 'AUTH_SET_ERROR_MESSAGE',
+					what: 'password',
+					message: 'Incorrect email or password.'
+				});
+				dispatch({
+					type: 'MAIN_LOADER_HIDE'
+				});
+				dispatch({
+					type: 'AUTH_STOP'
+				});
+			} else {
+				toast.error("Something went wrong!");
+				dispatch({
+					type: 'MAIN_LOADER_HIDE'
+				});
+				dispatch({
+					type: 'AUTH_STOP'
+				});
+				console.log('when logging in: ' + err);
+			}
+		});
 	}
 }
