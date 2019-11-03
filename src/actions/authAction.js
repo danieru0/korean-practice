@@ -1,5 +1,7 @@
+import { toast } from 'react-toastify';
+
 export const signUp = (firestore, nick, email, password1, password2) => {
-	return (dispatch, getState, { getFirebase }) => {
+	return async (dispatch, getState, { getFirebase }) => {
 		const firebase = getFirebase();
 
 		dispatch({
@@ -80,6 +82,30 @@ export const signUp = (firestore, nick, email, password1, password2) => {
 			});
 			return false;
 		}
+		
+		let isUserAlreadyExists = false;
+		
+		const users = await firestore.collection("users").where("nick", "==", nick).get();
+		users.forEach(doc => {
+			if (doc.data().nick === nick) {
+				isUserAlreadyExists = true;
+			}
+		});
+
+		if (isUserAlreadyExists) { 
+			dispatch({
+				type: 'AUTH_SET_ERROR_MESSAGE',
+				what: 'nick',
+				message: "Nick is already in use!"
+			});
+			dispatch({
+				type: 'AUTH_STOP'
+			});
+			dispatch({
+				type: 'MAIN_LOADER_HIDE'
+			});
+			return false;
+		}
 
 		firebase.auth().createUserWithEmailAndPassword(email, password1).then(newUser => {
 			firestore.collection('users').doc(newUser.user.uid).set({
@@ -88,6 +114,7 @@ export const signUp = (firestore, nick, email, password1, password2) => {
 				exp: 0,
 				answers: 0
 			}).then(() => {
+				toast.success("You have successfully registred! Now you can log in!");
 				dispatch({
 					type: 'AUTH_STOP'
 				});

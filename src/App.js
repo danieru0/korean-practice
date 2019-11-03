@@ -1,5 +1,7 @@
 import React from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import './App.css';
 
 import MainLoader from './shared/MainLoader/MainLoader';
@@ -11,7 +13,8 @@ function App() {
 	return (
 		<BrowserRouter>
 		    <div className="App">
-				<MainLoader />
+				<ToastContainer position="bottom-left" autoClose={5000} closeOnClick pauseOnVisibilityChange={false}/>
+				<MainLoader/>
 				<Nav />
 				<Switch>
 					<Route exact path="/" component={Hello}/>
