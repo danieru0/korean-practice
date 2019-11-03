@@ -17,6 +17,21 @@ const Container = styled.form`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	position: relative;
+`
+
+const PageTitle = styled.p`
+	position: absolute;
+	top: 20px;
+	text-align: center;
+	font-size: 40px;
+	color: ${props => props.theme.mainFontColor};
+	font-family: ${props => props.theme.mainFont};
+	text-transform: uppercase;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
 `
 
 const StyledInput = styled(Input)`
@@ -73,6 +88,7 @@ const Register = ({firestore, authError, signUp, clearAuthState, authStart, auth
  
 	return (
 		<Container>
+			<PageTitle>Sign up</PageTitle>
 			<StyledInput onChange={(value) => setNickInput(value)} label="Nick:" placeholder="Nick..."/>
 			<ErrorMessage>{authError.nick}</ErrorMessage>
 			<StyledInput onChange={(value) => setEmailInput(value)} label="Email:" placeholder="Email..." type="email"/>

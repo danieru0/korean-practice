@@ -13,6 +13,7 @@ import Nav from './components/Nav/Nav';
 import Hello from './components/Hello/Hello';
 import Register from './components/Auth/Register/Register';
 import Login from './components/Auth/Login/Login';
+import Faq from './components/Faq/Faq';
 
 function App({auth}) {
 	if (!isLoaded(auth)) {
@@ -29,6 +30,7 @@ function App({auth}) {
 					<Route exact path="/" component={Hello}/>
 					<Route path="/register" component={WithAuth(Register)}/>
 					<Route path="/login" component={WithAuth(Login)}/>
+					<Route path="/faq" component={Faq}/>
 				</Switch>
 			</div>
 		</BrowserRouter>
