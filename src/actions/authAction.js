@@ -123,7 +123,8 @@ export const signUp = (firestore, nick, email, password1, password2) => {
 				nick: nick,
 				email: email,
 				exp: 0,
-				answers: 0
+				answers: 0,
+				avatar: 'https://i.pravatar.cc/'
 			}).then(() => {
 				toast.success("You have successfully registred! Now you can log in!");
 				dispatch({
@@ -214,7 +215,7 @@ export const logIn = (email, password) => {
 		});
 
 		firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-			toast.success("You have logged in! :D");
+			toast.success("You have logged in! (ง ͠° ͟ل͜ ͡°)ง");
 			dispatch({
 				type: 'AUTH_STOP'
 			});
