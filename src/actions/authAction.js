@@ -287,3 +287,13 @@ export const logIn = (email, password) => {
 		});
 	}
 }
+
+export const signOut = () => {
+	return (dispatch, getState, { getFirebase }) => {
+		const firebase = getFirebase();
+
+		firebase.auth().signOut().then(() => {
+			window.location.reload();
+		});
+	}
+}

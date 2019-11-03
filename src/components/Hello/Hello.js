@@ -2,6 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { signOut } from '../../actions/authAction';
 
 import Logo from '../../shared/Logo/Logo';
 import AuthBtn from '../../shared/AuthBtn/AuthBtn';
@@ -24,7 +27,7 @@ const HelloGreeting = styled.p`
 
 const ButtonsWrapper = styled.div`
 	display: flex;
-	justify-content: space-between;
+	justify-content: ${({logged}) => logged ? 'center' : 'space-between'};
 	width: 290px;
 	margin-top: 10px;
 `
@@ -52,14 +55,22 @@ const StyledLink = styled(Link)`
 	color: ${props => props.theme.infoColor};	
 `
 
-const Hello = () => {
+const Hello = ({auth, signOut}) => {
 	return (
 		<Container>
 			<Logo size="large" />
 			<HelloGreeting>안녕하세요!</HelloGreeting>
-			<ButtonsWrapper>
-				<AuthBtn href="/login">Log in</AuthBtn>
-				<AuthBtn href="/register">Sign up</AuthBtn>
+			<ButtonsWrapper logged={auth.uid ? 1 : 0}>
+				{
+					auth.uid ? (
+						<AuthBtn onClick={signOut}>Log out</AuthBtn>
+					) : (
+						<>
+							<AuthBtn href="/login">Log in</AuthBtn>
+							<AuthBtn href="/register">Sign up</AuthBtn>
+						</>
+					)
+				}
 			</ButtonsWrapper>
 			<Info>
 				Made with <Heart name="heart"/> by <LinkA href="https://github.com/elosiktv">Daniel Dąbrowski</LinkA> <br />
@@ -70,4 +81,10 @@ const Hello = () => {
 	);
 };
 
-export default Hello;
+const mapStateToProps = state => {
+	return {
+		auth: state.firebase.auth
+	}
+}
+
+export default connect(mapStateToProps, { signOut })(Hello);
