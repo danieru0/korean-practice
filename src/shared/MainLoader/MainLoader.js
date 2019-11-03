@@ -32,9 +32,11 @@ const StyledLogo = styled(Logo)`
 	outline: none;
 `
 
-const MainLoader = ({mainLoaderVisible}) => {
+const MainLoader = ({mainLoaderVisible, show}) => {
 	if (mainLoaderVisible === false) {
-		return null;
+		if (show !== true) {
+			return null;
+		}
 	}
 
 	return (
