@@ -49,7 +49,7 @@ const Faq = () => {
 			<PageTitle>FAQ</PageTitle>
 			<Wrapper>
 				<Question>What data are saved?</Question>
-				<Answer>When you register an account, data such as: Your nick, email, avatar, password and experience are stored on firebase database.</Answer>
+				<Answer>When you register an account, data such as: Your nick, email, avatar, password and experience are saved.</Answer>
 				<Question>Why are these data saved?</Question>
 				<Answer>Email and password is required for registration, nick is needed for communication. Everything else is saved for proper functioning of this website when you're logged in. </Answer>
 				<Question>Where my data is stored</Question>

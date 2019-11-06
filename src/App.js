@@ -6,7 +6,8 @@ import './App.css';
 import { isLoaded } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 
-import WithAuth from './hocs/withAuth';
+import withAuth from './hocs/withAuth';
+import withoutAuth from './hocs/withoutAuth';
 
 import MainLoader from './shared/MainLoader/MainLoader';
 import Nav from './components/Nav/Nav';
@@ -14,6 +15,7 @@ import Hello from './components/Hello/Hello';
 import Register from './components/Auth/Register/Register';
 import Login from './components/Auth/Login/Login';
 import Faq from './components/Faq/Faq';
+import Home from './components/Home/Home';
 
 function App({auth}) {
 	if (!isLoaded(auth)) {
@@ -28,9 +30,10 @@ function App({auth}) {
 				<Nav />
 				<Switch>
 					<Route exact path="/" component={Hello}/>
-					<Route path="/register" component={WithAuth(Register)}/>
-					<Route path="/login" component={WithAuth(Login)}/>
+					<Route path="/register" component={withoutAuth(Register)}/>
+					<Route path="/login" component={withoutAuth(Login)}/>
 					<Route path="/faq" component={Faq}/>
+					<Route path="/home" component={withAuth(Home)}/>
 				</Switch>
 			</div>
 		</BrowserRouter>

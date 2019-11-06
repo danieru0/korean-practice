@@ -24,7 +24,6 @@ const ButtonNormal = styled.button`
 	font-weight: 600;
 	font-family: ${props => props.theme.mainFont};
 	padding: 8px 15px;
-	text-decoration: none;
 `
 
 const AuthBtn = ({children, href, onClick}) => {
