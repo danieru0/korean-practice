@@ -102,3 +102,65 @@ export const changePassword = (oldPassword, newPassword) => {
 		});
 	}
 }
+
+export const deleteAccount = (firestore, currentPassword) => {
+	return (dispatch, getState, { getFirebase }) => {
+		const firebase = getFirebase();
+
+		firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+				dispatch({
+					type: 'MAIN_LOADER_SHOW'
+				});
+				dispatch({
+					type: 'UPDATE_SETTINGS_STATE',
+					data: true
+				});
+				const credential = firebase.auth.EmailAuthProvider.credential(
+					user.email,
+					currentPassword
+				)
+
+				firebase.auth().currentUser.reauthenticateWithCredential(credential).then(() => {
+					firestore.collection('users').doc(user.uid).delete().then(() => {
+						firebase.auth().currentUser.delete().then(() => {
+							window.location.reload();
+						}).catch(err => {
+							console.log(err);
+							dispatch({
+								type: 'MAIN_LOADER_HIDE'
+							});
+							dispatch({
+								type: 'UPDATE_SETTINGS_STATE',
+								data: false
+							});
+							toast.error('Something went wrong!');
+						});
+					}).catch(err => {
+						console.log(err);
+						dispatch({
+							type: 'MAIN_LOADER_HIDE'
+						});
+						dispatch({
+							type: 'UPDATE_SETTINGS_STATE',
+							data: false
+						});
+						toast.error('Something went wrong!');
+					});
+				}).catch(err => {
+					console.log(err);
+					if (err.code === 'auth/wrong-password') {
+						dispatch({
+							type: 'MAIN_LOADER_HIDE'
+						});
+						dispatch({
+							type: 'UPDATE_SETTINGS_STATE',
+							data: false
+						});
+						alert('Wrong password!');
+					}
+				});
+			}
+		})
+	}
+}

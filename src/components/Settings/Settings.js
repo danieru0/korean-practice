@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
 
-import { updateAvatar, changePassword } from '../../actions/settingsAction';
+import { updateAvatar, changePassword, deleteAccount } from '../../actions/settingsAction';
 
 import getImageSize from '../../utils/getImageSize';
 
@@ -95,7 +95,7 @@ const StyledInput = styled(Input)`
 	}
 `
 
-const Settings = ({profile, firestore, settingsState, updateAvatar, changePassword}) => {
+const Settings = ({profile, firestore, settingsState, updateAvatar, changePassword, deleteAccount}) => {
 	const [avatarFile, setAvatarFile] = useState(null);
 	const [avatarLink, setAvatarLink] = useState(null);
 	const [oldPassword, setOldPassword] = useState(null);
@@ -128,6 +128,15 @@ const Settings = ({profile, firestore, settingsState, updateAvatar, changePasswo
 		}
 	}
 
+	const handleDeleteAccount = () => {
+		if (!settingsState && window.confirm('Are you sure about that? (╥﹏╥)')) {
+			const currentPassword = prompt('Please provide your current password to continue:');
+			if (currentPassword) {
+				deleteAccount(firestore, currentPassword);
+			}
+		}
+	}
+
 	return (
 		<Container>
 			<PageTitle>Settings</PageTitle>
@@ -143,7 +152,7 @@ const Settings = ({profile, firestore, settingsState, updateAvatar, changePasswo
 				<StyledInput onChange={(value) => setNewPassword(value)} label="New password:" placeholder="New password..." type="password"/>
 				<NormalBtn onClick={handlePasswordChange}>Save</NormalBtn>
 				<OptionTitle>Other</OptionTitle>
-				<NormalBtn bordercolor="#f44336">DELETE ACCOUNT</NormalBtn>
+				<NormalBtn onClick={handleDeleteAccount} bordercolor="#f44336">DELETE ACCOUNT</NormalBtn>
 			</Wrapper>
 		</Container>
 	);
@@ -156,4 +165,4 @@ const mapStateToProps = state => {
 	}
 }
 
-export default connect(mapStateToProps, { updateAvatar, changePassword })(withFirestore(Settings));
+export default connect(mapStateToProps, { updateAvatar, changePassword, deleteAccount })(withFirestore(Settings));

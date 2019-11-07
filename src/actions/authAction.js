@@ -38,11 +38,11 @@ export const signUp = (firestore, nick, email, password1, password2) => {
 				type: 'MAIN_LOADER_HIDE'
 			});
 			return false;
-		} else if (nick.length > 15) {
+		} else if (nick.length > 16) {
 			dispatch({
 				type: 'AUTH_SET_ERROR_MESSAGE',
 				what: 'nick',
-				message: 'Nick is too long! Maximum length is: 15 characters'
+				message: 'Nick is too long! Maximum length is: 16 characters'
 			});
 			dispatch({
 				type: 'AUTH_STOP'
@@ -120,13 +120,13 @@ export const signUp = (firestore, nick, email, password1, password2) => {
 
 		firebase.auth().createUserWithEmailAndPassword(email, password1).then(newUser => {
 			firestore.collection('users').doc(newUser.user.uid).set({
-				nick: nick,
+				nick: nick.trim(),
 				email: email,
 				exp: 0,
 				answers: 0,
 				avatar: 'https://i.pravatar.cc/'
 			}).then(() => {
-				toast.success("You have successfully registred! Now you can log in!");
+				toast.success("You have successfully registred! Have fun <3");
 				dispatch({
 					type: 'AUTH_STOP'
 				});
