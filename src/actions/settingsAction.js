@@ -44,3 +44,61 @@ export const updateAvatar = (firestore, file) => {
 		})
 	}
 }
+
+export const changePassword = (oldPassword, newPassword) => {
+	return (dispatch, getState, { getFirebase }) => {
+		const firebase = getFirebase();
+
+		firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+				dispatch({
+					type: 'MAIN_LOADER_SHOW'
+				});
+				dispatch({
+					type: 'UPDATE_SETTINGS_STATE',
+					data: true
+				});
+
+				const credential = firebase.auth.EmailAuthProvider.credential(
+					user.email,
+					oldPassword
+				)
+				
+				firebase.auth().currentUser.reauthenticateWithCredential(credential).then(() => {
+					 firebase.auth().currentUser.updatePassword(newPassword).then(() => {
+						dispatch({
+							type: 'MAIN_LOADER_HIDE'
+						});
+						dispatch({
+							type: 'UPDATE_SETTINGS_STATE',
+							data: false
+						});
+						toast.success('Password has been changed! |･ω･)');
+					 }).catch(err => {
+						if (err.code === 'auth/weak-password') {
+							alert('New password should be at least 6 characters!');
+							dispatch({
+								type: 'MAIN_LOADER_HIDE'
+							});
+							dispatch({
+								type: 'UPDATE_SETTINGS_STATE',
+								data: false
+							});
+						}
+					 })
+				}).catch(err => {
+					if (err.code === 'auth/wrong-password') {
+						alert('Current password is wrong!');
+						dispatch({
+							type: 'MAIN_LOADER_HIDE'
+						});
+						dispatch({
+							type: 'UPDATE_SETTINGS_STATE',
+							data: false
+						});
+					}
+				});
+			}
+		});
+	}
+}

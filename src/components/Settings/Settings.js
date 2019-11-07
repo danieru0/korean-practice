@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
 
-import { updateAvatar } from '../../actions/settingsAction';
+import { updateAvatar, changePassword } from '../../actions/settingsAction';
 
 import getImageSize from '../../utils/getImageSize';
 
@@ -95,9 +95,11 @@ const StyledInput = styled(Input)`
 	}
 `
 
-const Settings = ({profile, firestore, settingsState, updateAvatar}) => {
+const Settings = ({profile, firestore, settingsState, updateAvatar, changePassword}) => {
 	const [avatarFile, setAvatarFile] = useState(null);
 	const [avatarLink, setAvatarLink] = useState(null);
+	const [oldPassword, setOldPassword] = useState(null);
+	const [newPassword, setNewPassword] = useState(null);
 
 	const handleAvatarFileInput = async e => {
 		const acceptedImageTypes = ['image/jpeg', 'image/png'];
@@ -120,6 +122,12 @@ const Settings = ({profile, firestore, settingsState, updateAvatar}) => {
 		}
 	}
 
+	const handlePasswordChange = () => {
+		if (oldPassword && newPassword && !settingsState) {
+			changePassword(oldPassword, newPassword);
+		}
+	}
+
 	return (
 		<Container>
 			<PageTitle>Settings</PageTitle>
@@ -131,9 +139,9 @@ const Settings = ({profile, firestore, settingsState, updateAvatar}) => {
 				</AvatarWrapper>
 				<NormalBtn onClick={handleAvatarUpdate}>Save</NormalBtn>
 				<OptionTitle>Change password</OptionTitle>
-				<StyledInput label="Current password:" placeholder="Current password..." type="password"/>
-				<StyledInput label="New password:" placeholder="New password..." type="password"/>
-				<NormalBtn>Save</NormalBtn>
+				<StyledInput onChange={(value) => setOldPassword(value)} label="Current password:" placeholder="Current password..." type="password"/>
+				<StyledInput onChange={(value) => setNewPassword(value)} label="New password:" placeholder="New password..." type="password"/>
+				<NormalBtn onClick={handlePasswordChange}>Save</NormalBtn>
 				<OptionTitle>Other</OptionTitle>
 				<NormalBtn bordercolor="#f44336">DELETE ACCOUNT</NormalBtn>
 			</Wrapper>
@@ -148,4 +156,4 @@ const mapStateToProps = state => {
 	}
 }
 
-export default connect(mapStateToProps, { updateAvatar })(withFirestore(Settings));
+export default connect(mapStateToProps, { updateAvatar, changePassword })(withFirestore(Settings));
