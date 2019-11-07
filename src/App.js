@@ -16,6 +16,7 @@ import Register from './components/Auth/Register/Register';
 import Login from './components/Auth/Login/Login';
 import Faq from './components/Faq/Faq';
 import Home from './components/Home/Home';
+import Settings from './components/Settings/Settings';
 
 function App({auth}) {
 	if (!isLoaded(auth)) {
@@ -34,6 +35,7 @@ function App({auth}) {
 					<Route path="/login" component={withoutAuth(Login)}/>
 					<Route path="/faq" component={Faq}/>
 					<Route path="/home" component={withAuth(Home)}/>
+					<Route path="/settings" component={withAuth(Settings)}/>
 				</Switch>
 			</div>
 		</BrowserRouter>

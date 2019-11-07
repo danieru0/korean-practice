@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const ButtonLink = styled(Link)`
 	background: transparent;
-	border: 2px solid ${({borderColor}) => borderColor};
+	border: 2px solid ${({bordercolor}) => bordercolor};
 	color: #ffffff;
 	font-family: 'Source Sans Pro';
 	padding: 8px 15px;
@@ -16,7 +16,7 @@ const ButtonLink = styled(Link)`
 
 const ButtonNormal = styled.button`
 	background: transparent;
-	border: 2px solid ${({borderColor}) => borderColor};
+	border: 2px solid ${({bordercolor}) => bordercolor};
 	color: #ffffff;
 	font-family: 'Source Sans Pro';
 	padding: 8px 15px;
@@ -24,25 +24,25 @@ const ButtonNormal = styled.button`
 	font-size: 14px;
 `
 
-const NormalBtn = ({href, children, borderColor, onClick, className}) => {
+const NormalBtn = ({href, children, bordercolor, onClick, className}) => {
 	let button;
 
 	if (href) {
-		button = <ButtonLink className={className} borderColor={borderColor} to={href}>{children}</ButtonLink>
+		button = <ButtonLink className={className} bordercolor={bordercolor} to={href}>{children}</ButtonLink>
 	} else {
-		button = <ButtonNormal className={className} borderColor={borderColor} onClick={onClick}>{children}</ButtonNormal>
+		button = <ButtonNormal className={className} bordercolor={bordercolor} onClick={onClick}>{children}</ButtonNormal>
 	}
 
 	return button;
 };
 
 NormalBtn.defaultProps = {
-	borderColor: '#8bc34a'
+	bordercolor: '#8bc34a'
 };
 
 NormalBtn.propTypes = {
 	href: PropTypes.string,
-	borderColor: PropTypes.string
+	bordercolor: PropTypes.string
 }
 
 export default NormalBtn;
