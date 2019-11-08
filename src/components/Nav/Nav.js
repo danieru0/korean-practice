@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
@@ -8,8 +8,52 @@ import Logo from '../../shared/Logo/Logo';
 
 const Container = styled.div`
 	width: 200px;
-	height: 100vh;
+	height: auto;
 	position: fixed;
+	transition: transform 1s cubic-bezier(1, 0, 0, 1);
+	z-index: 999;
+	transform: ${({isMenuActive}) => isMenuActive ? 'translateX(0%)' : 'translateX(-100%)'};
+
+	@media (min-width: 600px) {
+		transform: translateX(0%);
+	}
+`
+
+const MobileBtnContainer = styled.div`
+	width: 100px;
+	height: 200px;
+	position: absolute;
+	right: -40px;
+	background-color: ${props => props.theme.navColor};
+	top: 0px;
+	bottom: 0px;
+	margin: auto;
+	border-radius: 50%;
+	display: none;
+	justify-content: flex-end;
+	align-items: center;
+
+	@media (max-width: 600px) {
+		display: flex;
+	}
+`
+
+const MobileBtn = styled.button`
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	padding: 25px 7px 25px 0px;
+	outline: none;
+`
+
+const StyledIconMobile = styled(FontAwesome)`
+	color: #fff;
+	font-size: 36px;
+`
+
+const NavContainer = styled.div`
+	width: 100%;
+	height: 100vh;
 	font-family: ${props => props.theme.mainFont};
 	background-color: ${props => props.theme.navColor};
 	box-shadow: 0px 10px 15px #000;
@@ -18,6 +62,7 @@ const Container = styled.div`
 	padding-top: 10px;
 	align-items: center;
 	flex-direction: column;
+	overflow: hidden;
 `
 
 const Avatar = styled.img`
@@ -47,6 +92,7 @@ const NavList = styled.ul`
 	flex-direction: column;
 	list-style: none;
 	width: 100%;
+	z-index: 1;
 `
 
 const NavItem = styled.li`
@@ -81,51 +127,72 @@ const StyledIcon = styled(FontAwesome)`
 `
 
 const Nav = ({profile, auth, location}) => {
+	const [activeMenu, setActiveMenu] = useState(false);
+
+	const handleMobileNav = () => {
+		if (activeMenu) {
+			setActiveMenu(false);
+		} else {
+			setActiveMenu(true);
+		}
+	}
+
 	return (
-		<Container>
-			<Logo size="small" />
-			{
-				auth.uid && (
-					profile.isEmpty ? (
-						<>
-							<Avatar alt="" src="" />
-							<Nick>(づ｡◕‿‿◕｡)づ</Nick>
-						</>
-					) : (
-						<>
-							<Avatar alt="" src={profile.avatar} />
-							<Nick>{profile.nick}</Nick>
-						</>
+		<Container isMenuActive={activeMenu ? 1 : 0}>
+			<MobileBtnContainer>
+				<MobileBtn onClick={handleMobileNav}>
+					<StyledIconMobile name="bars"/>
+				</MobileBtn>
+			</MobileBtnContainer>
+			<NavContainer>
+				<Logo size="small" />
+				{
+					auth.uid && (
+						profile.isEmpty ? (
+							<>
+								<Avatar alt="" src="" />
+								<Nick>(づ｡◕‿‿◕｡)づ</Nick>
+							</>
+						) : (
+							<>
+								<Avatar alt="" src={profile.avatar} />
+								<Nick>{profile.nick}</Nick>
+							</>
+						)
 					)
-				)
-			}
-			<Line />
-			<NavList>
-				<NavItem>
-					<NavLink active={location.pathname === '/home' ? 1 : 0} to="/home">
-						<StyledIcon name="home"/>
-						Home
-					</NavLink>
-				</NavItem>
-				<NavItem>
-					<NavLink active={location.pathname === '/alphabet' ? 1 : 0} to="/alphabet">
-						<StyledIcon name="font"/>
-						Alphabet
-					</NavLink>
-				</NavItem>
-				<NavItem>
-					<NavLink active={location.pathname === '/words' ? 1 : 0} to="/words">
-						<StyledIcon name="sort-alpha-down"/>
-						Words
-					</NavLink>
-				</NavItem>
-				<NavItem>
-					<NavLink active={location.pathname === '/conjugation' ? 1 : 0} to="/conjugation">
-						<StyledIcon name="plug"/>
-						Conjugation
-					</NavLink>
-				</NavItem>
-			</NavList>
+				}
+				<Line />
+				<NavList>
+					{
+						auth.uid && (
+							<NavItem>
+								<NavLink active={location.pathname === '/home' ? 1 : 0} to="/home">
+									<StyledIcon name="home"/>
+									Home
+								</NavLink>
+							</NavItem>
+						)
+					}
+					<NavItem>
+						<NavLink active={location.pathname === '/alphabet' ? 1 : 0} to="/alphabet">
+							<StyledIcon name="font"/>
+							Alphabet
+						</NavLink>
+					</NavItem>
+					<NavItem>
+						<NavLink active={location.pathname === '/words' ? 1 : 0} to="/words">
+							<StyledIcon name="sort-alpha-down"/>
+							Words
+						</NavLink>
+					</NavItem>
+					<NavItem>
+						<NavLink active={location.pathname === '/conjugation' ? 1 : 0} to="/conjugation">
+							<StyledIcon name="plug"/>
+							Conjugation
+						</NavLink>
+					</NavItem>
+				</NavList>
+			</NavContainer>
 		</Container>
 	);
 };
