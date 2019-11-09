@@ -21,17 +21,16 @@ const Container = styled.div`
 
 const MobileBtnContainer = styled.div`
 	width: 100px;
-	height: 200px;
+	height: 150px;
 	position: absolute;
 	right: -40px;
 	background-color: ${props => props.theme.navColor};
 	top: 0px;
-	bottom: 0px;
-	margin: auto;
 	border-radius: 50%;
 	display: none;
 	justify-content: flex-end;
 	align-items: center;
+	z-index: 1;
 
 	@media (max-width: 600px) {
 		display: flex;
@@ -65,6 +64,10 @@ const NavContainer = styled.div`
 	overflow: hidden;
 `
 
+const StyledLogo = styled(Logo)`
+	z-index: 1;
+`
+
 const Avatar = styled.img`
 	width: 64px;
 	height: 64px;
@@ -85,6 +88,7 @@ const Line = styled.hr`
 	margin: 0px;
 	margin-top: 15px;
 	margin-bottom: 1px;
+	z-index: 1;
 `
 
 const NavList = styled.ul`
@@ -145,7 +149,7 @@ const Nav = ({profile, auth, location}) => {
 				</MobileBtn>
 			</MobileBtnContainer>
 			<NavContainer>
-				<Logo size="small" />
+				<StyledLogo size="small" />
 				{
 					auth.uid && (
 						profile.isEmpty ? (

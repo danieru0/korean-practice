@@ -9,6 +9,15 @@ const Container = styled.div`
 	justify-content: center;
 	align-items: center;
 	position: relative;
+
+	@media (max-width: 600px) {
+		width: 100%;
+		margin: 0;
+	}
+
+	@media (max-height: 550px) {
+		height: auto;
+	}
 `
 
 const PageTitle = styled.p`
@@ -32,15 +41,31 @@ const Wrapper = styled.div`
 	flex-direction: column;
 	color: ${props => props.theme.mainFontColor};
 	font-family: ${props => props.theme.mainFont};
+
+	@media (max-width: 850px) {
+		padding: 0px 20px;
+	}
+
+	@media (max-height: 550px) {
+		margin: 60px 0px;
+	}
 `
 
 const Question = styled.p`
 	font-size: 28px;
 	margin: 15px 0px 3px 0px;
+
+	@media (max-width: 450px) {
+		font-size: 24px;
+	}
 `
 
 const Answer = styled.p`
 	font-size: 18px;
+
+	@media (max-width: 450px) {
+		font-size: 16px;
+	}
 `
 
 const Faq = () => {

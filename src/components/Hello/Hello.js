@@ -17,12 +17,26 @@ const Container = styled.div`
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+
+	@media (max-width: 600px) {
+		width: 100%;
+		margin: 0;
+	}
+
+	@media (max-height: 425px) {
+		height: 360px;
+		margin-top: 20px;
+	}
 `
 
 const HelloGreeting = styled.p`
 	font-size: 58px;
 	color: #ffff00;
 	margin-top: 40px;
+
+	@media (max-width: 350px) {
+		font-size: 52px;
+	}
 `
 
 const ButtonsWrapper = styled.div`

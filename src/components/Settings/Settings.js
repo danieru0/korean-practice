@@ -19,6 +19,15 @@ const Container = styled.div`
 	align-items: center;
 	position: relative;
 	font-family: ${props => props.theme.mainFont};
+
+	@media (max-width: 600px) {
+		width: 100%;
+		margin-left: 0px;
+	}
+
+	@media (max-height: 750px) {
+		height: 700px;
+	}
 `
 
 const PageTitle = styled.p`
@@ -41,6 +50,11 @@ const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
+	padding: 0px 20px;
+
+	@media (max-height: 750px) {
+		margin-top: 70px;
+	}
 `
 
 const OptionTitle = styled.div`
@@ -84,6 +98,10 @@ const AvatarFileInput = styled.input`
 		content: "Maximum resolution: 112x112 (px)";
 		color: ${props => props.theme.infoColor};
 		font-size: 12px;
+	}
+
+	@media (max-width: 350px) {
+		width: 150px;
 	}
 `
 

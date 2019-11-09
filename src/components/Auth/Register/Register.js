@@ -18,6 +18,15 @@ const Container = styled.form`
 	justify-content: center;
 	align-items: center;
 	position: relative;
+
+	@media (max-width: 600px) {
+		width: 100%;
+		margin: 0;
+	}
+
+	@media (max-height: 580px) {
+		height: 570px;
+	}
 `
 
 const PageTitle = styled.p`

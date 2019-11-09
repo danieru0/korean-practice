@@ -12,12 +12,23 @@ const Container = styled.div`
 	justify-content: center;
 	align-items: center;
 	position: relative;
+
+	@media (max-width: 600px) {
+		width: 100%;
+		margin-left: 0px;
+	}
 `
 
 const Wrapper = styled.div`
 	width: 600px;
 	height: 300px;
 	display: flex;
+
+	@media (max-width: 800px) {
+		flex-direction: column;
+		width: 100%;
+		align-items: center;
+	}
 `
 
 const User = styled.div`
@@ -29,6 +40,13 @@ const User = styled.div`
 	border-right: 1px solid #424242;
 	color: ${props => props.theme.mainFontColor};
 	font-family: ${props => props.theme.mainFont};
+
+	@media (max-width: 800px) {
+		border-right: none;
+		border-bottom: 1px solid #424242;
+		width: 200px;
+		padding-bottom: 10px;
+	}
 `
 
 const Avatar = styled.img`
@@ -52,6 +70,11 @@ const Saved = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	align-content: center;
+
+	@media (max-width: 800px) {
+		width: 300px;
+		padding-top: 10px;
+	}
 `
 
 const CakeIsALie = styled.p`
