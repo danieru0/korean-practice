@@ -7,6 +7,7 @@ import { updateAvatar, changePassword, deleteAccount } from '../../actions/setti
 
 import getImageSize from '../../utils/getImageSize';
 
+import PageTitle from '../../shared/PageTitle/PageTitle';
 import NormalBtn from '../../shared/NormalBtn/NormalBtn';
 import Input from '../../shared/Input/Input';
 
@@ -28,20 +29,6 @@ const Container = styled.div`
 	@media (max-height: 750px) {
 		height: 700px;
 	}
-`
-
-const PageTitle = styled.p`
-	position: absolute;
-	top: 20px;
-	text-align: center;
-	font-size: 40px;
-	color: ${props => props.theme.mainFontColor};
-	font-family: ${props => props.theme.mainFont};
-	text-transform: uppercase;
-	left: 0;
-	right: 0;
-	margin-left: auto;
-	margin-right: auto;
 `
 
 const Wrapper = styled.div`

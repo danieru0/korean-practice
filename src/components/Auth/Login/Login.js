@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import { logIn, clearAuthState } from '../../../actions/authAction';
 
+import PageTitle from '../../../shared/PageTitle/PageTitle';
 import Input from '../../../shared/Input/Input';
 import AuthBtn from '../../../shared/AuthBtn/AuthBtn';
 
@@ -26,20 +27,6 @@ const Container = styled.form`
 	@media (max-height: 370px) {
 		height: 350px;
 	}
-`
-
-const PageTitle = styled.p`
-	position: absolute;
-	top: 20px;
-	text-align: center;
-	font-size: 40px;
-	color: ${props => props.theme.mainFontColor};
-	font-family: ${props => props.theme.mainFont};
-	text-transform: uppercase;
-	left: 0;
-	right: 0;
-	margin-left: auto;
-	margin-right: auto;
 `
 
 const StyledInput = styled(Input)`
