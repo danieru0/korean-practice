@@ -25,7 +25,7 @@ const MobileBtnContainer = styled.div`
 	position: absolute;
 	right: -40px;
 	background-color: ${props => props.theme.navColor};
-	top: 0px;
+	top: -50px;
 	border-radius: 50%;
 	display: none;
 	justify-content: flex-end;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import PracticeBtn from '../../shared/PracticeBtn/PracticeBtn';
+import PracticeBtn from '../../../shared/PracticeBtn/PracticeBtn';
 
 const Container = styled.div`
 	width: calc(100% - 200px);
@@ -9,7 +9,6 @@ const Container = styled.div`
 	margin-left: 200px;
 	display: flex;
 	justify-content: center;
-	flex-wrap: wrap;
 	align-items: center;
 
 	@media (max-width: 600px) {
@@ -20,19 +19,16 @@ const Container = styled.div`
 
 const StyledPracticeBtn = styled(PracticeBtn)`
 	margin: 0px 70px;
-
-	@media (max-width: 1055px) {
-		margin: 10px 10px;
-	}
 `
 
-const Alphabet = () => {
+const Letters = () => {
 	return (
 		<Container>
-			<StyledPracticeBtn to="/alphabet/letters">Letters</StyledPracticeBtn>
-			<StyledPracticeBtn bordercolor="#ffeb3b" to="/alphabet/blocks">Blocks</StyledPracticeBtn>
+			<StyledPracticeBtn to="/alphabet/letters/vowels">Vowels</StyledPracticeBtn>
+			<StyledPracticeBtn to="/alphabet/letters/consonants">Consonants</StyledPracticeBtn>
+			<StyledPracticeBtn bordercolor="#e91e63" to="/alphabet/letters/test">Test yourself</StyledPracticeBtn>
 		</Container>
 	);
 };
 
-export default Alphabet;
+export default Letters;

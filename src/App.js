@@ -20,6 +20,8 @@ import Settings from './components/Settings/Settings';
 
 import Alphabet from './components/Alphabet/Alphabet';
 import Blocks from './components/Alphabet/Blocks/Blocks';
+import Letters from './components/Alphabet/Letters/Letters';
+import Consonants from './components/Alphabet/Letters/Consonants/Consonants';
 
 function App({auth}) {
 	if (!isLoaded(auth)) {
@@ -29,7 +31,7 @@ function App({auth}) {
 	return (
 		<BrowserRouter>
 		    <div className="App">
-				<ToastContainer position="bottom-left" autoClose={5000} closeOnClick pauseOnVisibilityChange={false}/>
+				<ToastContainer position="bottom-left" autoClose={5000} closeOnClick/>
 				<MainLoader/>
 				<Nav />
 				<Switch>
@@ -40,6 +42,8 @@ function App({auth}) {
 					<Route path="/home" component={withAuth(Home)}/>
 					<Route path="/settings" component={withAuth(Settings)}/>
 					<Route path="/alphabet/blocks" component={Blocks}/>
+					<Route path="/alphabet/letters/consonants" component={Consonants}/>
+					<Route path="/alphabet/letters" component={Letters}/>
 					<Route path="/alphabet" component={Alphabet}/>
 				</Switch>
 			</div>

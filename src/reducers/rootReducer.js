@@ -4,13 +4,15 @@ import { firestoreReducer } from 'redux-firestore';
 import authReducer from './authReducer';
 import mainLoaderReducer from './mainLoaderReducer'
 import settingsReducer from './settingsReducer';
+import lettersReducer from './lettersReducer';
 
 const rootReducer = combineReducers({
 	firebase: firebaseReducer,
 	firestore: firestoreReducer,
 	authReducer: authReducer,
 	mainLoaderReducer: mainLoaderReducer,
-	settingsReducer: settingsReducer
+	settingsReducer: settingsReducer,
+	lettersReducer: lettersReducer
 });
 
 export default rootReducer;
