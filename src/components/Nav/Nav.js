@@ -170,7 +170,7 @@ const Nav = ({profile, auth, location}) => {
 					{
 						auth.uid && (
 							<NavItem>
-								<NavLink active={location.pathname === '/home' ? 1 : 0} to="/home">
+								<NavLink active={location.pathname.split('/')[1] === 'home' ? 1 : 0} to="/home">
 									<StyledIcon name="home"/>
 									Home
 								</NavLink>
@@ -178,19 +178,19 @@ const Nav = ({profile, auth, location}) => {
 						)
 					}
 					<NavItem>
-						<NavLink active={location.pathname === '/alphabet' ? 1 : 0} to="/alphabet">
+						<NavLink active={location.pathname.split('/')[1] === 'alphabet' ? 1 : 0} to="/alphabet">
 							<StyledIcon name="font"/>
 							Alphabet
 						</NavLink>
 					</NavItem>
 					<NavItem>
-						<NavLink active={location.pathname === '/words' ? 1 : 0} to="/words">
+						<NavLink active={location.pathname.split('/')[1] === 'words' ? 1 : 0} to="/words">
 							<StyledIcon name="sort-alpha-down"/>
 							Words
 						</NavLink>
 					</NavItem>
 					<NavItem>
-						<NavLink active={location.pathname === '/conjugation' ? 1 : 0} to="/conjugation">
+						<NavLink active={location.pathname.split('/')[1] === 'conjugation' ? 1 : 0} to="/conjugation">
 							<StyledIcon name="plug"/>
 							Conjugation
 						</NavLink>
