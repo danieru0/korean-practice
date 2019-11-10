@@ -18,6 +18,9 @@ import Faq from './components/Faq/Faq';
 import Home from './components/Home/Home';
 import Settings from './components/Settings/Settings';
 
+import Alphabet from './components/Alphabet/Alphabet';
+import Blocks from './components/Alphabet/Blocks/Blocks';
+
 function App({auth}) {
 	if (!isLoaded(auth)) {
 		return <BrowserRouter><MainLoader show /></BrowserRouter>
@@ -36,6 +39,8 @@ function App({auth}) {
 					<Route path="/faq" component={Faq}/>
 					<Route path="/home" component={withAuth(Home)}/>
 					<Route path="/settings" component={withAuth(Settings)}/>
+					<Route path="/alphabet/blocks" component={Blocks}/>
+					<Route path="/alphabet" component={Alphabet}/>
 				</Switch>
 			</div>
 		</BrowserRouter>
