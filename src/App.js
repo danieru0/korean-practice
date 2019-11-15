@@ -26,6 +26,7 @@ import Vowels from './components/Alphabet/Letters/Vowels/Vowels';
 
 import Words from './components/Words/Words';
 import Categories from './components/Words/Nouns/Categories';
+import Nouns from './components/Words/Nouns/Nouns';
 
 function App({auth}) {
 	if (!isLoaded(auth)) {
@@ -51,6 +52,7 @@ function App({auth}) {
 					<Route path="/alphabet/letters" component={Letters}/>
 					<Route path="/alphabet" component={Alphabet}/>
 					<Route path="/words/nouns/categories" component={Categories}/>
+					<Route path="/words/nouns/:category" component={Nouns}/>
 					<Route path="/words" component={Words}/>
 				</Switch>
 			</div>

@@ -28,7 +28,7 @@ const Container = styled.div`
 `
 
 const StyledPracticeBtn = styled(PracticeBtn)`
-	margin: 20px 20px;
+	margin: 20px;
 `
 
 const Categories = ({firestore, getNounsCategories, nounsCategories}) => {

@@ -1,5 +1,6 @@
 const initState = {
-	nounsCategories: null
+	nounsCategories: null,
+	nouns: null
 }
 
 const wordsReducer = (state = initState, action) => {
@@ -8,6 +9,11 @@ const wordsReducer = (state = initState, action) => {
 			return {
 				...state,
 				nounsCategories: action.data
+			}
+		case 'UPDATE_NOUNS':
+			return {
+				...state,
+				nouns: action.data
 			}
 		default: return state;
 	}
