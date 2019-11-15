@@ -42,7 +42,7 @@ const LetterName = styled.span`
 	text-transform: uppercase;
 `
 
-class Consonants extends Component {
+class Vowels extends Component {
 	componentDidUpdate(prevProps) {
 		if (prevProps.location.pathname.split('/')[4] !== this.props.location.pathname.split('/')[4]) {
 			this.props.getLetter(this.props.firestore, this.props.location.pathname.split('/')[4]);
@@ -50,14 +50,14 @@ class Consonants extends Component {
 	}
 
 	componentDidMount() {
-		this.props.getLetter(this.props.firestore, this.props.location.pathname.split('/')[4] || '01');
+		this.props.getLetter(this.props.firestore, this.props.location.pathname.split('/')[4] || '20');
 	}
 
 	render() {
 		const {location, letter} = this.props;
 		return (
 			<Container>
-				<PageTitle>Consonants</PageTitle>
+				<PageTitle>Vowels</PageTitle>
 				<Menu active={location.pathname.split('/')[4]}/>
 				{
 					letter ? (
@@ -80,4 +80,4 @@ const mapStateToProps = state => {
 	}
 }
 
-export default connect(mapStateToProps, { getLetter })(withRouter(withFirestore(Consonants)));
+export default connect(mapStateToProps, { getLetter })(withRouter(withFirestore(Vowels)));

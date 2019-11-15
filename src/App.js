@@ -22,6 +22,7 @@ import Alphabet from './components/Alphabet/Alphabet';
 import Blocks from './components/Alphabet/Blocks/Blocks';
 import Letters from './components/Alphabet/Letters/Letters';
 import Consonants from './components/Alphabet/Letters/Consonants/Consonants';
+import Vowels from './components/Alphabet/Letters/Vowels/Vowels';
 
 function App({auth}) {
 	if (!isLoaded(auth)) {
@@ -42,6 +43,7 @@ function App({auth}) {
 					<Route path="/home" component={withAuth(Home)}/>
 					<Route path="/settings" component={withAuth(Settings)}/>
 					<Route path="/alphabet/blocks" component={Blocks}/>
+					<Route path="/alphabet/letters/vowels" component={Vowels}/>
 					<Route path="/alphabet/letters/consonants" component={Consonants}/>
 					<Route path="/alphabet/letters" component={Letters}/>
 					<Route path="/alphabet" component={Alphabet}/>

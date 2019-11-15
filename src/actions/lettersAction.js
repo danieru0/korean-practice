@@ -10,7 +10,7 @@ export const getLetter = (firestore, id) => {
 				data: true
 			});
 
-			const doc = await firestore.collection('letters').doc(id === undefined ? '01' : id).get();
+			const doc = await firestore.collection('letters').doc(id).get();
 			
 			dispatch({
 				type: 'UPDATE_LETTER',
