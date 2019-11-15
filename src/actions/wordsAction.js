@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify';
+
 export const getNounsCategories = (firestore) => {
 	return async dispatch => {
 		try {
@@ -31,5 +33,58 @@ export const getNouns = (firestore, category) => {
 		} catch (err) {
 			throw err;
 		}
+	}
+}
+
+export const clearNouns = () => {
+	return dispatch => {
+		dispatch({
+			type: 'CLEAR_NOUNS'
+		});
+	}
+}
+
+export const saveWord = (firestore, category, item) => {
+	return (dispatch, getState, { getFirebase }) => {
+		const firebase = getFirebase();
+
+		firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+				dispatch({
+					type: 'SAVING_WORD_STATE',
+					data: true
+				});
+
+				firestore.collection('users').doc(user.uid).collection(category).where("english", "==", item.english).limit(1).get().then(snapshot => {
+					if (snapshot.empty) {
+						firestore.collection('users').doc(user.uid).collection(category).doc().set(JSON.parse(JSON.stringify(item))).then(() => {
+							dispatch({
+								type: 'SAVING_WORD_STATE',
+								data: false
+							});
+							toast.success('Word saved!');
+						}).catch(err => {
+							dispatch({
+								type: 'SAVING_WORD_STATE',
+								data: false
+							});
+							throw err;
+						});
+					} else {
+						toast.error('Word already saved!');
+						dispatch({
+							type: 'SAVING_WORD_STATE',
+							data: false
+						});
+					}
+				}).catch(err => {
+					dispatch({
+						type: 'SAVING_WORD_STATE',
+						data: false
+					});
+					throw err;
+				});
+			}
+		})
 	}
 }

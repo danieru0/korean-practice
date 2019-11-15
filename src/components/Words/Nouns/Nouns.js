@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 
-import { getNouns } from '../../../actions/wordsAction';
+import { getNouns, clearNouns, saveWord } from '../../../actions/wordsAction';
 
 import PracticeBtn from '../../../shared/PracticeBtn/PracticeBtn';
 import PageTitle from '../../../shared/PageTitle/PageTitle';
 import PageLoader from './../../../shared/PageLoader/PageLoader';
+import MainLoader from '../../../shared/MainLoader/MainLoader';
 
 const Container = styled.div`
 	width: calc(100% - 200px);
@@ -39,27 +40,29 @@ const Line = styled.hr`
 	width: 100%;
 `
 
-const Text = styled.p`
-	
-`
+const Text = styled.p``
 
-const Nouns = ({location, firestore, getNouns, nouns}) => {
+const Nouns = ({location, firestore, getNouns, clearNouns, saveWord, wordSaving, nouns}) => {
 	useEffect(() => {
 		getNouns(firestore, location.pathname.split('/')[3])
-	}, [location, firestore, getNouns])
+		return (() => {
+			clearNouns();
+		})
+	}, [location, firestore, getNouns, clearNouns])
 
-	const siema = () => {
-		alert('siema');
+	const saveNoun = item => {
+		saveWord(firestore, 'nouns', item);
 	}
 
 	return (
 		<Container>
 			<PageTitle>{`Nouns / ${location.pathname.split('/')[3]}`}</PageTitle>
+			<MainLoader show={wordSaving} />
 			{
-				nouns ? (
-					nouns.map((item, key) => {
+				nouns.length !== 0 ? (
+					nouns[0].map((item, key) => {
 						return (
-							<StyledPracticeBtn key={key} small={true} onClick={siema} bordercolor="#9c27b0">
+							<StyledPracticeBtn key={key} small={true} onClick={() => saveNoun(item)} bordercolor="#9c27b0">
 								<Text>{item.korean}</Text>
 								<Line />
 								<Text>{item.english}</Text>
@@ -76,8 +79,9 @@ const Nouns = ({location, firestore, getNouns, nouns}) => {
 
 const mapStateToProps = state => {
 	return {
-		nouns: state.wordsReducer.nouns
+		nouns: state.wordsReducer.nouns,
+		wordSaving: state.wordsReducer.wordSaving
 	}
 }
 
-export default connect(mapStateToProps, { getNouns })(withFirestore(withRouter(Nouns)));
+export default connect(mapStateToProps, { getNouns, clearNouns, saveWord })(withFirestore(withRouter(Nouns)));

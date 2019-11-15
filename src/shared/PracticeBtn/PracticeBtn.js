@@ -46,7 +46,6 @@ PracticeBtn.defaultProps = {
 
 PracticeBtn.propTypes = {
 	bordercolor: PropTypes.string,
-	children: PropTypes.string.isRequired,
 	to: PropTypes.string
 }
 
