@@ -5,6 +5,7 @@ import authReducer from './authReducer';
 import mainLoaderReducer from './mainLoaderReducer'
 import settingsReducer from './settingsReducer';
 import lettersReducer from './lettersReducer';
+import wordsReducer from './wordsReducer';
 
 const rootReducer = combineReducers({
 	firebase: firebaseReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
 	authReducer: authReducer,
 	mainLoaderReducer: mainLoaderReducer,
 	settingsReducer: settingsReducer,
-	lettersReducer: lettersReducer
+	lettersReducer: lettersReducer,
+	wordsReducer: wordsReducer
 });
 
 export default rootReducer;

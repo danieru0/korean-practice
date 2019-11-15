@@ -10,6 +10,7 @@ const Container = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	flex-wrap: wrap;
 
 	@media (max-width: 600px) {
 		width: 100%;
@@ -19,6 +20,10 @@ const Container = styled.div`
 
 const StyledPracticeBtn = styled(PracticeBtn)`
 	margin: 0px 70px;
+
+	@media (max-width: 1483px) {
+		margin: 20px 20px;
+	}
 `
 
 const Letters = () => {
@@ -26,7 +31,7 @@ const Letters = () => {
 		<Container>
 			<StyledPracticeBtn to="/alphabet/letters/vowels">Vowels</StyledPracticeBtn>
 			<StyledPracticeBtn to="/alphabet/letters/consonants">Consonants</StyledPracticeBtn>
-			<StyledPracticeBtn bordercolor="#e91e63" to="/alphabet/letters/test">Test yourself</StyledPracticeBtn>
+			<StyledPracticeBtn bordercolor="#e91e63" to="/test/alphabet">Test yourself</StyledPracticeBtn>
 		</Container>
 	);
 };

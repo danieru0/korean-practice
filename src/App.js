@@ -24,6 +24,9 @@ import Letters from './components/Alphabet/Letters/Letters';
 import Consonants from './components/Alphabet/Letters/Consonants/Consonants';
 import Vowels from './components/Alphabet/Letters/Vowels/Vowels';
 
+import Words from './components/Words/Words';
+import Categories from './components/Words/Nouns/Categories';
+
 function App({auth}) {
 	if (!isLoaded(auth)) {
 		return <BrowserRouter><MainLoader show /></BrowserRouter>
@@ -47,6 +50,8 @@ function App({auth}) {
 					<Route path="/alphabet/letters/consonants" component={Consonants}/>
 					<Route path="/alphabet/letters" component={Letters}/>
 					<Route path="/alphabet" component={Alphabet}/>
+					<Route path="/words/nouns/categories" component={Categories}/>
+					<Route path="/words" component={Words}/>
 				</Switch>
 			</div>
 		</BrowserRouter>
