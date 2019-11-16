@@ -42,27 +42,27 @@ const Line = styled.hr`
 
 const Text = styled.p``
 
-const Nouns = ({location, firestore, getWords, clearWords, saveWord, wordSaving, nouns}) => {
+const Verbs = ({location, firestore, getWords, clearWords, saveWord, wordSaving, verbs}) => {
 	useEffect(() => {
-		getWords(firestore, 'nouns', '01', location.pathname.split('/')[3]);
+		getWords(firestore, 'verbs', '01');
 		return (() => {
 			clearWords();
 		})
 	}, [location, firestore, getWords, clearWords])
 
-	const saveNoun = item => {
-		saveWord(firestore, 'nouns', item);
+	const saveVerb = item => {
+		saveWord(firestore, 'verbs', item);
 	}
 
 	return (
 		<Container>
-			<PageTitle>{`Nouns / ${location.pathname.split('/')[3]}`}</PageTitle>
+			<PageTitle>Verbs</PageTitle>
 			<MainLoader show={wordSaving} />
 			{
-				nouns.length !== 0 ? (
-					nouns[0].map((item, key) => {
+				verbs.length !== 0 ? (
+					verbs[0].map((item, key) => {
 						return (
-							<StyledPracticeBtn key={key} small={true} onClick={() => saveNoun(item)} bordercolor="#9c27b0">
+							<StyledPracticeBtn key={key} small={true} onClick={() => saveVerb(item)} bordercolor="#9c27b0">
 								<Text>{item.korean}</Text>
 								<Line />
 								<Text>{item.english}</Text>
@@ -79,9 +79,9 @@ const Nouns = ({location, firestore, getWords, clearWords, saveWord, wordSaving,
 
 const mapStateToProps = state => {
 	return {
-		nouns: state.wordsReducer.nouns,
+		verbs: state.wordsReducer.verbs,
 		wordSaving: state.wordsReducer.wordSaving
 	}
 }
 
-export default connect(mapStateToProps, { getWords, clearWords, saveWord })(withFirestore(withRouter(Nouns)));
+export default connect(mapStateToProps, { getWords, clearWords, saveWord })(withFirestore(withRouter(Verbs)));

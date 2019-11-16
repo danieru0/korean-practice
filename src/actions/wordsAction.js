@@ -15,20 +15,22 @@ export const getNounsCategories = (firestore) => {
 		}
 	}
 }
-
-export const getNouns = (firestore, category) => {
+export const getWords = (firestore, type, startAt, category) => {
 	return async dispatch => {
 		try {
-
-			const doc = await firestore.collection('nouns').where("type", "==", category).orderBy('__name__').startAt('01').get();
-			let nouns = [];
+			const doc = type === 'nouns' ? (
+					await firestore.collection(type).where("type", "==", category).orderBy('__name__').startAt(startAt).get()
+				) : (
+					await firestore.collection(type).orderBy('__name__').startAt(startAt).get()
+				);
+			let words = [];
 			doc.forEach(snapshot => {
-				nouns.push(snapshot.data());
+				words.push(snapshot.data());
 			});
 
 			dispatch({
-				type: 'UPDATE_NOUNS',
-				data: nouns
+				type: `UPDATE_${type.toUpperCase()}`,
+				data: words
 			});
 		} catch (err) {
 			throw err;
@@ -36,10 +38,10 @@ export const getNouns = (firestore, category) => {
 	}
 }
 
-export const clearNouns = () => {
+export const clearWords = () => {
 	return dispatch => {
 		dispatch({
-			type: 'CLEAR_NOUNS'
+			type: 'CLEAR_WORDS'
 		});
 	}
 }
@@ -57,9 +59,9 @@ export const saveWord = (firestore, category, item) => {
 
 				firestore.collection('users').doc(user.uid).collection(category).where("english", "==", item.english).limit(1).get().then(snapshot => {
 					if (snapshot.empty) {
-						firestore.collection('users').doc(user.uid).collection(category).doc().set(JSON.parse(JSON.stringify(item))).then(() => {
+						firestore.collection('users').doc(user.uid).collection(category).doc().set({ english: item.english, korean: item.korean }).then(() => {
 							firestore.collection('users').doc(user.uid).update({
-								"saved.nouns": firebase.firestore.FieldValue.increment(1)
+								[`saved.${category}`]: firebase.firestore.FieldValue.increment(1)
 							}).then(() => {
 								dispatch({
 									type: 'SAVING_WORD_STATE',
