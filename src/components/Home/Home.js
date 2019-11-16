@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 import NormalBtn from '../../shared/NormalBtn/NormalBtn';
+import PageLoader from '../../shared/PageLoader/PageLoader';
 
 const Container = styled.div`
 	width: calc(100% - 200px);
@@ -84,13 +85,14 @@ const CakeIsALie = styled.p`
 	font-size: 14px;
 `
 
-// eslint-disable-next-line
 const StyledSavedButton = styled(NormalBtn)`
 	margin: 10px;
+	text-transform: capitalize;
 `
 
 const Home = ({profile}) => {
-	if (profile.isEmpty) return (<Container>nie ma</Container>);
+	if (profile.isEmpty) return (<Container><PageLoader /></Container>);
+	let zeros = 0;
 
 	return (
 		<Container>
@@ -103,7 +105,24 @@ const Home = ({profile}) => {
 					<NormalBtn href="/settings">Settings</NormalBtn>
 				</User>
 				<Saved>
-					<CakeIsALie>Everything you save will appear here (●´ω｀●)</CakeIsALie>
+					{
+						profile.saved && Object.keys(profile.saved).map(item => {
+							if (profile.saved[item] > 0) {
+								return <StyledSavedButton href={`/saved/${item}`} key={item}>{item}</StyledSavedButton>
+							} else {
+								return zeros++
+							}
+						})
+					}
+					{
+						profile.saved ? (
+							Object.keys(profile.saved).length === zeros && (
+								<CakeIsALie>Everything you save will appear here (●´ω｀●)</CakeIsALie>
+							)
+						) : (
+							<CakeIsALie>Everything you save will appear here (●´ω｀●)</CakeIsALie>
+						)
+					}
 				</Saved>
 			</Wrapper>
 		</Container>

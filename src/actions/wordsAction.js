@@ -58,11 +58,18 @@ export const saveWord = (firestore, category, item) => {
 				firestore.collection('users').doc(user.uid).collection(category).where("english", "==", item.english).limit(1).get().then(snapshot => {
 					if (snapshot.empty) {
 						firestore.collection('users').doc(user.uid).collection(category).doc().set(JSON.parse(JSON.stringify(item))).then(() => {
-							dispatch({
-								type: 'SAVING_WORD_STATE',
-								data: false
-							});
-							toast.success('Word saved!');
+							firestore.collection('users').doc(user.uid).update({
+								"saved.nouns": firebase.firestore.FieldValue.increment(1)
+							}).then(() => {
+								dispatch({
+									type: 'SAVING_WORD_STATE',
+									data: false
+								});
+								toast.success('Word saved!');
+							}).catch(err => {
+								throw err;
+							})
+
 						}).catch(err => {
 							dispatch({
 								type: 'SAVING_WORD_STATE',
