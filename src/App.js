@@ -28,6 +28,7 @@ import Words from './components/Words/Words';
 import Categories from './components/Words/Nouns/Categories';
 import Nouns from './components/Words/Nouns/Nouns';
 import Verbs from './components/Words/Verbs/Verbs';
+import Adjectives from './components/Words/Adjectives/Adjectives';
 
 function App({auth}) {
 	if (!isLoaded(auth)) {
@@ -52,6 +53,7 @@ function App({auth}) {
 					<Route path="/alphabet/letters/consonants" component={Consonants}/>
 					<Route path="/alphabet/letters" component={Letters}/>
 					<Route path="/alphabet" component={Alphabet}/>
+					<Route path="/words/adjectives" component={Adjectives}/>
 					<Route path="/words/verbs" component={Verbs}/>
 					<Route path="/words/nouns/categories" component={Categories}/>
 					<Route path="/words/nouns/:category" component={Nouns}/>

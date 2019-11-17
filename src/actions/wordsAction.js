@@ -15,6 +15,7 @@ export const getNounsCategories = (firestore) => {
 		}
 	}
 }
+
 export const getWords = (firestore, type, startAt, category) => {
 	return async dispatch => {
 		try {
