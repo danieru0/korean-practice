@@ -30,7 +30,7 @@ export const getWords = (firestore, type, startAt, category) => {
 			});
 
 			dispatch({
-				type: `UPDATE_${type.toUpperCase()}`,
+				type: `UPDATE_WORDS`,
 				data: words
 			});
 		} catch (err) {
