@@ -32,11 +32,28 @@ const ContainerBtn = styled.button`
 	background: transparent;
 `
 
-const PracticeBtn = ({bordercolor, children, to, onClick, className, small}) => {
+const ContainerDiv = styled.div`
+	width: ${({small}) => small ? '200px' : '288px'};
+	height: ${({small}) => small ? '200px' : '313px'};
+	text-decoration: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-transform: uppercase;
+	font-size: 36px;
+	color: #fff;
+	font-family: ${props => props.theme.mainFont};
+	border: 3px solid ${({bordercolor}) => bordercolor && bordercolor};
+	background: transparent;
+`
+
+const PracticeBtn = ({bordercolor, children, to, notClickable, onClick, className, small}) => {
 	if (onClick) {
 		return <ContainerBtn small={small ? 1 : 0} bordercolor={bordercolor} className={className} onClick={onClick}>{children}</ContainerBtn>
+	} else if (notClickable) {
+		return 	<ContainerDiv small={small ? 1 : 0} to={to} bordercolor={bordercolor} className={className}>{children}</ContainerDiv>
 	} else {
-		return 	<ContainerLink small={small ? 1 : 0} to={to} bordercolor={bordercolor} className={className}>{children}</ContainerLink>
+		return <ContainerLink small={small ? 1 : 0} to={to} bordercolor={bordercolor} className={className}>{children}</ContainerLink>
 	}
 };
 

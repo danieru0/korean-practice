@@ -39,14 +39,6 @@ export const getWords = (firestore, type, startAt, category) => {
 	}
 }
 
-export const clearWords = () => {
-	return dispatch => {
-		dispatch({
-			type: 'CLEAR_WORDS'
-		});
-	}
-}
-
 export const saveWord = (firestore, category, item) => {
 	return (dispatch, getState, { getFirebase }) => {
 		const firebase = getFirebase();
@@ -96,5 +88,37 @@ export const saveWord = (firestore, category, item) => {
 				});
 			}
 		})
+	}
+}
+
+export const getSavedWords = (firestore, type, startAt) => {
+	return (dispatch, getState, { getFirebase }) => {
+		const firebase = getFirebase();
+
+		firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+				let words = [];
+				firestore.collection('users').doc(user.uid).collection(type).orderBy('__name__').startAt(startAt).get().then(snapshot => {
+					snapshot.forEach(item => {
+						words.push(item.data());
+					});
+
+					dispatch({
+						type: 'UPDATE_SAVED_WORDS',
+						data: words
+					});
+				}).catch(err => {
+					throw err;
+				});
+			}
+		})
+	}
+}
+
+export const clearWords = () => {
+	return dispatch => {
+		dispatch({
+			type: 'CLEAR_WORDS'
+		});
 	}
 }

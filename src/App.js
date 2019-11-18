@@ -17,6 +17,7 @@ import Login from './components/Auth/Login/Login';
 import Faq from './components/Faq/Faq';
 import Home from './components/Home/Home';
 import Settings from './components/Settings/Settings';
+import Saved from './components/Saved/Saved';
 
 import Alphabet from './components/Alphabet/Alphabet';
 import Blocks from './components/Alphabet/Blocks/Blocks';
@@ -58,6 +59,7 @@ function App({auth}) {
 					<Route path="/words/nouns/categories" component={Categories}/>
 					<Route path="/words/nouns/:category" component={Nouns}/>
 					<Route path="/words" component={Words}/>
+					<Route path="/saved/:category" component={withAuth(Saved)}/>
 				</Switch>
 			</div>
 		</BrowserRouter>
