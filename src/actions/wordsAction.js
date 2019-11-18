@@ -100,7 +100,7 @@ export const getSavedWords = (firestore, type, startAt) => {
 				let words = [];
 				firestore.collection('users').doc(user.uid).collection(type).orderBy('__name__').startAt(startAt).get().then(snapshot => {
 					snapshot.forEach(item => {
-						words.push(item.data());
+						words.push({...item.data(), id: item.id});
 					});
 
 					dispatch({
@@ -108,6 +108,48 @@ export const getSavedWords = (firestore, type, startAt) => {
 						data: words
 					});
 				}).catch(err => {
+					throw err;
+				});
+			}
+		})
+	}
+}
+
+export const removeSavedWord = (firestore, type, id) => {
+	return (dispatch, getState, { getFirebase }) => {
+		const firebase = getFirebase();
+
+		firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+				dispatch({
+					type: 'DELETING_WORD_STATE',
+					data: true
+				});
+				firestore.collection('users').doc(user.uid).collection(type).doc(id).delete().then(() => {
+					firestore.collection('users').doc(user.uid).update({
+						[`saved.${type}`]: firebase.firestore.FieldValue.increment(-1)
+					}).then(() => {
+						dispatch({
+							type: 'REMOVE_DELETED_WORD_FROM_STATE',
+							data: id
+						});
+						dispatch({
+							type: 'DELETING_WORD_STATE',
+							data: false
+						});
+						toast.success('Word deleted!');
+					}).catch(err => {
+						dispatch({
+							type: 'DELETING_WORD_STATE',
+							data: false
+						});
+						throw err;
+					})
+				}).catch(err => {
+					dispatch({
+						type: 'DELETING_WORD_STATE',
+						data: false
+					});
 					throw err;
 				});
 			}

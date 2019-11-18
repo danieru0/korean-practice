@@ -4,7 +4,8 @@ const initState = {
 	verbs: [],
 	adjectives: [],
 	saved: [],
-	wordSaving: false
+	wordSaving: false,
+	wordDeleting: false
 }
 
 const wordsReducer = (state = initState, action) => {
@@ -46,6 +47,16 @@ const wordsReducer = (state = initState, action) => {
 			return {
 				...state,
 				wordSaving: action.data
+			}
+		case 'DELETING_WORD_STATE':
+			return {
+				...state,
+				wordDeleting: action.data
+			}
+		case 'REMOVE_DELETED_WORD_FROM_STATE':
+			return {
+				...state, 
+				saved: [state.saved[0].filter(item => item.id !== action.data)]
 			}
 		default: return state;
 	}

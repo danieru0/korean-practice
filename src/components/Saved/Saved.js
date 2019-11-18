@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 
-import { getSavedWords, clearWords } from '../../actions/wordsAction';
+import { getSavedWords, clearWords, removeSavedWord } from '../../actions/wordsAction';
 
 import PracticeBtn from '../../shared/PracticeBtn/PracticeBtn';
 import PageTitle from '../../shared/PageTitle/PageTitle';
@@ -62,7 +62,13 @@ const Line = styled.hr`
 
 const Text = styled.p``
 
-const Saved = ({firestore, location, getSavedWords, clearWords, saved}) => {
+const EmptyText = styled.p`
+	font-size: 32px;
+	color: ${props => props.theme.mainFontColor};
+	font-family: ${props => props.theme.mainFont};
+`
+
+const Saved = ({firestore, location, getSavedWords, clearWords, removeSavedWord, saved, wordDeleting}) => {
 	useEffect(() => {
 		getSavedWords(firestore, location.pathname.split('/')[2], '01');
 		return (() => {
@@ -70,25 +76,32 @@ const Saved = ({firestore, location, getSavedWords, clearWords, saved}) => {
 		})
 	}, [location, firestore, getSavedWords, clearWords]);
 
-	const removeWord = (e) => {
+	const removeWord = (e, id) => {
 		e.stopPropagation();
+		removeSavedWord(firestore, location.pathname.split('/')[2], id)
 	}
 
 	return (
 		<Container>
+			<MainLoader show={wordDeleting}/>
 			<PageTitle>{`Saved ${location.pathname.split('/')[2]}`}</PageTitle>
 			{
 				saved.length !== 0 ? (
-					saved[0].map((item, key) => {
+					saved[0].length !== 0 ? (
+						saved[0].map((item, key) => {
 						return (
 							<StyledPracticeBtn key={key} small notClickable bordercolor="#9c27b0">
-								<RemoveButton onClick={removeWord}>Delete</RemoveButton>
+								<RemoveButton onClick={(e) => removeWord(e, item.id)}>Delete</RemoveButton>
 								<Text>{item.korean}</Text>
 								<Line />
 								<Text>{item.english}</Text>
 							</StyledPracticeBtn>
 						)
 					})
+					) : (
+						<EmptyText>Nothing to show! |ω･)ﾉ</EmptyText>
+					)
+
 				) : (
 					<PageLoader />
 				)
@@ -99,8 +112,9 @@ const Saved = ({firestore, location, getSavedWords, clearWords, saved}) => {
 
 const mapStateToProps = state => {
 	return {
-		saved: state.wordsReducer.saved
+		saved: state.wordsReducer.saved,
+		wordDeleting: state.wordsReducer.wordDeleting
 	}
 }
 
-export default connect(mapStateToProps, { getSavedWords, clearWords })(withFirestore(withRouter(Saved)));
+export default connect(mapStateToProps, { getSavedWords, clearWords, removeSavedWord })(withFirestore(withRouter(Saved)));
