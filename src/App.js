@@ -27,7 +27,7 @@ import Vowels from './components/Alphabet/Letters/Vowels/Vowels';
 
 import Words from './components/Words/Words';
 import Categories from './components/Words/Nouns/Categories';
-import WordContainer from './containers/Words/WordsContainer';
+import WordsContainer from './containers/Words/WordsContainer';
 
 function App({auth}) {
 	if (!isLoaded(auth)) {
@@ -52,10 +52,10 @@ function App({auth}) {
 					<Route path="/alphabet/letters/consonants" component={Consonants}/>
 					<Route path="/alphabet/letters" component={Letters}/>
 					<Route path="/alphabet" component={Alphabet}/>
-					<Route path="/words/adjectives" render={props => <WordContainer type="adjectives" {...props}/>}/>
-					<Route path="/words/verbs" render={props => <WordContainer type="verbs" {...props}/>}/>
+					<Route path="/words/adjectives" render={props => <WordsContainer type="adjectives" {...props}/>}/>
+					<Route path="/words/verbs" render={props => <WordsContainer type="verbs" {...props}/>}/>
 					<Route path="/words/nouns/categories" component={Categories}/>
-					<Route path="/words/nouns/:category" render={props => <WordContainer type="nouns" {...props}/>}/>
+					<Route path="/words/nouns/:category" render={props => <WordsContainer type="nouns" {...props}/>}/>
 					<Route path="/words" component={Words}/>
 					<Route path="/saved/:category" component={withAuth(Saved)}/>
 				</Switch>

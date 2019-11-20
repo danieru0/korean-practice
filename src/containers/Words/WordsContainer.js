@@ -29,15 +29,35 @@ const Container = styled.div`
 	}
 `
 
+const SaveButton = styled.button`
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	border: 0px;
+	background: transparent;
+	color: #fff;
+	font-family: ${props => props.theme.mainFont};
+	padding: 5px 10px;
+	font-size: 14px;
+	border-bottom: 2px solid #9c27b0;
+	border-right: 2px solid #9c27b0;
+	text-transform: uppercase;
+
+	&:hover {
+		color: #ccc;
+	}
+`
+
 const StyledPracticeBtn = styled(PracticeBtn)`
 	margin: 20px;
 	font-size: 20px;
 	display: flex;
 	flex-direction: column;
+	position: relative;
 `
 
 const Line = styled.hr`
-	width: 100%;
+	width: 60%;
 `
 
 const Text = styled.p``
@@ -73,7 +93,8 @@ const WordContainer = ({type, location, firestore, getWords, clearWords, saveWor
 				words.length !== 0 ? (
 					words[0].map((item, key) => {
 						return (
-							<StyledPracticeBtn key={key} small={true} onClick={() => handleWordSave(item)} bordercolor="#9c27b0">
+							<StyledPracticeBtn key={key} notClickable small={true} bordercolor="#9c27b0">
+								<SaveButton onClick={() => handleWordSave(item)}>Save</SaveButton>
 								<Text>{item.korean}</Text>
 								<Line />
 								<Text>{item.english}</Text>
