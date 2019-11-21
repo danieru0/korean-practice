@@ -29,6 +29,9 @@ import Words from './components/Words/Words';
 import Categories from './components/Words/Nouns/Categories';
 import WordsContainer from './containers/Words/WordsContainer';
 
+import Conjugation from './components/Conjugation/Conjugation';
+import ConjugationContainer from './containers/Conjugation/ConjugationContainer';
+
 function App({auth}) {
 	if (!isLoaded(auth)) {
 		return <BrowserRouter><MainLoader show /></BrowserRouter>
@@ -58,6 +61,8 @@ function App({auth}) {
 					<Route path="/words/nouns/:category" render={props => <WordsContainer type="nouns" {...props}/>}/>
 					<Route path="/words" component={Words}/>
 					<Route path="/saved/:category" component={withAuth(Saved)}/>
+					<Route path="/conjugation/:category" component={ConjugationContainer}/>
+					<Route path="/conjugation" component={Conjugation}/>
 				</Switch>
 			</div>
 		</BrowserRouter>
