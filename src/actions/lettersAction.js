@@ -11,7 +11,10 @@ export const getLetter = (firestore, id) => {
 			});
 
 			const doc = await firestore.collection('letters').doc(id).get();
-			
+			if (!doc.exists) {
+				throw new Error('404');
+			}
+
 			dispatch({
 				type: 'UPDATE_LETTER',
 				data: doc.data()
@@ -24,9 +27,13 @@ export const getLetter = (firestore, id) => {
 		} catch (err) {
 			dispatch({
 				type: 'LOADING_LETTER',
-				data: true
+				data: false
 			});
-			throw err;
+			if (err.message === '404') {
+				window.location.href = '/404';
+			} else {
+				throw err;
+			}
 		}
 	}
 }

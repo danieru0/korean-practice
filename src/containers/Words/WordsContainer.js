@@ -29,6 +29,13 @@ const Container = styled.div`
 	}
 `
 
+const StyledPageLoader = styled(PageLoader)`
+	position: absolute !important;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+`
+
 const SaveButton = styled.button`
 	position: absolute;
 	left: 0px;
@@ -82,7 +89,7 @@ const WordContainer = ({type, location, firestore, getWords, clearWords, saveWor
 	}, [type, location, firestore, getWords, clearWords])
 
 	const handleWordSave = item => {
-		saveWord(firestore, 'nouns', item);
+		saveWord(firestore, type, item);
 	}
 
 	return (
@@ -102,7 +109,7 @@ const WordContainer = ({type, location, firestore, getWords, clearWords, saveWor
 						)
 					})
 				) : (
-					<PageLoader />
+					<StyledPageLoader />
 				)
 			}
 		</Container>

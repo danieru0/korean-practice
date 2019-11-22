@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 
 import { getSavedWords, clearWords, removeSavedWord } from '../../actions/wordsAction';
 
@@ -27,6 +27,13 @@ const Container = styled.div`
 		width: 100%;
 		margin-left: 0px;
 	}
+`
+
+const StyledPageLoader = styled(PageLoader)`
+	position: absolute !important;
+	margin: auto;
+	top: 0;
+	bottom: 0;
 `
 
 const StyledPracticeBtn = styled(PracticeBtn)`
@@ -62,12 +69,6 @@ const Line = styled.hr`
 
 const Text = styled.p``
 
-const EmptyText = styled.p`
-	font-size: 32px;
-	color: ${props => props.theme.mainFontColor};
-	font-family: ${props => props.theme.mainFont};
-`
-
 const Saved = ({firestore, location, getSavedWords, clearWords, removeSavedWord, saved, wordDeleting}) => {
 	useEffect(() => {
 		getSavedWords(firestore, location.pathname.split('/')[2], '01');
@@ -99,11 +100,11 @@ const Saved = ({firestore, location, getSavedWords, clearWords, removeSavedWord,
 						)
 					})
 					) : (
-						<EmptyText>Nothing to show! |ω･)ﾉ</EmptyText>
+						<Redirect to="/404" />
 					)
 
 				) : (
-					<PageLoader />
+					<StyledPageLoader />
 				)
 			}
 		</Container>

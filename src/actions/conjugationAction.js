@@ -32,6 +32,10 @@ export const getRandomConjugatedWord = (firestore, category) => {
 
         try {
             const doc = await firestore.collection(category).doc(randomNumber()).get();
+            if (!doc.exists) {
+                throw new Error('404');
+            }
+
             const word = await doc.data().word.get();
 
             dispatch({
@@ -48,7 +52,11 @@ export const getRandomConjugatedWord = (firestore, category) => {
             });
 
         } catch (err) {
-            throw err;
+            if (err.message === '404') {
+                window.location.href = '/404';
+            } else {
+                throw err;
+            }
         }
     }
 }

@@ -24,17 +24,24 @@ export const getWords = (firestore, type, startAt, category) => {
 				) : (
 					await firestore.collection(type).orderBy('__name__').startAt(startAt).get()
 				);
+
 			let words = [];
 			doc.forEach(snapshot => {
 				words.push(snapshot.data());
 			});
+
+			if (words.length === 0) throw new Error('404');
 
 			dispatch({
 				type: `UPDATE_WORDS`,
 				data: words
 			});
 		} catch (err) {
-			throw err;
+			if (err.message === '404') {
+				window.location.href = '/404';
+			} else {
+				throw err;
+			}
 		}
 	}
 }

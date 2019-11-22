@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import './App.css';
@@ -18,6 +18,7 @@ import Faq from './components/Faq/Faq';
 import Home from './components/Home/Home';
 import Settings from './components/Settings/Settings';
 import Saved from './components/Saved/Saved';
+import NotFound from './components/NotFound/NotFound';
 
 import Alphabet from './components/Alphabet/Alphabet';
 import Blocks from './components/Alphabet/Blocks/Blocks';
@@ -63,6 +64,8 @@ function App({auth}) {
 					<Route path="/saved/:category" component={withAuth(Saved)}/>
 					<Route path="/conjugation/:category" component={ConjugationContainer}/>
 					<Route path="/conjugation" component={Conjugation}/>
+					<Route path="/404" component={NotFound}/>
+					<Redirect to="/404" />
 				</Switch>
 			</div>
 		</BrowserRouter>
