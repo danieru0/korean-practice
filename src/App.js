@@ -33,6 +33,8 @@ import WordsContainer from './containers/Words/WordsContainer';
 import Conjugation from './components/Conjugation/Conjugation';
 import ConjugationContainer from './containers/Conjugation/ConjugationContainer';
 
+import TestTypeOne from './components/TestTypeOne/TestTypeOne';
+
 function App({auth}) {
 	if (!isLoaded(auth)) {
 		return <BrowserRouter><MainLoader show /></BrowserRouter>
@@ -64,6 +66,7 @@ function App({auth}) {
 					<Route path="/saved/:category" component={withAuth(Saved)}/>
 					<Route path="/conjugation/:category" component={ConjugationContainer}/>
 					<Route path="/conjugation" component={Conjugation}/>
+					<Route path="/testone/:category" component={TestTypeOne}/>
 					<Route path="/404" component={NotFound}/>
 					<Redirect to="/404" />
 				</Switch>

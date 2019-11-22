@@ -1,3 +1,5 @@
+import getRandomNumber from '../utils/getRandomNumber';
+
 export const getExplanation = (firestore, category) => {
     return async dispatch => {
         try {
@@ -16,22 +18,13 @@ export const getExplanation = (firestore, category) => {
 export const getRandomConjugatedWord = (firestore, category) => {
     return async dispatch => {
 
-        const randomNumber = () => {
-            let number = Math.floor(Math.random() * 2) + 1;
-            if (number < 10) {
-                number = `0${number}`
-            }
-
-            return number;
-        }
-
         dispatch({
             type: 'UPDATE_LOADING_WORD',
             data: true
         });
 
         try {
-            const doc = await firestore.collection(category).doc(randomNumber()).get();
+            const doc = await firestore.collection(category).doc(getRandomNumber(2)).get();
             if (!doc.exists) {
                 throw new Error('404');
             }

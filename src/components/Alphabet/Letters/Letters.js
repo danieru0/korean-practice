@@ -31,7 +31,7 @@ const Letters = () => {
 		<Container>
 			<StyledPracticeBtn to="/alphabet/letters/vowels">Vowels</StyledPracticeBtn>
 			<StyledPracticeBtn to="/alphabet/letters/consonants">Consonants</StyledPracticeBtn>
-			<StyledPracticeBtn bordercolor="#e91e63" to="/test/alphabet">Test yourself</StyledPracticeBtn>
+			<StyledPracticeBtn bordercolor="#e91e63" to="/testone/letter">Test yourself</StyledPracticeBtn>
 		</Container>
 	);
 };
