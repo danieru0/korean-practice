@@ -11,13 +11,12 @@ import IrregularInfo from './IrregularInfo';
 
 import PageTitle from '../../shared/PageTitle/PageTitle';
 import PageLoader from '../../shared/PageLoader/PageLoader';
-// eslint-disable-next-line
 import MainLoader from '../../shared/MainLoader/MainLoader';
 import NormalBtn from '../../shared/NormalBtn/NormalBtn';
 
 const Container = styled.div`
 	width: calc(100% - 200px);
-    height: 100vh;
+    min-height: 100vh;
 	margin-left: 200px;
 	display: flex;
 	justify-content: center;
@@ -38,6 +37,11 @@ const Wrapper = styled.div`
     flex-direction: column;
     font-family: ${props => props.theme.mainFont};
     color: ${props => props.theme.mainFontColor};
+
+    @media (max-width: 1035px) {
+        width: 100%;
+        padding: 0px 10px;
+    }
 `
 
 const TopContainer = styled.div`
@@ -61,7 +65,9 @@ const ConjugationList = styled.ul`
     margin-top: 20px;
 `
 
-const ConjugationItem = styled.li``;
+const ConjugationItem = styled.li`
+    margin: 0px 5px;
+`;
 
 const YellowItem = styled.span`
     color: #ffeb3b;
@@ -122,7 +128,7 @@ const ExplanationLine = styled.span`
     margin: 0px 10px;
 `
 
-const ConjugationContainer = ({location, firestore, getExplanation, getRandomConjugatedWord, clearConjugation, explanation, conjugatedWord, word}) => {
+const ConjugationContainer = ({location, firestore, getExplanation, getRandomConjugatedWord, clearConjugation, explanation, conjugatedWord, word, loadingNewWorld}) => {
     const [activeExplanation, setActiveExplanation] = useState(false);
 
     useEffect(() => {
@@ -135,11 +141,12 @@ const ConjugationContainer = ({location, firestore, getExplanation, getRandomCon
     }, [location, firestore, getExplanation, getRandomConjugatedWord, clearConjugation]);
 
     const getNextConjugation = () => {
-
+        getRandomConjugatedWord(firestore, location.pathname.split('/')[2]);
     }
 
     return (
         <Container>
+            <MainLoader show={loadingNewWorld}/>
             <PageTitle>{`${explanation ? explanation.info.title : location.pathname.split('/')[2].split('-').join(' ')}`}</PageTitle>
             {
                 word ? (
@@ -227,7 +234,8 @@ const mapStateToProps = state => {
     return {
         explanation: state.conjugationReducer.explanation,
         conjugatedWord: state.conjugationReducer.conjugatedWord,
-        word: state.conjugationReducer.word
+        word: state.conjugationReducer.word,
+        loadingNewWorld: state.conjugationReducer.loadingNewWorld
     }
 }
 

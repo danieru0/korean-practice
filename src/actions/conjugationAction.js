@@ -16,18 +16,22 @@ export const getExplanation = (firestore, category) => {
 export const getRandomConjugatedWord = (firestore, category) => {
     return async dispatch => {
 
-        // eslint-disable-next-line
         const randomNumber = () => {
-            let number = Math.floor(Math.random() * 20);
+            let number = Math.floor(Math.random() * 2) + 1;
             if (number < 10) {
                 number = `0${number}`
             }
 
             return number;
         }
-        
+
+        dispatch({
+            type: 'UPDATE_LOADING_WORD',
+            data: true
+        });
+
         try {
-            const doc = await firestore.collection(category).doc('01').get();
+            const doc = await firestore.collection(category).doc(randomNumber()).get();
             const word = await doc.data().word.get();
 
             dispatch({
@@ -37,6 +41,10 @@ export const getRandomConjugatedWord = (firestore, category) => {
             dispatch({
                 type: 'UPDATE_WORD',
                 data: word.data()
+            });
+            dispatch({
+                type: 'UPDATE_LOADING_WORD',
+                data: false
             });
 
         } catch (err) {

@@ -1,7 +1,8 @@
 const initState = {
     explanation: null,
     conjugatedWord: null,
-    word: null
+    word: null,
+    loadingNewWorld: false
 }
 
 const conjugationReducer = (state = initState, action) => {
@@ -20,6 +21,11 @@ const conjugationReducer = (state = initState, action) => {
             return {
                 ...state,
                 word: action.data
+            }
+        case 'UPDATE_LOADING_WORD':
+            return {
+                ...state,
+                loadingNewWorld: action.data
             }
         case 'CLEAR_ALL_CONJUGATIONS':
             return {
