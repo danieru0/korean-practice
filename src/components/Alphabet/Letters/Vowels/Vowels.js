@@ -62,7 +62,7 @@ class Vowels extends Component {
 				{
 					letter ? (
 						<>
-							<LetterRead>{`${letter.korean} = ${letter.pron}`}</LetterRead>
+							<LetterRead>{`${letter.korean} = ${letter.english}`}</LetterRead>
 							<LetterName>{`Name: ${letter.name}`}</LetterName>
 						</>
 					) : (

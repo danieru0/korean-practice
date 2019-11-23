@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
 
-import { getTest } from '../../actions/testTypeOneAction';
+import { getTest, clearTest } from '../../actions/testTypeOneAction';
 
 import PageTitle from '../../shared/PageTitle/PageTitle';
 import PageLoader from '../../shared/PageLoader/PageLoader';
@@ -50,8 +50,17 @@ const TestTitle = styled.p`
 const ReverseButton = styled.button`
     background: none;
     border: none;
-    color: ${props => props.theme.mainFontColor};
     font-family: ${props => props.theme.mainFont};
+
+    ${props => {
+        switch(props.reversed) {
+            case 'reverseInit':
+                return "color: #b9b7b7"
+            case 'active':
+                return "color: #525151"
+            default: return `color: #fff`
+        }
+    }}
 `
 
 const TestTask = styled.div`
@@ -116,11 +125,12 @@ const StyledTestBtn = styled(TestBtn)`
     margin: 0px 10px;
 `
 
-class TestTypeOne extends Component {
+class TestTypeOne extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
             reverse: false,
+            reverseOnNextTask: false,
             answerInputValue: '',
             correct: false,
             wrong: false
@@ -131,6 +141,10 @@ class TestTypeOne extends Component {
         this.props.getTest(this.props.firestore, this.props.location.pathname.split('/')[2]);
     }
 
+    componentWillUnmount() {
+        this.props.clearTest();
+    }
+
     handleAnswerInputChange = e => {
         this.setState({
             answerInputValue: e.target.value,
@@ -138,22 +152,56 @@ class TestTypeOne extends Component {
         });
     }
 
-    handleCheckClick = () => {
-        if (this.props.location.pathname.split('/')[2] === 'letter') {
-            if (this.state.answerInputValue.toLowerCase() === this.props.testTypeOneData.pron.toLowerCase()) {
-                this.setState({
-                    correct: true
-                });
-            } else {
-                this.setState({
-                    wrong: true
-                })
-            }
+    handleCheck = () => {
+        const correctAnswer = this.state.reverse ? this.props.testTypeOneData.korean : this.props.testTypeOneData.english.toLowerCase();
+        if (this.state.answerInputValue.toLowerCase() === correctAnswer) {
+            this.setState({
+                correct: true
+            });
+        } else {
+            this.setState({
+                wrong: true
+            })
+        }
+    }
+
+    handleAnswerClick = () => {
+        this.setState({
+            correct: 1,
+            answerInputValue: this.state.reverse ? this.props.testTypeOneData.korean : this.props.testTypeOneData.english
+        })
+    }
+
+    handleReverseClick = () => {
+        this.setState({
+            reverseOnNextTask: !this.state.reverseOnNextTask
+        });
+    }
+
+    handleNextClick = () => {
+        if (this.state.reverseOnNextTask) {
+            this.setState({
+                reverseOnNextTask: false,
+                reverse: !this.state.reverse,
+                correct: false,
+                wrong: false,
+                answerInputValue: '' 
+            }, () => {
+                this.props.getTest(this.props.firestore, this.props.location.pathname.split('/')[2]);
+            })
+        } else {
+            this.setState({
+                correct: false,
+                wrong: false,
+                answerInputValue: ''
+            }, () => {
+                this.props.getTest(this.props.firestore, this.props.location.pathname.split('/')[2]);
+            });
         }
     }
 
     render() {
-        const { testTypeOneData, location } = this.props;
+        const { testTypeOneData, loadingTestTypeOne, location } = this.props;
 
         return (
             <Container>
@@ -163,21 +211,28 @@ class TestTypeOne extends Component {
                         <Test>
                             <TopWrapper>
                                 <TestTitle>{`Translate this ${location.pathname.split('/')[2]}`}</TestTitle>
-                                <ReverseButton>Reverse</ReverseButton>
+                                <ReverseButton reversed={this.state.reverseOnNextTask ? 'reverseInit' : this.state.reverse && 'active'} onClick={this.handleReverseClick}>Reverse</ReverseButton>
                             </TopWrapper>
-                            <TestTask correctanswer={this.state.correct ? 1 : 0}>{testTypeOneData.korean}</TestTask>
-                            <TestAnswerInput wronganswer={this.state.wrong ? 1 : 0} disabled={this.state.correct} correctanswer={this.state.correct ? 1 : 0} onChange={this.handleAnswerInputChange} value={this.state.answerInputValue} placeholder="Your answer..."/>
+                            <TestTask correctanswer={this.state.correct ? 1 : 0}>
+                                {
+                                    loadingTestTypeOne ? (
+                                        <PageLoader />
+                                    ) : (
+                                        this.state.reverse ? testTypeOneData.english : testTypeOneData.korean
+                                    )
+                                }
+                            </TestTask>
+                            <TestAnswerInput wronganswer={this.state.wrong ? 1 : 0} disabled={this.state.correct} correctanswer={this.state.correct ? 1 : 0} onKeyDown={(e) => e.key === 'Enter' && this.handleCheck(e)} onChange={this.handleAnswerInputChange} value={this.state.answerInputValue} placeholder="Your answer..."/>
                             <ButtonsWrapper>
-                                <StyledTestBtn correctanswer={this.state.correct} bordercolor="#f44336">Answer</StyledTestBtn>
-                                <StyledTestBtn bordercolor="#03a9f4">Next</StyledTestBtn>
-                                <StyledTestBtn correctanswer={this.state.correct} disabled={this.state.correct} onClick={this.handleCheckClick}>Check</StyledTestBtn>
+                                <StyledTestBtn onClick={this.handleAnswerClick} correctanswer={this.state.correct} bordercolor="#f44336">Answer</StyledTestBtn>
+                                <StyledTestBtn correctanswer={this.state.correct} disabled={this.state.correct} onClick={this.handleCheck}>Check</StyledTestBtn>
+                                <StyledTestBtn onClick={this.handleNextClick} bordercolor="#03a9f4">Next</StyledTestBtn>
                             </ButtonsWrapper>
                         </Test>
                     ) : (
                         <PageLoader />
                     )
                 }
-
             </Container>
         );
     }
@@ -185,8 +240,9 @@ class TestTypeOne extends Component {
 
 const mapStateToProps = state => {
     return {
-        testTypeOneData: state.testTypeOneReducer.testTypeOneData
+        testTypeOneData: state.testTypeOneReducer.testTypeOneData,
+        loadingTestTypeOne: state.testTypeOneReducer.loadingTestTypeOne
     }
 }
 
-export default connect(mapStateToProps, { getTest })(withFirestore(withRouter(TestTypeOne)));
+export default connect(mapStateToProps, { getTest, clearTest })(withFirestore(withRouter(TestTypeOne)));
