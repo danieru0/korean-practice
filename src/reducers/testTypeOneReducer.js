@@ -1,7 +1,8 @@
 const initState = {
     testTypeOneData: null,
     loadingTestTypeOne: false,
-    exp: 0
+    exp: 0,
+    numberOfWords: null
 }
 
 const testTypeOneData = (state = initState, action) => {
@@ -16,6 +17,11 @@ const testTypeOneData = (state = initState, action) => {
                 ...state,
                 exp: action.data
             }
+        case 'SET_NUMBER_OF_WORDS':
+            return {
+                ...state,
+                numberOfWords: action.data
+            }
         case 'REMOVE_TEST_ONE_DATA':
             return {
                 ...state,
@@ -26,7 +32,8 @@ const testTypeOneData = (state = initState, action) => {
                 ...state,
                 testTypeOneData: null,
                 loadingTestTypeOne: false,
-                exp: 0
+                exp: 0,
+                numberOfWords: null
             }
         case 'LOADING_TEST_ONE':
             return {
