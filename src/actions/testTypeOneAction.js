@@ -36,6 +36,10 @@ export const getLetter = (firestore) => {
                 data: doc.data()
             });
             dispatch({
+                type: 'SET_EXP',
+                data: 1
+            });
+            dispatch({
                 type: 'LOADING_TEST_ONE',
                 data: false
             });

@@ -8,6 +8,7 @@ import lettersReducer from './lettersReducer';
 import wordsReducer from './wordsReducer';
 import conjugationReducer from './conjugationReducer';
 import testTypeOneReducer from './testTypeOneReducer';
+import userReducer from './userReducer';
 
 const rootReducer = combineReducers({
 	firebase: firebaseReducer,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
 	lettersReducer: lettersReducer,
 	wordsReducer: wordsReducer,
 	conjugationReducer: conjugationReducer,
-	testTypeOneReducer: testTypeOneReducer
+	testTypeOneReducer: testTypeOneReducer,
+	userReducer: userReducer
 });
 
 export default rootReducer;

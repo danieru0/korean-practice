@@ -1,6 +1,7 @@
 const initState = {
     testTypeOneData: null,
-    loadingTestTypeOne: false
+    loadingTestTypeOne: false,
+    exp: 0
 }
 
 const testTypeOneData = (state = initState, action) => {
@@ -9,6 +10,11 @@ const testTypeOneData = (state = initState, action) => {
             return {
                 ...state,
                 testTypeOneData: action.data
+            }
+        case 'SET_EXP':
+            return {
+                ...state,
+                exp: action.data
             }
         case 'REMOVE_TEST_ONE_DATA':
             return {
@@ -19,7 +25,8 @@ const testTypeOneData = (state = initState, action) => {
             return {
                 ...state,
                 testTypeOneData: null,
-                loadingTestTypeOne: false
+                loadingTestTypeOne: false,
+                exp: 0
             }
         case 'LOADING_TEST_ONE':
             return {
