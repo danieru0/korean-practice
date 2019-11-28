@@ -149,6 +149,7 @@ class TestTypeOne extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
+            url: null,
             reverse: false,
             reverseOnNextTask: false,
             answerInputValue: '',
@@ -161,8 +162,13 @@ class TestTypeOne extends PureComponent {
     answerInputRef = React.createRef();
 
     componentDidMount() {
-        this.props.getTest(this.props.firestore, this.props.location.pathname.split('/')[2]);
-        document.addEventListener('keydown', this.handleNextEnter);
+        let pathnameWithSearch = this.props.location.pathname + this.props.location.search;
+        this.setState({
+            url: pathnameWithSearch.split('/')[2]
+        }, () => {
+            this.props.getTest(this.props.firestore, this.state.url);
+            document.addEventListener('keydown', this.handleNextEnter);
+        })
     }
 
     componentWillUnmount() {
@@ -230,7 +236,7 @@ class TestTypeOne extends PureComponent {
                 answerInputValue: '',
                 answerFromClick: false
             }, () => {
-                this.props.getTest(this.props.firestore, this.props.location.pathname.split('/')[2], this.props.numberOfWords);
+                this.props.getTest(this.props.firestore, this.state.url, this.props.numberOfWords);
             });
         } else {
             this.setState({
@@ -239,7 +245,7 @@ class TestTypeOne extends PureComponent {
                 answerInputValue: '',
                 answerFromClick: false
             }, () => {
-                this.props.getTest(this.props.firestore, this.props.location.pathname.split('/')[2], this.props.numberOfWords);
+                this.props.getTest(this.props.firestore, this.state.url, this.props.numberOfWords);
             });
         }
 
@@ -253,7 +259,7 @@ class TestTypeOne extends PureComponent {
 
         return (
             <Container>
-                <PageTitle>{`Test / ${location.pathname.split('/')[2]}`}</PageTitle>
+                <PageTitle>{`Test / ${location.pathname.split('/')[2]} ${location.search.split('=')[1] || ''}`}</PageTitle>
                 {
                     testTypeOneData ? (
                         <Test>

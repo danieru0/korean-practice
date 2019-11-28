@@ -59,7 +59,7 @@ export const saveWord = (firestore, category, item) => {
 
 				firestore.collection('users').doc(user.uid).collection(category).where("english", "==", item.english).limit(1).get().then(snapshot => {
 					if (snapshot.empty) {
-						firestore.collection('users').doc(user.uid).collection(category).doc().set({ english: item.english, korean: item.korean }).then(() => {
+						firestore.collection('users').doc(user.uid).collection(category).doc(item.id).set({ english: item.english, korean: item.korean }).then(() => {
 							firestore.collection('users').doc(user.uid).update({
 								[`saved.${category}`]: firebase.firestore.FieldValue.increment(1)
 							}).then(() => {

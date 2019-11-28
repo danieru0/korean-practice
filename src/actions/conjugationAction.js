@@ -4,13 +4,20 @@ export const getExplanation = (firestore, category) => {
     return async dispatch => {
         try {
             const doc = await firestore.collection(category).doc('explanation').get();
+            if (!doc.exists) {
+                throw new Error('404');
+            }
 
             dispatch({
                 type: 'UPDATE_EXPLANATION',
                 data: doc.data()
             });
         } catch (err) {
-            throw err;
+            if (err.message === '404') {
+                window.location.href = '/404';
+            } else {
+                throw err;
+            }
         }
     }
 }
@@ -24,11 +31,8 @@ export const getRandomConjugatedWord = (firestore, category) => {
         });
 
         try {
-            const doc = await firestore.collection(category).doc(getRandomNumber(2)).get();
-            if (!doc.exists) {
-                throw new Error('404');
-            }
-
+            const counters = await firestore.collection('settings').doc('counters').get();
+            const doc = await firestore.collection(category).doc(getRandomNumber(counters.data()[category])).get();
             const word = await doc.data().word.get();
 
             dispatch({
@@ -45,11 +49,7 @@ export const getRandomConjugatedWord = (firestore, category) => {
             });
 
         } catch (err) {
-            if (err.message === '404') {
-                window.location.href = '/404';
-            } else {
-                throw err;
-            }
+            throw err;
         }
     }
 }

@@ -20,7 +20,7 @@ export const getTest = (firestore, category, numberOfWords) => {
 
         let number = numberOfWords;
 
-        if (!numberOfWords) {
+        if (!numberOfWords && category.split('?')[0] !== 'saved') {
             const numberFromFirestore = await firestore.collection('settings').doc('counters').get();
             dispatch({
                 type: 'SET_NUMBER_OF_WORDS',
@@ -36,6 +36,8 @@ export const getTest = (firestore, category, numberOfWords) => {
                 return dispatch(getVerb(firestore, number));
             case 'adjective':
                 return dispatch(getAdjective(firestore, number));
+            case (category.match(/saved/) || {}).input:
+                return dispatch(getSaved(firestore, category.split('=')[1]));
             default: window.location.href = '/404';
         }
     }
@@ -107,5 +109,35 @@ export const getAdjective = (firestore, numberOfWords) => {
         } catch (err) {
             throw err;
         }
+    }
+}
+
+export const getSaved = (firestore, type) => {
+    return async (dispatch, getState, { getFirebase }) => {
+        const firebase = getFirebase();
+
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                firestore.collection('users').doc(user.uid).get().then(doc => {
+                    const savedInfo = doc.data().saved;
+                    firestore.collection('users').doc(user.uid).collection(type).doc(getRandomNumber(savedInfo[type])).get().then(doc => {
+                        dispatch({
+                            type: 'UPDATE_TEST_ONE_DATA',
+                            data: doc.data()
+                        });
+                        dispatch({
+                            type: 'SET_EXP',
+                            data: 5
+                        });
+                        dispatch({
+                            type: 'LOADING_TEST_ONE',
+                            data: false
+                        });
+                    })
+                })
+            } else {
+                window.location.href = '/';
+            }
+        });
     }
 }

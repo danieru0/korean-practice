@@ -89,16 +89,21 @@ const Saved = ({firestore, location, getSavedWords, clearWords, removeSavedWord,
 			{
 				saved.length !== 0 ? (
 					saved[0].length !== 0 ? (
-						saved[0].map((item, key) => {
-						return (
-							<StyledPracticeBtn key={key} small notClickable bordercolor="#9c27b0">
-								<RemoveButton onClick={(e) => removeWord(e, item.id)}>Delete</RemoveButton>
-								<Text>{item.korean}</Text>
-								<Line />
-								<Text>{item.english}</Text>
-							</StyledPracticeBtn>
-						)
-					})
+						<>
+							<PracticeBtn to={`/testone/saved?type=${location.pathname.split('/')[2]}`}>Test yourself</PracticeBtn>
+							{
+								saved[0].map((item, key) => {
+								return (
+									<StyledPracticeBtn key={key} small notClickable bordercolor="#9c27b0">
+										<RemoveButton onClick={(e) => removeWord(e, item.id)}>Delete</RemoveButton>
+										<Text>{item.korean}</Text>
+										<Line />
+										<Text>{item.english}</Text>
+									</StyledPracticeBtn>
+									)
+								})
+							}
+						</>
 					) : (
 						<Redirect to="/404" />
 					)
