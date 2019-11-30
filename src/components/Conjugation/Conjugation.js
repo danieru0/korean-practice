@@ -60,13 +60,13 @@ const Conjugation = () => {
         <Container>
             <PageTitle>Conjugation</PageTitle>
 			<Wrapper>
-				<TestLink to="/test">Test</TestLink>
+				<TestLink to="/testtwo/past-tense">Test</TestLink>
 				<StyledPracticeBtn to="/conjugation/past-tense" bordercolor="#ff9800">
 					Past tense
 				</StyledPracticeBtn> 
 			</Wrapper>
 			<Wrapper>
-				<TestLink to="/test">Test</TestLink>
+				<TestLink to="/testtwo/present-tense">Test</TestLink>
 				<StyledPracticeBtn to="/conjugation/present-tense" bordercolor="#ff9800">
 					Present tense
 				</StyledPracticeBtn>
