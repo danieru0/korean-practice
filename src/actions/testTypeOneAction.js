@@ -23,7 +23,7 @@ export const getTest = (firestore, category, numberOfWords) => {
         if (!numberOfWords && category.split('?')[0] !== 'saved') {
             const numberFromFirestore = await firestore.collection('settings').doc('counters').get();
             dispatch({
-                type: 'SET_NUMBER_OF_WORDS',
+                type: 'SET_NUMBER_OF_WORDS_TEST_ONE',
                 data: numberFromFirestore.data()[category]
             });
             number = numberFromFirestore.data()[category]
@@ -53,7 +53,7 @@ export const getLetter = (firestore) => {
                 data: doc.data()
             });
             dispatch({
-                type: 'SET_EXP',
+                type: 'SET_EXP_TEST_ONE',
                 data: 1
             });
             dispatch({
@@ -76,7 +76,7 @@ export const getVerb = (firestore, numberOfWords) => {
                 data: doc.data()
             });
             dispatch({
-                type: 'SET_EXP',
+                type: 'SET_EXP_TEST_ONE',
                 data: 5
             });
             dispatch({
@@ -99,7 +99,7 @@ export const getAdjective = (firestore, numberOfWords) => {
                 data: doc.data()
             });
             dispatch({
-                type: 'SET_EXP',
+                type: 'SET_EXP_TEST_ONE',
                 data: 5
             });
             dispatch({
@@ -121,18 +121,22 @@ export const getSaved = (firestore, type) => {
                 firestore.collection('users').doc(user.uid).get().then(doc => {
                     const savedInfo = doc.data().saved;
                     firestore.collection('users').doc(user.uid).collection(type).doc(getRandomNumber(savedInfo[type])).get().then(doc => {
-                        dispatch({
-                            type: 'UPDATE_TEST_ONE_DATA',
-                            data: doc.data()
-                        });
-                        dispatch({
-                            type: 'SET_EXP',
-                            data: 5
-                        });
-                        dispatch({
-                            type: 'LOADING_TEST_ONE',
-                            data: false
-                        });
+                        if (doc.exists) {
+                            dispatch({
+                                type: 'UPDATE_TEST_ONE_DATA',
+                                data: doc.data()
+                            });
+                            dispatch({
+                                type: 'SET_EXP_TEST_ONE',
+                                data: 5
+                            });
+                            dispatch({
+                                type: 'LOADING_TEST_ONE',
+                                data: false
+                            });
+                        } else {
+                            window.location.href = '/404';
+                        }
                     })
                 })
             } else {

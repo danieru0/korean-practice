@@ -1,47 +1,48 @@
 const initState = {
-    testTypeOneData: null,
-    loadingTestTypeOne: false,
+    testTypeTwoData: null,
+    loadingTestTypeTwo: false,
     exp: 0,
     numberOfWords: null
 }
 
-const testTypeOneReducer = (state = initState, action) => {
+
+const testTypeTwoReducer = (state = initState, action) => {
     switch(action.type) {
-        case 'UPDATE_TEST_ONE_DATA':
+        case 'UPDATE_TEST_TWO_DATA':
             return {
                 ...state,
-                testTypeOneData: action.data
+                testTypeTwoData: action.data
             }
-        case 'SET_EXP_TEST_ONE':
+        case 'SET_EXP_TEST_TWO':
             return {
                 ...state,
                 exp: action.data
             }
-        case 'SET_NUMBER_OF_WORDS_TEST_ONE':
+        case 'SET_NUMBER_OF_WORDS_TEST_TWO':
             return {
                 ...state,
                 numberOfWords: action.data
             }
-        case 'REMOVE_TEST_ONE_DATA':
+        case 'REMOVE_TEST_TWO_DATA':
             return {
                 ...state,
-                testTypeOneData: true
+                testTypeTwoData: true
             }
-        case 'CLEAR_TEST_ONE':
+        case 'CLEAR_TEST_TWO':
             return {
                 ...state,
-                testTypeOneData: null,
-                loadingTestTypeOne: false,
+                testTypeTwoData: null,
+                loadingTestTypeTwo: false,
                 exp: 0,
                 numberOfWords: null
             }
-        case 'LOADING_TEST_ONE':
+        case 'LOADING_TEST_TWO':
             return {
                 ...state,
-                loadingTestTypeOne: action.data
+                loadingTestTypeTwo: action.data
             }
         default: return state;
     }
 }
 
-export default testTypeOneReducer;
+export default testTypeTwoReducer;

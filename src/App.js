@@ -34,6 +34,7 @@ import Conjugation from './components/Conjugation/Conjugation';
 import ConjugationContainer from './containers/Conjugation/ConjugationContainer';
 
 import TestTypeOne from './components/TestTypeOne/TestTypeOne';
+import TestTypeTwo from './components/TestTypeTwo/TestTypeTwo';
 
 function App({auth}) {
 	if (!isLoaded(auth)) {
@@ -67,6 +68,7 @@ function App({auth}) {
 					<Route path="/conjugation/:category" component={ConjugationContainer}/>
 					<Route path="/conjugation" component={Conjugation}/>
 					<Route path="/testone/:category" component={TestTypeOne}/>
+					<Route path="/testtwo/:category" component={TestTypeTwo}/>
 					<Route path="/404" component={NotFound}/>
 					<Redirect to="/404" />
 				</Switch>

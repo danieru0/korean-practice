@@ -8,6 +8,7 @@ import lettersReducer from './lettersReducer';
 import wordsReducer from './wordsReducer';
 import conjugationReducer from './conjugationReducer';
 import testTypeOneReducer from './testTypeOneReducer';
+import testTypeTwoReducer from './testTypeTwoReducer';
 import userReducer from './userReducer';
 
 const rootReducer = combineReducers({
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
 	wordsReducer: wordsReducer,
 	conjugationReducer: conjugationReducer,
 	testTypeOneReducer: testTypeOneReducer,
+	testTypeTwoReducer: testTypeTwoReducer,
 	userReducer: userReducer
 });
 
