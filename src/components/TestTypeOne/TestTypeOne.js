@@ -155,7 +155,8 @@ class TestTypeOne extends PureComponent {
             answerInputValue: '',
             correct: false,
             wrong: false,
-            answerFromClick: false
+            answerFromClick: false,
+            nextInit: false
         }
     }
 
@@ -169,6 +170,17 @@ class TestTypeOne extends PureComponent {
             this.props.getTest(this.props.firestore, this.state.url);
             document.addEventListener('keydown', this.handleNextEnter);
         })
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.loadingTestTypeOne !== this.props.loadingTestTypeOne) {
+            if (this.props.loadingTestTypeOne === false) {
+                this.setState({
+                    nextInit: false
+                })
+            }
+
+        }
     }
 
     componentWillUnmount() {
@@ -185,7 +197,7 @@ class TestTypeOne extends PureComponent {
     }
 
     handleCheck = () => {
-        if (!this.state.answerFromClick) {
+        if (!this.state.answerFromClick && this.props.testTypeOneData.english) {
             const correctAnswer = this.state.reverse ? this.props.testTypeOneData.korean : this.props.testTypeOneData.english.toLowerCase();
             if (this.state.answerInputValue.toLowerCase() === correctAnswer) {
                 this.setState({
@@ -227,31 +239,38 @@ class TestTypeOne extends PureComponent {
             }
         }
 
-        if (this.state.reverseOnNextTask) {
+        if (this.state.nextInit === false) {
             this.setState({
-                reverseOnNextTask: false,
-                reverse: !this.state.reverse,
-                correct: false,
-                wrong: false,
-                answerInputValue: '',
-                answerFromClick: false
+                nextInit: true
             }, () => {
-                this.props.getTest(this.props.firestore, this.state.url, this.props.numberOfWords);
-            });
-        } else {
-            this.setState({
-                correct: false,
-                wrong: false,
-                answerInputValue: '',
-                answerFromClick: false
-            }, () => {
-                this.props.getTest(this.props.firestore, this.state.url, this.props.numberOfWords);
-            });
+                if (this.state.reverseOnNextTask) {
+                    this.setState({
+                        reverseOnNextTask: false,
+                        reverse: !this.state.reverse,
+                        correct: false,
+                        wrong: false,
+                        answerInputValue: '',
+                        answerFromClick: false
+                    }, () => {
+                        this.props.getTest(this.props.firestore, this.state.url, this.props.numberOfWords);
+                    });
+                } else {
+                    this.setState({
+                        correct: false,
+                        wrong: false,
+                        answerInputValue: '',
+                        answerFromClick: false
+                    }, () => {
+                        this.props.getTest(this.props.firestore, this.state.url, this.props.numberOfWords);
+                    });
+                }
+        
+                this.props.clearUserExpAnswerStatus();
+        
+                this.answerInputRef.current.focus();
+            })
         }
 
-        this.props.clearUserExpAnswerStatus();
-
-        this.answerInputRef.current.focus();
     }
 
     render() {

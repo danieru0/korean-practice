@@ -11,6 +11,7 @@ const ContainerLink = styled(Link)`
 	justify-content: center;
 	align-items: center;
 	text-transform: uppercase;
+	text-align: center;
 	font-size: 36px;
 	color: #fff;
 	font-family: ${props => props.theme.mainFont};
@@ -24,6 +25,7 @@ const ContainerBtn = styled.button`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	text-align: center;
 	text-transform: uppercase;
 	font-size: 36px;
 	color: #fff;
@@ -38,6 +40,7 @@ const ContainerDiv = styled.div`
 	text-decoration: none;
 	display: flex;
 	justify-content: center;
+	text-align: center;
 	align-items: center;
 	text-transform: uppercase;
 	font-size: 36px;

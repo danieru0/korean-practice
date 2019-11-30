@@ -7,7 +7,7 @@ import PageTitle from '../../shared/PageTitle/PageTitle';
 
 const Container = styled.div`
 	width: calc(100% - 200px);
-	height: 100vh;
+	min-height: 100vh;
 	margin-left: 200px;
 	display: flex;
 	justify-content: center;

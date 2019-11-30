@@ -10,7 +10,7 @@ const Container = styled.div`
 	width: 200px;
 	height: auto;
 	position: fixed;
-	transition: transform 1s cubic-bezier(1, 0, 0, 1);
+	transition: transform .8s cubic-bezier(1, 0, 0, 1);
 	z-index: 999;
 	transform: ${({isMenuActive}) => isMenuActive ? 'translateX(0%)' : 'translateX(-100%)'};
 
@@ -170,7 +170,7 @@ const Nav = ({profile, auth, location}) => {
 					{
 						auth.uid && (
 							<NavItem>
-								<NavLink active={location.pathname.split('/')[1] === 'home' ? 1 : 0} to="/home">
+								<NavLink onClick={handleMobileNav} active={location.pathname.split('/')[1] === 'home' ? 1 : 0} to="/home">
 									<StyledIcon name="home"/>
 									Home
 								</NavLink>
@@ -178,19 +178,19 @@ const Nav = ({profile, auth, location}) => {
 						)
 					}
 					<NavItem>
-						<NavLink active={location.pathname.split('/')[1] === 'alphabet' ? 1 : 0} to="/alphabet">
+						<NavLink onClick={handleMobileNav} active={location.pathname.split('/')[1] === 'alphabet' ? 1 : 0} to="/alphabet">
 							<StyledIcon name="font"/>
 							Alphabet
 						</NavLink>
 					</NavItem>
 					<NavItem>
-						<NavLink active={location.pathname.split('/')[1] === 'words' ? 1 : 0} to="/words">
+						<NavLink onClick={handleMobileNav} active={location.pathname.split('/')[1] === 'words' ? 1 : 0} to="/words">
 							<StyledIcon name="sort-alpha-down"/>
 							Words
 						</NavLink>
 					</NavItem>
 					<NavItem>
-						<NavLink active={location.pathname.split('/')[1] === 'conjugation' ? 1 : 0} to="/conjugation">
+						<NavLink onClick={handleMobileNav} active={location.pathname.split('/')[1] === 'conjugation' ? 1 : 0} to="/conjugation">
 							<StyledIcon name="plug"/>
 							Conjugation
 						</NavLink>

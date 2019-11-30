@@ -211,7 +211,7 @@ class TestTypeTwo extends Component {
     }
 
     handleAnswerClick = () => {
-        if (this.state.allCorrect === false && this.state.nextInit === false) {
+        if (this.state.allCorrect === false && this.state.nextInit === false && this.props.testTypeTwoData[0]) {
             this.setState({
                 allCorrect: true,
                 answerFromClick: true
