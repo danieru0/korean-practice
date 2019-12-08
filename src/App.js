@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 
 import withAuth from './hocs/withAuth';
 import withoutAuth from './hocs/withoutAuth';
+import withAdminAuth from './hocs/withAdminAuth';
 
 import MainLoader from './shared/MainLoader/MainLoader';
 import Nav from './components/Nav/Nav';
@@ -35,6 +36,8 @@ import ConjugationContainer from './containers/Conjugation/ConjugationContainer'
 
 import TestTypeOne from './components/TestTypeOne/TestTypeOne';
 import TestTypeTwo from './components/TestTypeTwo/TestTypeTwo';
+
+import AdminContainer from './containers/Admin/AdminContainer';
 
 function App({auth}) {
 	if (!isLoaded(auth)) {
@@ -69,6 +72,7 @@ function App({auth}) {
 					<Route path="/conjugation" component={Conjugation}/>
 					<Route path="/testone/:category" component={TestTypeOne}/>
 					<Route path="/testtwo/:category" component={TestTypeTwo}/>
+					<Route path="/admin/:page?" component={withAdminAuth(AdminContainer)} />
 					<Route path="/404" component={NotFound}/>
 					<Redirect to="/404" />
 				</Switch>

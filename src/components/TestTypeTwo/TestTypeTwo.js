@@ -280,7 +280,7 @@ class TestTypeTwo extends Component {
 
         return (
             <Container>
-                <PageTitle>{`Test / ${location.pathname.split('/')[2]}`}</PageTitle>
+                <PageTitle>{`Test / ${location.pathname.split('/')[2].split('-').join(' ')}`}</PageTitle>
                 {
                     testTypeTwoData ? (
                         <Test>

@@ -30,17 +30,17 @@ export const getTest = (firestore, category, numberOfWords) => {
         }
 
         switch(category) {
-            case 'past-tense':
-                return dispatch(getPastTense(firestore, number));
+            case (category.match(/tense/) || {}).input:
+                return dispatch(getTense(category, firestore, number));
             default: window.location.href ='/404';
         }
     }
 }
 
-export const getPastTense = (firestore, numberOfWords) => {
+export const getTense = (category, firestore, numberOfWords) => {
     return async dispatch => {
         try {
-            const doc = await firestore.collection('past-tense').doc(getRandomNumber(numberOfWords)).get();
+            const doc = await firestore.collection(category).doc(getRandomNumber(numberOfWords)).get();
             const word = await doc.data().word.get();
 
             dispatch({

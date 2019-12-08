@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
 import Logo from '../../shared/Logo/Logo';
+import NavUserMenu from './NavUserMenu';
+import NavAdminMenu from './NavAdminMenu';
 
 const Container = styled.div`
 	width: 200px;
@@ -130,7 +132,7 @@ const StyledIcon = styled(FontAwesome)`
 	text-align: center;
 `
 
-const Nav = ({profile, auth, location}) => {
+const Nav = ({profile, auth, location, adminStatus}) => {
 	const [activeMenu, setActiveMenu] = useState(false);
 
 	const handleMobileNav = () => {
@@ -177,24 +179,13 @@ const Nav = ({profile, auth, location}) => {
 							</NavItem>
 						)
 					}
-					<NavItem>
-						<NavLink onClick={handleMobileNav} active={location.pathname.split('/')[1] === 'alphabet' ? 1 : 0} to="/alphabet">
-							<StyledIcon name="font"/>
-							Alphabet
-						</NavLink>
-					</NavItem>
-					<NavItem>
-						<NavLink onClick={handleMobileNav} active={location.pathname.split('/')[1] === 'words' ? 1 : 0} to="/words">
-							<StyledIcon name="sort-alpha-down"/>
-							Words
-						</NavLink>
-					</NavItem>
-					<NavItem>
-						<NavLink onClick={handleMobileNav} active={location.pathname.split('/')[1] === 'conjugation' ? 1 : 0} to="/conjugation">
-							<StyledIcon name="plug"/>
-							Conjugation
-						</NavLink>
-					</NavItem>
+					{
+						adminStatus ? (
+							<NavAdminMenu onClick={handleMobileNav} pathname={location.pathname}/>
+						) : (
+							<NavUserMenu onClick={handleMobileNav} pathname={location.pathname.split('/')[1]}/>
+						)
+					}
 				</NavList>
 			</NavContainer>
 		</Container>
@@ -204,7 +195,8 @@ const Nav = ({profile, auth, location}) => {
 const mapStateToProps = state => {
 	return {
 		profile: state.firebase.profile,
-		auth: state.firebase.auth
+		auth: state.firebase.auth,
+		adminStatus: state.adminReducer.adminStatus
 	}
 }
 

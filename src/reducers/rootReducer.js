@@ -10,6 +10,7 @@ import conjugationReducer from './conjugationReducer';
 import testTypeOneReducer from './testTypeOneReducer';
 import testTypeTwoReducer from './testTypeTwoReducer';
 import userReducer from './userReducer';
+import adminReducer from './adminReducer';
 
 const rootReducer = combineReducers({
 	firebase: firebaseReducer,
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
 	conjugationReducer: conjugationReducer,
 	testTypeOneReducer: testTypeOneReducer,
 	testTypeTwoReducer: testTypeTwoReducer,
-	userReducer: userReducer
+	userReducer: userReducer,
+	adminReducer: adminReducer
 });
 
 export default rootReducer;
