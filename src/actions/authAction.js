@@ -127,7 +127,8 @@ export const signUp = (firestore, nick, email, password1, password2) => {
 				avatar: 'https://i.pravatar.cc/',
 				saved: {},
 				isAdmin: false,
-				createdAt: new Date()
+				createdAt: new Date(),
+				id: newUser.user.uid
 			}).then(() => {
 				toast.success("You have successfully registred! Have fun <3");
 				dispatch({

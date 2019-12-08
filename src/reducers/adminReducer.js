@@ -1,6 +1,8 @@
 const initState = {
     adminStatus: null,
-    appSettings: null
+    appSettings: null,
+    users: [],
+    lastUser: null
 }
 
 const adminReducer = (state = initState, action) => {
@@ -14,6 +16,28 @@ const adminReducer = (state = initState, action) => {
             return {
                 ...state,
                 appSettings: action.data
+            }
+        case 'UPDATE_USERS':
+            if (action.init) {
+                return {
+                    ...state,
+                    users: action.data
+                }
+            } else {
+                return {
+                    ...state,
+                    users: [...state.users, ...action.data]
+                }
+            }
+        case 'UPDATE_LAST_USER':
+            return {
+                ...state,
+                lastUser: action.data
+            }
+        case 'CLEAR_LAST_USER':
+            return {
+                ...state,
+                lastUser: null
             }
         default: return state;
     }

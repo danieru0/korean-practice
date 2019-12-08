@@ -57,3 +57,93 @@ export const updateAppSettings = (firestore, settings) => {
         });
     }
 }
+
+export const getUsers = (firestore, searchValue, searchType, sortBy, sortType, lastUser) => {
+    return dispatch => {
+        if (!searchValue) {
+            if (!lastUser) {
+                dispatch({
+                    type: 'CLEAR_LAST_USER'
+                });
+
+                firestore.collection('users').orderBy(sortBy, sortType).limit(15).get().then(doc => {
+                    let users = [];
+                    doc.forEach(item => users.push({...item.data(), createdAt: item.data().createdAt.toDate()}));
+            
+                    dispatch({
+                        type: 'UPDATE_USERS',
+                        data: users,
+                        init: true
+                    });
+                    dispatch({
+                        type: 'UPDATE_LAST_USER',
+                        data: doc.docs[doc.docs.length-1]
+                    });
+                }).catch(err => {
+                    throw err;
+                });
+            } else {
+                firestore.collection('users').orderBy(sortBy, sortType).startAfter(lastUser).limit(15).get().then(doc => {
+                    let users = [];
+                    doc.forEach(item => users.push({...item.data(), createdAt: item.data().createdAt.toDate()}));
+
+                    dispatch({
+                        type: 'UPDATE_USERS',
+                        data: users
+                    });
+                    dispatch({
+                        type: 'UPDATE_LAST_USER',
+                        data: doc.docs[doc.docs.length-1]
+                    });
+                }).catch(err => {
+                    throw err;
+                })
+            }
+        } else {
+            if (!lastUser) {
+                dispatch({
+                    type: 'CLEAR_LAST_USER'
+                });
+
+                firestore.collection('users').where(searchType, "==", searchValue).limit(15).get().then(doc => {
+                    let users = [];
+                    doc.forEach(item => users.push({...item.data(), createdAt: item.data().createdAt.toDate()}));
+
+                    dispatch({
+                        type: 'UPDATE_USERS',
+                        data: users,
+                        init: true
+                    });
+                    dispatch({
+                        type: 'UPDATE_LAST_USER',
+                        data: doc.docs[doc.docs.length-1]
+                    });
+                })
+            } else {
+                firestore.collection('users').where(searchType, "==", searchValue).startAfter(lastUser).limit(15).get().then(doc => {
+                    let users = [];
+                    doc.forEach(item => users.push({...item.data(), createdAt: item.data().createdAt.toDate()}));
+
+                    dispatch({
+                        type: 'UPDATE_USERS',
+                        data: users
+                    });
+                    dispatch({
+                        type: 'UPDATE_LAST_USER',
+                        data: doc.docs[doc.docs.length-1]
+                    });
+                }).catch(err => {
+                    throw err;
+                })
+            }
+        }
+    }
+}
+
+export const clearLastUser = () => {
+    return dispatch => {
+        dispatch({
+            type: 'CLEAR_LAST_USER'
+        })
+    }
+}
