@@ -160,7 +160,6 @@ const Users = ({firestore, getUsers, clearLastUser, users, lastUser}) => {
     }
 
     const updateUsers = () => {
-        console.log(sortBy, sortType);
         getUsers(firestore, searchValue, searchType, sortBy, sortType);
     }
 

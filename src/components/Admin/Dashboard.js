@@ -76,7 +76,7 @@ const Dashboard = () => {
             <Wrapper>
                 <AdminLink to="/admin/settings">Settings</AdminLink>
                 <AdminLink to="/admin/users">Users</AdminLink>
-                <AdminLink to="/admin/words">Words</AdminLink>
+                <AdminLink to="/admin/word">Add word</AdminLink>
                 <AdminLink to="/admin/conjugations">Conjugations</AdminLink>
             </Wrapper>
         </Container>

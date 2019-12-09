@@ -56,9 +56,9 @@ const NavAdminMenu = ({pathname, onClick}) => {
                 </NavLink>
             </NavItem>
             <NavItem>
-                <NavLink onClick={onClick} active={pathname.split('/')[2] === 'words' ? 1 : 0} to="/admin/words">
+                <NavLink onClick={onClick} active={pathname.split('/')[2] === 'word' ? 1 : 0} to="/admin/word">
                     <StyledIcon name="sort-alpha-down"/>
-                    Words
+                    Add word
                 </NavLink>
             </NavItem>
             <NavItem>

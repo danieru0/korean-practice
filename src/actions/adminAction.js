@@ -220,3 +220,37 @@ export const clearLastUser = () => {
         })
     }
 }
+
+export const addNewWord = (firestore, word, type, counterType) => {
+    return async (dispatch, getState, { getFirebase }) => {
+        const firebase = getFirebase();
+
+        dispatch({
+            type: 'MAIN_LOADER_SHOW'
+        });
+
+        try {
+            const counter = await firestore.collection('settings').doc('counters').get();
+            const id = counter.data()[counterType] < 10 ? '0'+ (counter.data()[counterType] + 1) : counter.data()[counterType] + 1;
+            
+            Object.keys(word).forEach((key) =>  word[key] === '' && delete word[key]);
+
+            firestore.collection(type).doc(id).set({...word, id: id}).then(() => {
+                firestore.collection('settings').doc('counters').update({
+                    [counterType]: firebase.firestore.FieldValue.increment(1)
+                }).then(() => {
+                    toast.success('Done!');
+                    dispatch({
+                        type: 'MAIN_LOADER_HIDE'
+                    });
+                }).catch(err => {
+                    throw err;
+                });
+            }).catch(err => {
+                throw err;
+            })
+        } catch (err) {
+            throw err;
+        }
+    }
+}
