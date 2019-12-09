@@ -20,8 +20,8 @@ export const checkAdminStatus = (firestore, clear) => {
                         data: doc.data().isAdmin
                     });
                 }).catch(err => {
-                    throw err;
-                }) 
+                    
+                })
             }
         })
     }
@@ -53,7 +53,11 @@ export const updateAppSettings = (firestore, settings) => {
             });
             toast.success('Done!');
         }).catch(err => {
-            throw err;
+            if (err.code === 'permission-denied') {
+                window.location.href = '/';
+            } else {
+                throw err;
+            }
         });
     }
 }
@@ -131,7 +135,11 @@ export const getUsers = (firestore, searchValue, searchType, sortBy, sortType, l
                         data: doc.docs[doc.docs.length-1]
                     });
                 }).catch(err => {
-                    throw err;
+                    if (err.code === 'permission-denied') {
+                        window.location.href = '/';
+                    } else {
+                        throw err;
+                    }
                 });
             } else {
                 firestore.collection('users').orderBy(sortBy, sortType).startAfter(lastUser).limit(15).get().then(doc => {
@@ -147,7 +155,11 @@ export const getUsers = (firestore, searchValue, searchType, sortBy, sortType, l
                         data: doc.docs[doc.docs.length-1]
                     });
                 }).catch(err => {
-                    throw err;
+                    if (err.code === 'permission-denied') {
+                        window.location.href = '/';
+                    } else {
+                        throw err;
+                    }
                 })
             }
         } else {
@@ -169,6 +181,12 @@ export const getUsers = (firestore, searchValue, searchType, sortBy, sortType, l
                         type: 'UPDATE_LAST_USER',
                         data: doc.docs[doc.docs.length-1]
                     });
+                }).catch(err => {
+                    if (err.code === 'permission-denied') {
+                        window.location.href = '/';
+                    } else {
+                        throw err;
+                    }
                 })
             } else {
                 firestore.collection('users').where(searchType, "==", searchValue).startAfter(lastUser).limit(15).get().then(doc => {
@@ -184,7 +202,11 @@ export const getUsers = (firestore, searchValue, searchType, sortBy, sortType, l
                         data: doc.docs[doc.docs.length-1]
                     });
                 }).catch(err => {
-                    throw err;
+                    if (err.code === 'permission-denied') {
+                        window.location.href = '/';
+                    } else {
+                        throw err;
+                    }
                 })
             }
         }
