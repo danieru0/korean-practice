@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import Dashboard from '../../components/Admin/Dashboard';
 import Settings from '../../components/Admin/Settings';
 import Users from '../../components/Admin/Users';
+import User from '../../components/Admin/User';
 
 const AdminContainer = ({location}) => {
     const page = location.pathname.split('/')[2];
@@ -12,6 +13,8 @@ const AdminContainer = ({location}) => {
             return <Settings />
         case 'users':
             return <Users />
+        case 'user':
+            return <User />
         default: return <Dashboard />
     }
 };

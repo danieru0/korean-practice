@@ -58,6 +58,57 @@ export const updateAppSettings = (firestore, settings) => {
     }
 }
 
+export const getSpecificUser = (firestore, uid) => {
+    return async dispatch => {
+        try {
+            const doc = await firestore.collection('users').doc(uid).get();
+
+            if (doc.empty) throw new Error('Empty');
+
+            dispatch({
+                type: 'UPDATE_SPECIFIC_USER',
+                data: {...doc.data(), createdAt: doc.data().createdAt.toDate()}
+            });
+        } catch (err) {
+            throw err;
+        }
+    }
+}
+
+export const clearSpecificUser = () => {
+    return dispatch => {
+        dispatch({
+            type: 'CLEAR_SPECIFIC_USER'
+        })
+    }
+}
+
+export const setUserAdmin = (firestore, uid, boolean) => {
+    return dispatch => {
+        firestore.collection('users').doc(uid).update({
+            isAdmin: boolean
+        }).then(() => {
+            toast.success('Updated!');
+            window.location.reload();
+        }).catch(err => {
+            throw err;
+        });
+    }
+}
+
+export const removeUserAvatar = (firestore, uid) => {
+    return dispatch => {
+        firestore.collection('users').doc(uid).update({
+            avatar: 'https://i.pravatar.cc/'
+        }).then(() => {
+            toast.success('Updated!');
+            window.location.reload();
+        }).catch(err => {
+            throw err;
+        })
+    }
+}
+
 export const getUsers = (firestore, searchValue, searchType, sortBy, sortType, lastUser) => {
     return dispatch => {
         if (!searchValue) {
