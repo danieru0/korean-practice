@@ -50,6 +50,15 @@ const adminReducer = (state = initState, action) => {
                 ...state,
                 specificUser: null
             }
+        case 'CLEAR_ADMIN':
+            return {
+                ...state,
+                adminStatus: null,
+                appSettings: null,
+                users: [],
+                lastUser: null,
+                specificUser: null
+            }
         default: return state;
     }
 }

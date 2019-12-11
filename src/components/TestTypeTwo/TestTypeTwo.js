@@ -295,19 +295,19 @@ class TestTypeTwo extends Component {
                             </TestWordToConjugate>
                             <TestWrapper>
                                 <TestHonorificsType>Plain form:</TestHonorificsType>
-                                <TestAnswerInput onKeyDown={this.handleNextInputEnter} disabled={this.state[1].correct !== 'notSet' && this.state[1].correct} correctanswer={this.state[1].correct} onChange={this.handleAnswerInputChange} value={this.state[1].value} name="1" placeholder="Answer..."/>
+                                <TestAnswerInput autoComplete="off" onKeyDown={this.handleNextInputEnter} disabled={this.state[1].correct !== 'notSet' && this.state[1].correct} correctanswer={this.state[1].correct} onChange={this.handleAnswerInputChange} value={this.state[1].value} name="1" placeholder="Answer..."/>
                             </TestWrapper>
                             <TestWrapper>
                                 <TestHonorificsType>Informal low respect:</TestHonorificsType>
-                                <TestAnswerInput onKeyDown={this.handleNextInputEnter} disabled={this.state[2].correct !== 'notSet' && this.state[2].correct} correctanswer={this.state[2].correct} onChange={this.handleAnswerInputChange} value={this.state[2].value} name="2" placeholder="Answer..."/>
+                                <TestAnswerInput autoComplete="off" onKeyDown={this.handleNextInputEnter} disabled={this.state[2].correct !== 'notSet' && this.state[2].correct} correctanswer={this.state[2].correct} onChange={this.handleAnswerInputChange} value={this.state[2].value} name="2" placeholder="Answer..."/>
                             </TestWrapper>
                             <TestWrapper>
                                 <TestHonorificsType>Informal high respect:</TestHonorificsType>
-                                <TestAnswerInput onKeyDown={this.handleNextInputEnter} disabled={this.state[3].correct !== 'notSet' && this.state[3].correct} correctanswer={this.state[3].correct} onChange={this.handleAnswerInputChange} value={this.state[3].value} name="3" placeholder="Answer..."/>
+                                <TestAnswerInput autoComplete="off" onKeyDown={this.handleNextInputEnter} disabled={this.state[3].correct !== 'notSet' && this.state[3].correct} correctanswer={this.state[3].correct} onChange={this.handleAnswerInputChange} value={this.state[3].value} name="3" placeholder="Answer..."/>
                             </TestWrapper>
                             <TestWrapper>
                                 <TestHonorificsType>formal high respect:</TestHonorificsType>
-                                <TestAnswerInput onKeyDown={this.handleNextInputEnter} disabled={this.state[4].correct !== 'notSet' && this.state[4].correct} correctanswer={this.state[4].correct} onChange={this.handleAnswerInputChange} value={this.state[4].value} name="4" placeholder="Answer..."/>
+                                <TestAnswerInput autoComplete="off" onKeyDown={this.handleNextInputEnter} disabled={this.state[4].correct !== 'notSet' && this.state[4].correct} correctanswer={this.state[4].correct} onChange={this.handleAnswerInputChange} value={this.state[4].value} name="4" placeholder="Answer..."/>
                             </TestWrapper>
                             <ButtonsWrapper>
                                 <StyledTestBtn correctanswer={this.state.allCorrect} onClick={this.handleAnswerClick} bordercolor="#f44336">Answer</StyledTestBtn>

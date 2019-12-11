@@ -62,9 +62,9 @@ const NavAdminMenu = ({pathname, onClick}) => {
                 </NavLink>
             </NavItem>
             <NavItem>
-                <NavLink onClick={onClick} active={pathname.split('/')[2] === 'conjugations' ? 1 : 0} to="/admin/conjugations">
+                <NavLink onClick={onClick} active={pathname.split('/')[2] === 'conjugation' ? 1 : 0} to="/admin/conjugation">
                     <StyledIcon name="plug"/>
-                    Conjugations
+                    Add conjugation
                 </NavLink>
             </NavItem>
         </>

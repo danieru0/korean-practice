@@ -45,7 +45,7 @@ const Input = styled.input`
     margin: 10px 0px;
 
     &::placeholder {
-        color: #fff;
+        color: #bbb;
     }
 `
 
@@ -105,7 +105,7 @@ const Word = ({addNewWord, firestore}) => {
             <Wrapper>
                 <Input onChange={handleInputChange} name="english" value={word.english} placeholder="English"/>
                 <Input onChange={handleInputChange} name="korean" value={word.korean} placeholder="Korean"/>
-                <Select onClick={handleSelectChange} defaultValue="nouns">
+                <Select onClick={handleSelectChange} defaultValue="nouns-nouns">
                     <Option value="nouns-nouns">Nouns</Option>
                     <Option value="adjectives-adjective">Adjective</Option>
                     <Option value="verbs-verb">Verb</Option>

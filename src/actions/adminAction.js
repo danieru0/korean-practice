@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import createIdFromCounter from '../utils/createIdFromCounter';
 
 export const checkAdminStatus = (firestore, clear) => {
     return (dispatch, getState, { getFirebase }) => {
@@ -231,7 +232,7 @@ export const addNewWord = (firestore, word, type, counterType) => {
 
         try {
             const counter = await firestore.collection('settings').doc('counters').get();
-            const id = counter.data()[counterType] < 10 ? '0'+ (counter.data()[counterType] + 1) : counter.data()[counterType] + 1;
+            const id = createIdFromCounter(counter.data()[counterType]);
             
             Object.keys(word).forEach((key) =>  word[key] === '' && delete word[key]);
 
@@ -252,5 +253,55 @@ export const addNewWord = (firestore, word, type, counterType) => {
         } catch (err) {
             throw err;
         }
+    }
+}
+
+export const addNewConjugation = (firestore, conjugation, type) => {
+    return async (dispatch, getState, { getFirebase }) => {
+        const firebase = getFirebase();
+
+        dispatch({
+            type: 'MAIN_LOADER_SHOW'
+        });
+        
+        try {
+            const counter = await firestore.collection('settings').doc('counters').get();
+            const id = createIdFromCounter(counter.data()[type]);
+
+            firestore.collection(type).doc(id).set({
+                1: conjugation[1],
+                2: conjugation[2],
+                3: conjugation[3],
+                4: conjugation[4],
+                info: {
+                    breakpoint: conjugation.breakpoint,
+                    irregular: conjugation.irregular
+                },
+                word: firebase.firestore().doc(conjugation.word)
+            }).then(() => {
+                firestore.collection('settings').doc('counters').update({
+                    [type]: firebase.firestore.FieldValue.increment(1)
+                }).then(() => {
+                    toast.success('Done!');
+                    dispatch({
+                        type: 'MAIN_LOADER_HIDE'
+                    });
+                }).catch(err => {
+                    throw err;
+                });
+            }).catch(err => {
+                throw err;
+            })
+        } catch (err) {
+            throw err;
+        }
+    }
+}
+
+export const clearAdmin = () => {
+    return dispatch => {
+        dispatch({
+            type: 'CLEAR_ADMIN'
+        });
     }
 }

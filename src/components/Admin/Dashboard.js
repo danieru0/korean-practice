@@ -57,6 +57,7 @@ const AdminLink = styled(Link)`
     font-family: ${props => props.theme.mainFont};
     background: #3f51b5;
     margin: 20px 20px;
+    text-align: center;
 `
 
 const Wrapper = styled.div`
@@ -77,7 +78,7 @@ const Dashboard = () => {
                 <AdminLink to="/admin/settings">Settings</AdminLink>
                 <AdminLink to="/admin/users">Users</AdminLink>
                 <AdminLink to="/admin/word">Add word</AdminLink>
-                <AdminLink to="/admin/conjugations">Conjugations</AdminLink>
+                <AdminLink to="/admin/conjugation">Add Conjugation</AdminLink>
             </Wrapper>
         </Container>
     );
