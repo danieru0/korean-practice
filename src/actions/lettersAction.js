@@ -31,6 +31,12 @@ export const getLetter = (firestore, id) => {
 			});
 			if (err.message === '404') {
 				window.location.href = '/404';
+			} else if (err.message === 'resource-exhausted') {
+				dispatch({
+					type: 'TOGGLE_MODAL',
+					boolean: true,
+					modalType: 'limit'
+				})
 			} else {
 				throw err;
 			}

@@ -137,7 +137,15 @@ export const deleteAccount = (firestore, currentPassword) => {
 							toast.error('Something went wrong!');
 						});
 					}).catch(err => {
-						console.log(err);
+						if (err.message === 'resource-exhausted') {
+							dispatch({
+								type: 'TOGGLE_MODAL',
+								boolean: true,
+								modalType: 'limit'
+							})
+						} else {
+							throw err;
+						}
 						dispatch({
 							type: 'MAIN_LOADER_HIDE'
 						});
@@ -148,7 +156,6 @@ export const deleteAccount = (firestore, currentPassword) => {
 						toast.error('Something went wrong!');
 					});
 				}).catch(err => {
-					console.log(err);
 					if (err.code === 'auth/wrong-password') {
 						dispatch({
 							type: 'MAIN_LOADER_HIDE'
@@ -158,6 +165,8 @@ export const deleteAccount = (firestore, currentPassword) => {
 							data: false
 						});
 						alert('Wrong password!');
+					} else {
+						throw err;
 					}
 				});
 			}

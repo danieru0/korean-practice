@@ -15,7 +15,13 @@ export const getExplanation = (firestore, category) => {
         } catch (err) {
             if (err.message === '404') {
                 window.location.href = '/404';
-            } else {
+            } else if (err.message === 'resource-exhausted') {
+				dispatch({
+					type: 'TOGGLE_MODAL',
+					boolean: true,
+					modalType: 'limit'
+				})
+			} else {
                 throw err;
             }
         }
@@ -49,7 +55,15 @@ export const getRandomConjugatedWord = (firestore, category) => {
             });
 
         } catch (err) {
-            throw err;
+            if (err.message === 'resource-exhausted') {
+				dispatch({
+					type: 'TOGGLE_MODAL',
+					boolean: true,
+					modalType: 'limit'
+				})
+			} else {
+                throw err;
+            }
         }
     }
 }

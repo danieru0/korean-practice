@@ -11,7 +11,15 @@ export const getNounsCategories = (firestore) => {
 				data: doc.data()
 			});
 		} catch (err) {
-			throw err;
+            if (err.message === 'resource-exhausted') {
+				dispatch({
+					type: 'TOGGLE_MODAL',
+					boolean: true,
+					modalType: 'limit'
+				})
+			} else {
+                throw err;
+            }
 		}
 	}
 }
@@ -39,9 +47,15 @@ export const getWords = (firestore, type, startAt, category) => {
 		} catch (err) {
 			if (err.message === '404') {
 				window.location.href = '/404';
+			} else if (err.message === 'resource-exhausted') {
+				dispatch({
+					type: 'TOGGLE_MODAL',
+					boolean: true,
+					modalType: 'limit'
+				})
 			} else {
-				throw err;
-			}
+                throw err;
+            }
 		}
 	}
 }
@@ -91,7 +105,15 @@ export const saveWord = (firestore, category, item) => {
 						type: 'SAVING_WORD_STATE',
 						data: false
 					});
-					throw err;
+					if (err.message === 'resource-exhausted') {
+						dispatch({
+							type: 'TOGGLE_MODAL',
+							boolean: true,
+							modalType: 'limit'
+						})
+					} else {
+						throw err;
+					}
 				});
 			}
 		})
@@ -115,7 +137,15 @@ export const getSavedWords = (firestore, type, startAt) => {
 						data: words
 					});
 				}).catch(err => {
-					throw err;
+					if (err.message === 'resource-exhausted') {
+						dispatch({
+							type: 'TOGGLE_MODAL',
+							boolean: true,
+							modalType: 'limit'
+						})
+					} else {
+						throw err;
+					}
 				});
 			}
 		})
@@ -150,14 +180,30 @@ export const removeSavedWord = (firestore, type, id) => {
 							type: 'DELETING_WORD_STATE',
 							data: false
 						});
-						throw err;
+						if (err.message === 'resource-exhausted') {
+							dispatch({
+								type: 'TOGGLE_MODAL',
+								boolean: true,
+								modalType: 'limit'
+							})
+						} else {
+							throw err;
+						}
 					})
 				}).catch(err => {
 					dispatch({
 						type: 'DELETING_WORD_STATE',
 						data: false
 					});
-					throw err;
+					if (err.message === 'resource-exhausted') {
+						dispatch({
+							type: 'TOGGLE_MODAL',
+							boolean: true,
+							modalType: 'limit'
+						})
+					} else {
+						throw err;
+					}
 				});
 			}
 		})

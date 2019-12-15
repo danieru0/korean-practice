@@ -61,7 +61,15 @@ export const getLetter = (firestore) => {
                 data: false
             });
         } catch (err) {
-            throw err;
+            if (err.message === 'resource-exhausted') {
+				dispatch({
+					type: 'TOGGLE_MODAL',
+					boolean: true,
+					modalType: 'limit'
+				})
+			} else {
+                throw err;
+            }
         }
     }
 }
@@ -84,7 +92,15 @@ export const getVerb = (firestore, numberOfWords) => {
                 data: false
             });
         } catch (err) {
-            throw err;
+            if (err.message === 'resource-exhausted') {
+				dispatch({
+					type: 'TOGGLE_MODAL',
+					boolean: true,
+					modalType: 'limit'
+				})
+			} else {
+                throw err;
+            }
         }
     }
 }
@@ -107,7 +123,15 @@ export const getAdjective = (firestore, numberOfWords) => {
                 data: false
             });
         } catch (err) {
-            throw err;
+            if (err.message === 'resource-exhausted') {
+				dispatch({
+					type: 'TOGGLE_MODAL',
+					boolean: true,
+					modalType: 'limit'
+				})
+			} else {
+                throw err;
+            }
         }
     }
 }
@@ -138,6 +162,16 @@ export const getSaved = (firestore, type) => {
                             window.location.href = '/404';
                         }
                     })
+                }).catch(err => {
+                    if (err.message === 'resource-exhausted') {
+                        dispatch({
+                            type: 'TOGGLE_MODAL',
+                            boolean: true,
+                            modalType: 'limit'
+                        })
+                    } else {
+                        throw err;
+                    }
                 })
             } else {
                 window.location.href = '/';

@@ -20,6 +20,7 @@ import Home from './components/Home/Home';
 import Settings from './components/Settings/Settings';
 import Saved from './components/Saved/Saved';
 import NotFound from './components/NotFound/NotFound';
+import Modal from './containers/Modal/ModalContainer';
 
 import Alphabet from './components/Alphabet/Alphabet';
 import Blocks from './components/Alphabet/Blocks/Blocks';
@@ -39,7 +40,7 @@ import TestTypeTwo from './components/TestTypeTwo/TestTypeTwo';
 
 import AdminContainer from './containers/Admin/AdminContainer';
 
-function App({auth}) {
+function App({auth, modalActive}) {
 	if (!isLoaded(auth)) {
 		return <BrowserRouter><MainLoader show /></BrowserRouter>
 	}
@@ -50,6 +51,7 @@ function App({auth}) {
 				<ToastContainer position="bottom-left" autoClose={5000} closeOnClick/>
 				<MainLoader/>
 				<Nav />
+				{modalActive && <Modal />}
 				<Switch>
 					<Route exact path="/" component={Hello}/>
 					<Route path="/register" component={withoutAuth(Register)}/>
@@ -83,7 +85,8 @@ function App({auth}) {
 
 const mapStateToProps = state => {
 	return {
-		auth: state.firebase.auth
+		auth: state.firebase.auth,
+		modalActive: state.modalReducer.modalActive
 	}
 }
 

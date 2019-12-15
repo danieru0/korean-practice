@@ -56,7 +56,15 @@ export const getTense = (category, firestore, numberOfWords) => {
                 data: false
             });
         } catch (err) {
-            throw err;
+            if (err.message === 'resource-exhausted') {
+				dispatch({
+					type: 'TOGGLE_MODAL',
+					boolean: true,
+					modalType: 'limit'
+				})
+			} else {
+                throw err;
+            }
         }
     }
 }

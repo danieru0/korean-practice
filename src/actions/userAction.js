@@ -21,7 +21,15 @@ export const giveExpAndAnswers = (firestore, expAmount) => {
                     });
                     toast.success(`Good job! <3 You got: ${expAmount}exp`);
                 }).catch(err => {
-                    throw err;
+                    if (err.message === 'resource-exhausted') {
+                        dispatch({
+                            type: 'TOGGLE_MODAL',
+                            boolean: true,
+                            modalType: 'limit'
+                        })
+                    } else {
+                        throw err;
+                    }
                 })
             } else {
                 dispatch({
