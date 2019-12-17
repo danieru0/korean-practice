@@ -1,4 +1,5 @@
 import getRandomNumber from '../utils/getRandomNumber';
+import { handleErrors } from './errorsAction';
 
 export const getExplanation = (firestore, category) => {
     return async dispatch => {
@@ -13,17 +14,7 @@ export const getExplanation = (firestore, category) => {
                 data: doc.data()
             });
         } catch (err) {
-            if (err.message === '404') {
-                window.location.href = '/404';
-            } else if (err.message === 'resource-exhausted') {
-				dispatch({
-					type: 'TOGGLE_MODAL',
-					boolean: true,
-					modalType: 'limit'
-				})
-			} else {
-                throw err;
-            }
+            dispatch(handleErrors(err, 'conjugation-explanation'));
         }
     }
 }
@@ -55,15 +46,11 @@ export const getRandomConjugatedWord = (firestore, category) => {
             });
 
         } catch (err) {
-            if (err.message === 'resource-exhausted') {
-				dispatch({
-					type: 'TOGGLE_MODAL',
-					boolean: true,
-					modalType: 'limit'
-				})
-			} else {
-                throw err;
-            }
+            dispatch({
+                type: 'UPDATE_LOADING_WORD',
+                data: true
+            });
+            dispatch(handleErrors(err));
         }
     }
 }

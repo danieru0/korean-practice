@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import { handleErrors } from './errorsAction';
 
 export const giveExpAndAnswers = (firestore, expAmount) => {
     return (dispatch, getState, { getFirebase }) => {
@@ -21,15 +22,7 @@ export const giveExpAndAnswers = (firestore, expAmount) => {
                     });
                     toast.success(`Good job! <3 You got: ${expAmount}exp`);
                 }).catch(err => {
-                    if (err.message === 'resource-exhausted') {
-                        dispatch({
-                            type: 'TOGGLE_MODAL',
-                            boolean: true,
-                            modalType: 'limit'
-                        })
-                    } else {
-                        throw err;
-                    }
+                    dispatch(handleErrors(err));
                 })
             } else {
                 dispatch({

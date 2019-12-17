@@ -1,3 +1,5 @@
+import { handleErrors } from "./errorsAction";
+
 export const getLetter = (firestore, id) => {
 	return async (dispatch, getState, { getFirebase }) => {
 		try {
@@ -12,7 +14,7 @@ export const getLetter = (firestore, id) => {
 
 			const doc = await firestore.collection('letters').doc(id).get();
 			if (!doc.exists) {
-				throw new Error('404');
+				throw new Error('404')
 			}
 
 			dispatch({
@@ -29,17 +31,7 @@ export const getLetter = (firestore, id) => {
 				type: 'LOADING_LETTER',
 				data: false
 			});
-			if (err.message === '404') {
-				window.location.href = '/404';
-			} else if (err.message === 'resource-exhausted') {
-				dispatch({
-					type: 'TOGGLE_MODAL',
-					boolean: true,
-					modalType: 'limit'
-				})
-			} else {
-				throw err;
-			}
+			dispatch(handleErrors(err));
 		}
 	}
 }

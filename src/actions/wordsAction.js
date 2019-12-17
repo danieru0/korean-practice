@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import { handleErrors } from './errorsAction';
 
 export const getNounsCategories = (firestore) => {
 	return async dispatch => {
@@ -11,15 +12,7 @@ export const getNounsCategories = (firestore) => {
 				data: doc.data()
 			});
 		} catch (err) {
-            if (err.message === 'resource-exhausted') {
-				dispatch({
-					type: 'TOGGLE_MODAL',
-					boolean: true,
-					modalType: 'limit'
-				})
-			} else {
-                throw err;
-            }
+			dispatch(handleErrors(err));
 		}
 	}
 }
@@ -45,17 +38,7 @@ export const getWords = (firestore, type, startAt, category) => {
 				data: words
 			});
 		} catch (err) {
-			if (err.message === '404') {
-				window.location.href = '/404';
-			} else if (err.message === 'resource-exhausted') {
-				dispatch({
-					type: 'TOGGLE_MODAL',
-					boolean: true,
-					modalType: 'limit'
-				})
-			} else {
-                throw err;
-            }
+			dispatch(handleErrors(err))
 		}
 	}
 }
@@ -83,7 +66,7 @@ export const saveWord = (firestore, category, item) => {
 								});
 								toast.success('Word saved!');
 							}).catch(err => {
-								throw err;
+								dispatch(handleErrors(err));
 							})
 
 						}).catch(err => {
@@ -91,7 +74,7 @@ export const saveWord = (firestore, category, item) => {
 								type: 'SAVING_WORD_STATE',
 								data: false
 							});
-							throw err;
+							dispatch(handleErrors(err));
 						});
 					} else {
 						toast.error('Word already saved!');
@@ -105,15 +88,7 @@ export const saveWord = (firestore, category, item) => {
 						type: 'SAVING_WORD_STATE',
 						data: false
 					});
-					if (err.message === 'resource-exhausted') {
-						dispatch({
-							type: 'TOGGLE_MODAL',
-							boolean: true,
-							modalType: 'limit'
-						})
-					} else {
-						throw err;
-					}
+					dispatch(handleErrors(err));
 				});
 			}
 		})
@@ -137,15 +112,7 @@ export const getSavedWords = (firestore, type, startAt) => {
 						data: words
 					});
 				}).catch(err => {
-					if (err.message === 'resource-exhausted') {
-						dispatch({
-							type: 'TOGGLE_MODAL',
-							boolean: true,
-							modalType: 'limit'
-						})
-					} else {
-						throw err;
-					}
+					dispatch(handleErrors(err));
 				});
 			}
 		})
@@ -180,30 +147,14 @@ export const removeSavedWord = (firestore, type, id) => {
 							type: 'DELETING_WORD_STATE',
 							data: false
 						});
-						if (err.message === 'resource-exhausted') {
-							dispatch({
-								type: 'TOGGLE_MODAL',
-								boolean: true,
-								modalType: 'limit'
-							})
-						} else {
-							throw err;
-						}
+						dispatch(handleErrors(err));
 					})
 				}).catch(err => {
 					dispatch({
 						type: 'DELETING_WORD_STATE',
 						data: false
 					});
-					if (err.message === 'resource-exhausted') {
-						dispatch({
-							type: 'TOGGLE_MODAL',
-							boolean: true,
-							modalType: 'limit'
-						})
-					} else {
-						throw err;
-					}
+					dispatch(handleErrors(err));
 				});
 			}
 		})

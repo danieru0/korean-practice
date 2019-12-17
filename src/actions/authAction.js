@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import { handleErrors } from './errorsAction';
 
 export const clearAuthState = () => {
 	return dispatch => {
@@ -145,71 +146,13 @@ export const signUp = (firestore, nick, email, password1, password2) => {
 						type: 'AUTH_ERROR_CLEAR'
 					});
 				}).catch(err => {
-					toast.error("Something went wrong!");
-					dispatch({
-						type: 'MAIN_LOADER_HIDE'
-					});
-					dispatch({
-						type: 'AUTH_STOP'
-					});
-					console.log('when making user: ' + err);
+					dispatch(handleErrors(err, 'auth-userCreate'));
 				});
 			}).catch(err => {
-				if (err.code === 'auth/invalid-email') {
-					dispatch({
-						type: 'AUTH_SET_ERROR_MESSAGE',
-						what: 'email',
-						message: err.message
-					});
-					dispatch({
-						type: 'MAIN_LOADER_HIDE'
-					});
-					dispatch({
-						type: 'AUTH_STOP'
-					});
-				} else if (err.code === 'auth/weak-password') {
-					dispatch({
-						type: 'AUTH_SET_ERROR_MESSAGE',
-						what: 'password',
-						message: err.message
-					});
-					dispatch({
-						type: 'MAIN_LOADER_HIDE'
-					});
-					dispatch({
-						type: 'AUTH_STOP'
-					});
-				} else if (err.code === 'auth/email-already-in-use') {
-					dispatch({
-						type: 'AUTH_SET_ERROR_MESSAGE',
-						what: 'email',
-						message: err.message
-					});
-					dispatch({
-						type: 'MAIN_LOADER_HIDE'
-					});
-					dispatch({
-						type: 'AUTH_STOP'
-					});
-				} else {
-					toast.error("Something went wrong!");
-					dispatch({
-						type: 'MAIN_LOADER_HIDE'
-					});
-					dispatch({
-						type: 'AUTH_STOP'
-					});
-					console.log('when registering: ' + err);
-				}
+				dispatch(handleErrors(err, 'auth-register'));
 			});
 		} catch (err) {
-			if (err.message === 'resource-exhausted') {
-				dispatch({
-					type: 'TOGGLE_MODAL',
-					boolean: true,
-					modalType: 'limit'
-				})
-			}
+			dispatch(handleErrors(err));
 		}
 	}
 }
@@ -243,62 +186,7 @@ export const logIn = (email, password) => {
 				type: 'AUTH_ERROR_CLEAR'
 			});
 		}).catch(err => {
-			if (err.code === 'auth/invalid-email') {
-				dispatch({
-					type: 'AUTH_SET_ERROR_MESSAGE',
-					what: 'email',
-					message: err.message
-				});
-				dispatch({
-					type: 'MAIN_LOADER_HIDE'
-				});
-				dispatch({
-					type: 'AUTH_STOP'
-				});
-			} else if (err.code === 'auth/user-not-found') {
-				dispatch({
-					type: 'AUTH_SET_ERROR_MESSAGE',
-					what: 'email',
-					message: 'Incorrect email or password.'
-				});
-				dispatch({
-					type: 'AUTH_SET_ERROR_MESSAGE',
-					what: 'password',
-					message: 'Incorrect email or password.'
-				});
-				dispatch({
-					type: 'MAIN_LOADER_HIDE'
-				});
-				dispatch({
-					type: 'AUTH_STOP'
-				});
-			} else if (err.code === 'auth/wrong-password') {
-				dispatch({
-					type: 'AUTH_SET_ERROR_MESSAGE',
-					what: 'email',
-					message: 'Incorrect email or password.'
-				});
-				dispatch({
-					type: 'AUTH_SET_ERROR_MESSAGE',
-					what: 'password',
-					message: 'Incorrect email or password.'
-				});
-				dispatch({
-					type: 'MAIN_LOADER_HIDE'
-				});
-				dispatch({
-					type: 'AUTH_STOP'
-				});
-			} else {
-				toast.error("Something went wrong!");
-				dispatch({
-					type: 'MAIN_LOADER_HIDE'
-				});
-				dispatch({
-					type: 'AUTH_STOP'
-				});
-				console.log('when logging in: ' + err);
-			}
+			dispatch(handleErrors(err, 'auth-login'));
 		});
 	}
 }

@@ -69,7 +69,7 @@ const Line = styled.hr`
 
 const Text = styled.p``
 
-const WordContainer = ({type, location, firestore, getWords, clearWords, saveWord, wordSaving, words}) => {
+const WordContainer = ({type, location, firestore, getWords, clearWords, saveWord, wordSaving, words, auth}) => {
 	useEffect(() => {
 		switch(type) {
 			case 'nouns':
@@ -101,7 +101,7 @@ const WordContainer = ({type, location, firestore, getWords, clearWords, saveWor
 					words[0].map((item, key) => {
 						return (
 							<StyledPracticeBtn key={key} notClickable small={true} bordercolor="#9c27b0">
-								<SaveButton onClick={() => handleWordSave(item)}>Save</SaveButton>
+								{auth.uid && <SaveButton onClick={() => handleWordSave(item)}>Save</SaveButton>}
 								<Text>{item.korean}</Text>
 								<Line />
 								<Text>{item.english}</Text>
@@ -119,7 +119,8 @@ const WordContainer = ({type, location, firestore, getWords, clearWords, saveWor
 const mapStateToProps = state => {
 	return {
 		words: state.wordsReducer.words,
-		wordSaving: state.wordsReducer.wordSaving
+		wordSaving: state.wordsReducer.wordSaving,
+		auth: state.firebase.auth
 	}
 }
 

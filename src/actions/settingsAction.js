@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import { handleErrors } from './errorsAction';
 
 export const updateAvatar = (firestore, file) => {
 	return async (dispatch, getState, { getFirebase }) => {
@@ -30,15 +31,7 @@ export const updateAvatar = (firestore, file) => {
 						});
 					});
 				}).catch(err => {
-					console.log('while uploading: ' + err);
-					dispatch({
-						type: 'MAIN_LOADER_HIDE'
-					});
-					dispatch({
-						type: 'UPDATE_SETTINGS_STATE',
-						data: false
-					});
-					toast.error('Something went wrong!');
+					dispatch(handleErrors(err));
 				});
 			}
 		})
@@ -137,18 +130,7 @@ export const deleteAccount = (firestore, currentPassword) => {
 							toast.error('Something went wrong!');
 						});
 					}).catch(err => {
-						if (err.message === 'resource-exhausted') {
-							dispatch({
-								type: 'TOGGLE_MODAL',
-								boolean: true,
-								modalType: 'limit'
-							})
-						} else {
-							throw err;
-						}
-						dispatch({
-							type: 'MAIN_LOADER_HIDE'
-						});
+						dispatch(handleErrors(err));
 						dispatch({
 							type: 'UPDATE_SETTINGS_STATE',
 							data: false

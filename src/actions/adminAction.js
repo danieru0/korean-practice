@@ -21,8 +21,13 @@ export const checkAdminStatus = (firestore, clear) => {
                         data: doc.data().isAdmin
                     });
                 }).catch(err => {
-                    
+                    throw err;
                 })
+            } else {
+                dispatch({
+                    type: 'UPDATE_USER_ADMIN_STATUS',
+                    data: false
+                });
             }
         })
     }

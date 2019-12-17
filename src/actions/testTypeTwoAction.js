@@ -1,4 +1,5 @@
 import getRandomNumber from '../utils/getRandomNumber';
+import { handleErrors } from './errorsAction';
 
 export const clearTest = () => {
     return dispatch => {
@@ -56,15 +57,7 @@ export const getTense = (category, firestore, numberOfWords) => {
                 data: false
             });
         } catch (err) {
-            if (err.message === 'resource-exhausted') {
-				dispatch({
-					type: 'TOGGLE_MODAL',
-					boolean: true,
-					modalType: 'limit'
-				})
-			} else {
-                throw err;
-            }
+            dispatch(handleErrors(err));
         }
     }
 }
