@@ -44,8 +44,14 @@ export const getWords = (firestore, type, startAt, category) => {
 }
 
 export const saveWord = (firestore, category, item) => {
-	return (dispatch, getState, { getFirebase }) => {
+	return async (dispatch, getState, { getFirebase }) => {
 		const firebase = getFirebase();
+
+		const functions = await firestore.collection('settings').doc('functions').get();
+		if (functions.data().save === false) {
+			dispatch(handleErrors({message: 'Save blocked'}));
+			return;
+		}
 
 		firebase.auth().onAuthStateChanged(user => {
 			if (user) {

@@ -27,6 +27,12 @@ export const signUp = (firestore, nick, email, password1, password2) => {
 		});
 
 		try {
+			const functions = await firestore.collection('settings').doc('functions').get();
+
+			if (functions.data().register === false) {
+				throw new Error('Register disabled')
+			}
+
 			if (!nick) {
 				dispatch({
 					type: 'AUTH_SET_ERROR_MESSAGE',

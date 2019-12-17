@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { toggleModal } from '../../actions/modalAction';
 
 import Limit from '../../components/Modals/Limit';
+import Blocked from '../../components/Modals/Blocked';
 
 const Container = styled.div`
     width: 100%;
@@ -47,6 +48,9 @@ const ModalContainer = ({modalActive, modalType, toggleModal}) => {
     switch(modalType) {
         case 'limit':
             modal = <Limit onClick={hideModal}/>
+            break;
+        case 'blocked':
+            modal = <Blocked onClick={hideModal}/>
             break;
         default: return modalActive ? new Error('Wrong modal type!') : null;
     }

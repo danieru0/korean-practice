@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 
 export const handleErrors = (err, component) => {
     return dispatch => {
-        console.log(err);
+        console.log(err.message);
         if (err.code) {
             switch(err.code) {
                 case 'auth/invalid-email':
@@ -139,6 +139,31 @@ export const handleErrors = (err, component) => {
             switch(err.message) {
                 case '404':
                     window.location.href = '/404';
+                    break;
+                case 'Register disabled':
+                    dispatch({
+                        type: 'AUTH_STOP'
+                    });
+                    dispatch({
+                        type: 'MAIN_LOADER_HIDE'
+                    })
+                    dispatch({
+                        type: 'TOGGLE_MODAL',
+                        boolean: true,
+                        modalType: 'blocked'
+                    });
+                    break;
+                case 'Save blocked':
+                    console.log('xd');
+                    dispatch({
+                        type: 'SAVING_WORD_STATE',
+                        data: false
+                    });
+                    dispatch({
+                        type: 'TOGGLE_MODAL',
+                        boolean: true,
+                        modalType: 'blocked'
+                    });
                     break;
                 default: 
                     dispatch({
