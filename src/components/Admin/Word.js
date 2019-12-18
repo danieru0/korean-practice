@@ -93,7 +93,11 @@ const Word = ({addNewWord, firestore}) => {
             if (word.type || word.stem) {
                 addNewWord(firestore, word, type, forCounter)
             } else {
-                alert('Missing category or stem');
+                if (type === 'adverbs') {
+                    addNewWord(firestore, word, type, forCounter)
+                } else {
+                    alert('Missing category or stem');
+                }
             }
         } else {
             alert('Missing english or korean');
@@ -113,12 +117,15 @@ const Word = ({addNewWord, firestore}) => {
                     <Option value="nouns-nouns">Nouns</Option>
                     <Option value="adjectives-adjective">Adjective</Option>
                     <Option value="verbs-verb">Verb</Option>
+                    <Option value="adverbs-adverbs">Adverb</Option>
                 </Select>
                 {
                     type === 'nouns' ? (
                         <Input onChange={handleInputChange} name="type" value={word.type} placeholder="Category"/>
                     ) : (
-                        <Input onChange={handleInputChange} name="stem" value={word.stem} placeholder="Stem"/>
+                        type !== 'adverbs' && (
+                            <Input onChange={handleInputChange} name="stem" value={word.stem} placeholder="Stem"/>
+                        )
                     )
                 }
                 <SaveBtn onClick={handleSaveBtn}>Save</SaveBtn>

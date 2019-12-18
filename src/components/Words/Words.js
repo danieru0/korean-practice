@@ -32,6 +32,7 @@ const Words = () => {
 			<StyledPracticeBtn bordercolor="#00bcd4" to="/words/nouns/categories">Nouns</StyledPracticeBtn>
 			<StyledPracticeBtn bordercolor="#00bcd4" to="/words/verbs">Verbs</StyledPracticeBtn>
 			<StyledPracticeBtn bordercolor="#00bcd4" to="/words/adjectives">Adjectives</StyledPracticeBtn>
+			<StyledPracticeBtn bordercolor="#00bcd4" to="/words/adverbs">Adverbs</StyledPracticeBtn>
 			<StyledPracticeBtn bordercolor="#f44336" to="/testone/verb">Test verbs</StyledPracticeBtn>
 			<StyledPracticeBtn bordercolor="#f44336" to="/testone/adjective">Test adjectives</StyledPracticeBtn>
 		</Container>

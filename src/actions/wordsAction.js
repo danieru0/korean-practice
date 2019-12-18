@@ -90,6 +90,7 @@ export const saveWord = (firestore, category, item) => {
 						});
 					}
 				}).catch(err => {
+					console.log(err);
 					dispatch({
 						type: 'SAVING_WORD_STATE',
 						data: false

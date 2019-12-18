@@ -82,6 +82,9 @@ const WordContainer = ({type, location, firestore, getWords, clearWords, saveWor
 			case 'verbs':
 				getWords(firestore, 'verbs', '01');
 				break;
+			case 'adverbs':
+				getWords(firestore, 'adverbs', '01');
+				break;
 			default: return false;
 		}
 		return (() => {

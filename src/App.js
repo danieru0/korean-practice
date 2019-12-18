@@ -66,6 +66,7 @@ function App({auth, modalActive}) {
 					<Route path="/alphabet" component={Alphabet}/>
 					<Route path="/words/adjectives" render={props => <WordsContainer type="adjectives" {...props}/>}/>
 					<Route path="/words/verbs" render={props => <WordsContainer type="verbs" {...props}/>}/>
+					<Route path="/words/adverbs" render={props => <WordsContainer type="adverbs" {...props}/>}/>
 					<Route path="/words/nouns/categories" component={Categories}/>
 					<Route path="/words/nouns/:category" render={props => <WordsContainer type="nouns" {...props}/>}/>
 					<Route path="/words" component={Words}/>
