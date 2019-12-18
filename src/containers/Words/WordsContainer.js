@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
@@ -70,34 +70,61 @@ const Line = styled.hr`
 
 const Text = styled.p``
 
-const WordContainer = ({type, location, firestore, getWords, clearWords, saveWord, wordSaving, words, auth}) => {
+const WordContainer = ({type, location, firestore, getWords, clearWords, saveWord, wordSaving, words, auth, lastWord}) => {
+	const [scrollDown, setScrollDown] = useState(null);
 	useEffect(() => {
+		if (scrollDown === false) return;
 		switch(type) {
 			case 'nouns':
-				getWords(firestore, 'nouns', '01', location.pathname.split('/')[3]);
+				getWords(firestore, 'nouns', lastWord, location.pathname.split('/')[3]);
 				break;
 			case 'adjectives':
-				getWords(firestore, 'adjectives', '01');
+				getWords(firestore, 'adjectives', lastWord);
 				break;
 			case 'verbs':
-				getWords(firestore, 'verbs', '01');
+				getWords(firestore, 'verbs', lastWord);
 				break;
 			case 'adverbs':
-				getWords(firestore, 'adverbs', '01');
+				getWords(firestore, 'adverbs', lastWord);
 				break;
 			default: return false;
 		}
+		// eslint-disable-next-line
+	}, [type, location, firestore, getWords, scrollDown])
+
+	useEffect(() => {
+		document.addEventListener('scroll', handleScroll);
+
 		return (() => {
-			clearWords();
+			document.removeEventListener('scroll', handleScroll);
 		})
-	}, [type, location, firestore, getWords, clearWords])
+	}, []);
+
+	useEffect(() => {
+		setScrollDown(false);
+	}, [words])
+
+	useEffect(() => {
+		return () => {
+			console.log('y');
+			clearWords();
+		}
+	}, [clearWords])
+
+	const containerRef = useRef(null);
 
 	const handleWordSave = item => {
 		saveWord(firestore, type, item);
 	}
 
+	const handleScroll = (e) => {
+		if (containerRef.current.getBoundingClientRect().bottom <= window.innerHeight) {
+			setScrollDown(true);
+		}
+	}
+
 	return (
-		<Container>
+		<Container ref={containerRef}>
 			<Helmet>
 				<title>{`${type === 'nouns' ? `Nouns / ${location.pathname.split('/')[3]}` : type.charAt(0).toUpperCase() + type.slice(1)} - Korean practice`}</title>
 			</Helmet>
@@ -105,7 +132,7 @@ const WordContainer = ({type, location, firestore, getWords, clearWords, saveWor
 			<MainLoader show={wordSaving} />
 			{
 				words.length !== 0 ? (
-					words[0].map((item, key) => {
+					words.map((item, key) => {
 						return (
 							<StyledPracticeBtn key={key} notClickable small={true} bordercolor="#9c27b0">
 								{auth.uid && <SaveButton onClick={() => handleWordSave(item)}>Save</SaveButton>}
@@ -127,6 +154,7 @@ const mapStateToProps = state => {
 	return {
 		words: state.wordsReducer.words,
 		wordSaving: state.wordsReducer.wordSaving,
+		lastWord: state.wordsReducer.lastWord,
 		auth: state.firebase.auth
 	}
 }

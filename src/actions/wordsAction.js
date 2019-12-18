@@ -17,26 +17,52 @@ export const getNounsCategories = (firestore) => {
 	}
 }
 
-export const getWords = (firestore, type, startAt, category) => {
+export const getWords = (firestore, type, lastWord, category) => {
 	return async dispatch => {
 		try {
-			const doc = type === 'nouns' ? (
-					await firestore.collection(type).where("type", "==", category).orderBy('__name__').startAt(startAt).get()
+			if (lastWord === '01') {
+				console.log('01');
+				const doc = type === 'nouns' ? (
+					await firestore.collection(type).where("type", "==", category).orderBy('__name__').startAt(lastWord).limit(24).get()
 				) : (
-					await firestore.collection(type).orderBy('__name__').startAt(startAt).get()
+					await firestore.collection(type).orderBy('__name__').startAt(lastWord).limit(24).get()
 				);
 
-			let words = [];
-			doc.forEach(snapshot => {
-				words.push(snapshot.data());
-			});
+				let words = [];
+				doc.forEach(snapshot => {
+					words.push(snapshot.data());
+				});
+				if (words.length === 0) throw new Error('404');
 
-			if (words.length === 0) throw new Error('404');
+				dispatch({
+					type: `UPDATE_WORDS`,
+					data: words
+				});
+				dispatch({
+					type: `UPDATE_LAST_WORD`,
+					data: doc.docs[doc.docs.length-1]
+				});
+			} else if (lastWord !== undefined) {
+				const doc = type === 'nouns' ? (
+					await firestore.collection(type).where("type", "==", category).orderBy('__name__').startAfter(lastWord).limit(24).get()
+				) : (
+					await firestore.collection(type).orderBy('__name__').startAfter(lastWord).limit(24).get()
+				);
 
-			dispatch({
-				type: `UPDATE_WORDS`,
-				data: words
-			});
+				let words = [];
+				doc.forEach(snapshot => {
+					words.push(snapshot.data());
+				});
+
+				dispatch({
+					type: `UPDATE_WORDS`,
+					data: words
+				});
+				dispatch({
+					type: `UPDATE_LAST_WORD`,
+					data: doc.docs[doc.docs.length-1]
+				});
+			}
 		} catch (err) {
 			dispatch(handleErrors(err))
 		}
@@ -173,5 +199,8 @@ export const clearWords = () => {
 		dispatch({
 			type: 'CLEAR_WORDS'
 		});
+		dispatch({
+			type: 'CLEAR_LAST_WORD'
+		})
 	}
 }

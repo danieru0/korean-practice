@@ -179,6 +179,7 @@ class TestTypeOne extends PureComponent {
                 this.setState({
                     nextInit: false
                 })
+                this.answerInputRef.current.focus();
             }
 
         }
@@ -267,8 +268,6 @@ class TestTypeOne extends PureComponent {
                 }
         
                 this.props.clearUserExpAnswerStatus();
-        
-                this.answerInputRef.current.focus();
             })
         }
 

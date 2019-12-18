@@ -3,7 +3,8 @@ const initState = {
 	words: [],
 	saved: [],
 	wordSaving: false,
-	wordDeleting: false
+	wordDeleting: false,
+	lastWord: '01'
 }
 
 const wordsReducer = (state = initState, action) => {
@@ -16,12 +17,22 @@ const wordsReducer = (state = initState, action) => {
 		case 'UPDATE_WORDS':
 			return {
 				...state,
-				words: [...state.words, action.data]
+				words: [...state.words, ...action.data]
 			}
 		case 'UPDATE_SAVED_WORDS':
 			return {
 				...state,
 				saved: [...state.saved, action.data]
+			}
+		case 'UPDATE_LAST_WORD':
+			return {
+				...state,
+				lastWord: action.data
+			}
+		case 'CLEAR_LAST_WORD':
+			return {
+				...state,
+				lastWord: '01'
 			}
 		case 'CLEAR_WORDS':
 			return {
