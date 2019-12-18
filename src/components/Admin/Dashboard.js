@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import Helmet from 'react-helmet';
 
 const Container = styled.div`
 	width: calc(100% - 200px);
@@ -72,6 +73,9 @@ const Wrapper = styled.div`
 const Dashboard = () => {
     return (
         <Container>
+            <Helmet>
+                <title>Dashboard Admin - Korean practice</title>
+            </Helmet>
             <AdminTitle>Welcome!</AdminTitle>
             <AdminName>Daniel Dąbrowski</AdminName>
             <Wrapper>

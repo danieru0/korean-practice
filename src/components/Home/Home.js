@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 
 import NormalBtn from '../../shared/NormalBtn/NormalBtn';
 import PageLoader from '../../shared/PageLoader/PageLoader';
@@ -96,6 +97,9 @@ const Home = ({profile}) => {
 
 	return (
 		<Container>
+			<Helmet>
+				<title>Home - Korean practice</title>
+			</Helmet>
 			<Wrapper>
 				<User>
 					<Avatar alt="" src={profile.avatar}/>

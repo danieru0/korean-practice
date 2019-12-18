@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { withFirestore } from 'react-redux-firebase';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 
 import { getAppSettings, updateAppSettings } from '../../actions/adminAction';
 
@@ -100,6 +101,9 @@ class Settings extends Component {
     render() {
         return (
             <Container>
+                <Helmet>
+                    <title>Settings Admin - Korean practice</title>
+                </Helmet>
                 <PageTitle>Settings</PageTitle>
                 <Wrapper>
                     {

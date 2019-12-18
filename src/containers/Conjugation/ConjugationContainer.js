@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
+import Helmet from 'react-helmet';
 
 import { getExplanation, getRandomConjugatedWord, clearConjugation } from '../../actions/conjugationAction';
 
@@ -146,6 +147,9 @@ const ConjugationContainer = ({location, firestore, getExplanation, getRandomCon
 
     return (
         <Container>
+            <Helmet>
+                <title>{`${explanation ? explanation.info.title : 'Loading'} - Korean practice`}</title>
+            </Helmet>
             <MainLoader show={loadingNewWorld}/>
             <PageTitle>{`${explanation ? explanation.info.title : location.pathname.split('/')[2].split('-').join(' ')}`}</PageTitle>
             {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 
 import { logIn, clearAuthState } from '../../../actions/authAction';
 
@@ -66,6 +67,9 @@ const Login = ({logIn, clearAuthState, authError, authStart, authSuccess}) => {
 
 	return (
 		<Container>
+			<Helmet>
+				<title>Login - Korean practice</title>
+			</Helmet>
 			<PageTitle>Log in</PageTitle>
 			<StyledInput onChange={(value) => setEmailInput(value)} label="Email:" placeholder="Email..."/>
 			<ErrorMessage>{authError.email}</ErrorMessage>

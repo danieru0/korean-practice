@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
+import Helmet from 'react-helmet';
 
 import { getNounsCategories } from '../../../actions/wordsAction';
 
@@ -39,6 +40,9 @@ const Categories = ({firestore, getNounsCategories, nounsCategories}) => {
 
 	return (
 		<Container>
+			<Helmet>
+				<title>Nouns - Korean practice</title>
+			</Helmet>
 			<PageTitle>Nouns / Categories</PageTitle>
 			{
 				nounsCategories ? (

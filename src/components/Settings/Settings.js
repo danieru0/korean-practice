@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
+import Helmet from 'react-helmet';
 
 import { updateAvatar, changePassword, deleteAccount } from '../../actions/settingsAction';
 
@@ -144,6 +145,9 @@ const Settings = ({profile, firestore, settingsState, updateAvatar, changePasswo
 
 	return (
 		<Container>
+			<Helmet>
+				<title>Settings - Korean practice</title>
+			</Helmet>
 			<PageTitle>Settings</PageTitle>
 			<Wrapper>
 				<OptionTitle>Avatar</OptionTitle>

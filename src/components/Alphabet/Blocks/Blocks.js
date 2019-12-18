@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip'
+import Helmet from 'react-helmet';
 
 import PageTitle from '../../../shared/PageTitle/PageTitle';
 import NormalBtn from '../../../shared/NormalBtn/NormalBtn';
@@ -84,6 +85,9 @@ const Blocks = () => {
 
 	return (
 		<Container>
+			<Helmet>
+				<title>Blocks - Korean practice</title>
+			</Helmet>
 			<PageTitle>Blocks</PageTitle>
 			<Wrapper>
 				<StyledNormalBtn onClick={handleToKoreanBtn}>{koreanActive ? 'Go back' :'To korean'}</StyledNormalBtn>

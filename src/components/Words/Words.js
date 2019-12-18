@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Helmet from 'react-helmet';
 
 import PracticeBtn from '../../shared/PracticeBtn/PracticeBtn';
 
@@ -25,6 +26,9 @@ const StyledPracticeBtn = styled(PracticeBtn)`
 const Words = () => {
 	return (
 		<Container>
+			<Helmet>
+				<title>Words - Korean practice</title>
+			</Helmet>
 			<StyledPracticeBtn bordercolor="#00bcd4" to="/words/nouns/categories">Nouns</StyledPracticeBtn>
 			<StyledPracticeBtn bordercolor="#00bcd4" to="/words/verbs">Verbs</StyledPracticeBtn>
 			<StyledPracticeBtn bordercolor="#00bcd4" to="/words/adjectives">Adjectives</StyledPracticeBtn>

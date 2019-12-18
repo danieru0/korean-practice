@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { withFirestore } from 'react-redux-firebase';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 
 import { addNewWord } from '../../actions/adminAction';
 
@@ -101,6 +102,9 @@ const Word = ({addNewWord, firestore}) => {
 
     return (
         <Container>
+            <Helmet>
+                <title>Word Admin - Korean practice</title>
+            </Helmet>
             <PageTitle>Add word</PageTitle>
             <Wrapper>
                 <Input onChange={handleInputChange} name="english" value={word.english} placeholder="English"/>

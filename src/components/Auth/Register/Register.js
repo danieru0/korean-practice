@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
+import Helmet from 'react-helmet';
 
 import { signUp, clearAuthState } from '../../../actions/authAction';
 
@@ -84,6 +85,9 @@ const Register = ({firestore, authError, signUp, clearAuthState, authStart, auth
  
 	return (
 		<Container>
+			<Helmet>
+				<title>Register - Korean practice</title>
+			</Helmet>
 			<PageTitle>Sign up</PageTitle>
 			<StyledInput onChange={(value) => setNickInput(value)} label="Nick:" placeholder="Nick..."/>
 			<ErrorMessage>{authError.nick}</ErrorMessage>

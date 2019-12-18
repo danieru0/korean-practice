@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import Helmet from 'react-helmet';
 
 import PracticeBtn from '../../shared/PracticeBtn/PracticeBtn';
 import PageTitle from '../../shared/PageTitle/PageTitle';
@@ -58,6 +59,9 @@ const TestLink = styled(Link)`
 const Conjugation = () => {
     return (
         <Container>
+			<Helmet>
+				<title>Conjugation - Korean practice</title>
+			</Helmet>
             <PageTitle>Conjugation</PageTitle>
 			<Wrapper>
 				<TestLink to="/testtwo/past-tense">Test</TestLink>

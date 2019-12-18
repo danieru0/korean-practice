@@ -154,7 +154,6 @@ export const handleErrors = (err, component) => {
                     });
                     break;
                 case 'Save blocked':
-                    console.log('xd');
                     dispatch({
                         type: 'SAVING_WORD_STATE',
                         data: false

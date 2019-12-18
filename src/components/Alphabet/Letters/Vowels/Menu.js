@@ -80,7 +80,7 @@ const Menu = ({active}) => {
 				<VowelsLink active={active === '37' ? 1 : 0} to="/alphabet/letters/vowels/37">ㅠ</VowelsLink>
 			</VowelsItem>
 			<VowelsItem>
-				<VowelsLink active={active === '378' ? 1 : 0} to="/alphabet/letters/vowels/38">ㅡ</VowelsLink>
+				<VowelsLink active={active === '38' ? 1 : 0} to="/alphabet/letters/vowels/38">ㅡ</VowelsLink>
 			</VowelsItem>
 			<VowelsItem>
 				<VowelsLink active={active === '39' ? 1 : 0} to="/alphabet/letters/vowels/39">ㅢ</VowelsLink>

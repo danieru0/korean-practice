@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
 import { withRouter, Redirect } from 'react-router-dom';
+import Helmet from 'react-helmet';
 
 import { getSavedWords, clearWords, removeSavedWord } from '../../actions/wordsAction';
 
@@ -84,6 +85,9 @@ const Saved = ({firestore, location, getSavedWords, clearWords, removeSavedWord,
 
 	return (
 		<Container>
+			<Helmet>
+				<title>Saved - Korean practice</title>
+			</Helmet>
 			<MainLoader show={wordDeleting}/>
 			<PageTitle>{`Saved ${location.pathname.split('/')[2]}`}</PageTitle>
 			{

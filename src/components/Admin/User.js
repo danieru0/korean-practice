@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { withFirestore } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import Helmet from 'react-helmet';
 
 import { getSpecificUser, setUserAdmin, removeUserAvatar, clearSpecificUser } from '../../actions/adminAction';
 
@@ -113,6 +114,9 @@ const User = ({firestore, getSpecificUser, setUserAdmin, removeUserAvatar, clear
 
     return (
         <Container>
+            <Helmet>
+                <title>User Admin - Korean practice</title>
+            </Helmet>
             {
                 specificUser ? (
                     <Wrapper>

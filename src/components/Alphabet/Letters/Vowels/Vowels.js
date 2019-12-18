@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
+import Helmet from 'react-helmet';
 
 import { getLetter } from '../../../../actions/lettersAction';
 
@@ -57,6 +58,9 @@ class Vowels extends Component {
 		const {location, letter} = this.props;
 		return (
 			<Container>
+				<Helmet>
+					<title>Vowels - Korean practice</title>
+				</Helmet>
 				<PageTitle>Vowels</PageTitle>
 				<Menu active={location.pathname.split('/')[4]}/>
 				{

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
+import Helmet from 'react-helmet';
 
 import { getTest, clearTest } from '../../actions/testTypeOneAction';
 import { giveExpAndAnswers, clearUserExpAnswerStatus } from '../../actions/userAction';
@@ -278,6 +279,9 @@ class TestTypeOne extends PureComponent {
 
         return (
             <Container>
+                <Helmet>
+                    <title>Test - Korean practice</title>
+                </Helmet>
                 <PageTitle>{`Test / ${location.pathname.split('/')[2]} ${location.search.split('=')[1] || ''}`}</PageTitle>
                 {
                     testTypeOneData ? (

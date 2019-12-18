@@ -3,6 +3,7 @@ import { withFirestore } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import Helmet from 'react-helmet';
 
 import { getUsers, clearLastUser } from '../../actions/adminAction';
 
@@ -171,6 +172,9 @@ const Users = ({firestore, getUsers, clearLastUser, users, lastUser}) => {
 
     return (
         <Container>
+            <Helmet>
+                <title>Users Admin - Korean practice</title>
+            </Helmet>
            <PageTitle>Users</PageTitle> 
            <Wrapper>
                 <Options>

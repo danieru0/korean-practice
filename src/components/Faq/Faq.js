@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Helmet from 'react-helmet';
 
 import PageTitle from '../../shared/PageTitle/PageTitle';
 
@@ -59,6 +60,9 @@ const Answer = styled.p`
 const Faq = () => {
 	return (
 		<Container>
+			<Helmet>
+				<title>FAQ - Korean practice</title>
+			</Helmet>
 			<PageTitle>FAQ</PageTitle>
 			<Wrapper>
 				<Question>What data are saved?</Question>

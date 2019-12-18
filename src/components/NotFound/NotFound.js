@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Helmet from 'react-helmet';
 
 const Container = styled.div`
 	width: calc(100% - 200px);
@@ -29,6 +30,9 @@ const Text = styled.p`
 const NotFound = () => {
     return (
         <Container>
+            <Helmet>
+                <title>404 - Korean practice</title>
+            </Helmet>
             <Fourzerofour>404</Fourzerofour>
             <Text>Not found |･ω･)</Text>
         </Container>

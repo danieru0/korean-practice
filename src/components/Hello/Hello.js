@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 
 import { signOut } from '../../actions/authAction';
 
@@ -72,6 +73,9 @@ const StyledLink = styled(Link)`
 const Hello = ({auth, signOut}) => {
 	return (
 		<Container>
+			<Helmet>
+				<title>Korean practice</title>
+			</Helmet>
 			<Logo size="large" />
 			<HelloGreeting>안녕하세요!</HelloGreeting>
 			<ButtonsWrapper logged={auth.uid ? 1 : 0}>

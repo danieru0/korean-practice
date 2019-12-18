@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
+import Helmet from 'react-helmet';
 
 import { getWords, clearWords, saveWord } from '../../actions/wordsAction';
 
@@ -94,6 +95,9 @@ const WordContainer = ({type, location, firestore, getWords, clearWords, saveWor
 
 	return (
 		<Container>
+			<Helmet>
+				<title>{`${type === 'nouns' ? `Nouns / ${location.pathname.split('/')[3]}` : type.charAt(0).toUpperCase() + type.slice(1)} - Korean practice`}</title>
+			</Helmet>
 			<PageTitle>{type === 'nouns' ? `Nouns / ${location.pathname.split('/')[3]}` : type}</PageTitle>
 			<MainLoader show={wordSaving} />
 			{
