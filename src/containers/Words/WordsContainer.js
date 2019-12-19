@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
@@ -92,13 +92,21 @@ const WordContainer = ({type, location, firestore, getWords, clearWords, saveWor
 		// eslint-disable-next-line
 	}, [type, location, firestore, getWords, scrollDown])
 
+	const handleScroll = useCallback(() => {
+		if (containerRef.current.getBoundingClientRect().bottom <= window.innerHeight) {
+			if (words.length !== 0) {
+				setScrollDown(true);
+			}
+		}
+	}, [words])
+
 	useEffect(() => {
 		document.addEventListener('scroll', handleScroll);
 
 		return (() => {
 			document.removeEventListener('scroll', handleScroll);
 		})
-	}, []);
+	}, [handleScroll]);
 
 	useEffect(() => {
 		setScrollDown(false);
@@ -106,7 +114,6 @@ const WordContainer = ({type, location, firestore, getWords, clearWords, saveWor
 
 	useEffect(() => {
 		return () => {
-			console.log('y');
 			clearWords();
 		}
 	}, [clearWords])
@@ -115,12 +122,6 @@ const WordContainer = ({type, location, firestore, getWords, clearWords, saveWor
 
 	const handleWordSave = item => {
 		saveWord(firestore, type, item);
-	}
-
-	const handleScroll = (e) => {
-		if (containerRef.current.getBoundingClientRect().bottom <= window.innerHeight) {
-			setScrollDown(true);
-		}
 	}
 
 	return (
