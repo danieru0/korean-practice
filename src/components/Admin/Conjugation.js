@@ -144,6 +144,7 @@ const Conjugation = ({addNewConjugation, firestore}) => {
                     <Select onChange={handleTypeChange} defaultValue={type}>
                         <Option value="past-tense">past-tense</Option>
                         <Option value="present-tense">present-tense</Option>
+                        <Option value="future-tense-1">future-tense-1 겠다</Option>
                     </Select>
                 </Group>
             </Wrapper>

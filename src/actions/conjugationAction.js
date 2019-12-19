@@ -8,7 +8,6 @@ export const getExplanation = (firestore, category) => {
             if (!doc.exists) {
                 throw new Error('404');
             }
-
             dispatch({
                 type: 'UPDATE_EXPLANATION',
                 data: doc.data()

@@ -75,6 +75,12 @@ const Conjugation = () => {
 					Present tense
 				</StyledPracticeBtn>
 			</Wrapper>
+			<Wrapper>
+				<TestLink to="/testtwo/future-tense-1">Test</TestLink>
+				<StyledPracticeBtn to="/conjugation/future-tense-1" bordercolor="#ff9800">
+					Future tense <br /> 겠다
+				</StyledPracticeBtn>
+			</Wrapper>
         </Container>
     );
 };
