@@ -55,6 +55,18 @@ const NavUserMenu = ({pathname, onClick}) => {
                     Conjugation
                 </NavLink>
             </NavItem>
+            <NavItem>
+                <NavLink onClick={onClick} active={pathname === 'irregulars' ? 1 : 0} to="/irregulars">
+                    <StyledIcon name="exclamation"/>
+                    Irregulars
+                </NavLink>
+            </NavItem>
+            <NavItem>
+                <NavLink onClick={onClick} active={pathname === 'sentences' ? 1 : 0} to="/sentences">
+                    <StyledIcon name="comments"/>
+                    Sentences
+                </NavLink>
+            </NavItem>
         </>
     );
 };

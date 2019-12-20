@@ -12,6 +12,7 @@ import testTypeTwoReducer from './testTypeTwoReducer';
 import userReducer from './userReducer';
 import adminReducer from './adminReducer';
 import modalReducer from './modalReducer';
+import sentencesReducer from './sentencesReducer';
 
 const rootReducer = combineReducers({
 	firebase: firebaseReducer,
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
 	testTypeTwoReducer: testTypeTwoReducer,
 	userReducer: userReducer,
 	adminReducer: adminReducer,
-	modalReducer: modalReducer
+	modalReducer: modalReducer,
+	sentencesReducer: sentencesReducer
 });
 
 export default rootReducer;

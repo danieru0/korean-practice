@@ -38,6 +38,9 @@ import ConjugationContainer from './containers/Conjugation/ConjugationContainer'
 import TestTypeOne from './components/TestTypeOne/TestTypeOne';
 import TestTypeTwo from './components/TestTypeTwo/TestTypeTwo';
 
+import Sentences from './components/Sentences/Sentences';
+import SentencesContainer from './containers/Sentences/SentencesContainer';
+
 import AdminContainer from './containers/Admin/AdminContainer';
 
 function App({auth, modalActive}) {
@@ -75,6 +78,8 @@ function App({auth, modalActive}) {
 					<Route path="/conjugation" component={Conjugation}/>
 					<Route path="/testone/:category" component={TestTypeOne}/>
 					<Route path="/testtwo/:category" component={TestTypeTwo}/>
+					<Route path="/sentences/:category" component={SentencesContainer}/>
+					<Route path="/sentences/" component={Sentences}/>
 					<Route path="/admin/:page?" component={withAdminAuth(AdminContainer)} />
 					<Route path="/404" component={NotFound}/>
 					<Redirect to="/404" />
