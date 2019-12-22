@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 
 import PracticeBtn from '../../shared/PracticeBtn/PracticeBtn';
@@ -19,8 +20,35 @@ const Container = styled.div`
 	}
 `
 
-const StyledPracticeBtn = styled(PracticeBtn)`
-	margin: 20px 70px;
+const Wrapper = styled.div`
+	position: relative;
+	width: auto;
+	height: auto;
+	margin: 20px;
+`
+
+const TestLink = styled(Link)`
+    position: absolute;
+	left: 0px;
+	top: 0px;
+	border: 0px;
+	background: transparent;
+	color: #fff;
+	font-family: ${props => props.theme.mainFont};
+	padding: 10px 15px;
+	font-size: 16px;
+	border-bottom: 3px solid ${({bordercolor}) => bordercolor};
+	border-right: 3px solid ${({bordercolor}) => bordercolor};
+	text-transform: uppercase;
+    text-decoration: none;
+
+	&:hover {
+		color: #ccc;
+	}
+`
+
+const StyledPracticeBtn = styled(PracticeBtn)`	
+	display: flex;
 `
 
 const Words = () => {
@@ -29,12 +57,20 @@ const Words = () => {
 			<Helmet>
 				<title>Words - Korean practice</title>
 			</Helmet>
-			<StyledPracticeBtn bordercolor="#00bcd4" to="/words/nouns/categories">Nouns</StyledPracticeBtn>
-			<StyledPracticeBtn bordercolor="#00bcd4" to="/words/verbs">Verbs</StyledPracticeBtn>
-			<StyledPracticeBtn bordercolor="#00bcd4" to="/words/adjectives">Adjectives</StyledPracticeBtn>
-			<StyledPracticeBtn bordercolor="#00bcd4" to="/words/adverbs">Adverbs</StyledPracticeBtn>
-			<StyledPracticeBtn bordercolor="#f44336" to="/testone/verb">Test verbs</StyledPracticeBtn>
-			<StyledPracticeBtn bordercolor="#f44336" to="/testone/adjective">Test adjectives</StyledPracticeBtn>
+			<Wrapper>
+				<StyledPracticeBtn bordercolor="#00bcd4" to="/words/nouns/categories">Nouns</StyledPracticeBtn>
+			</Wrapper>
+			<Wrapper>
+				<TestLink to="/testone/verbs" bordercolor="#00bcd4">Test</TestLink>
+				<StyledPracticeBtn bordercolor="#00bcd4" to="/words/verbs">Verbs</StyledPracticeBtn>
+			</Wrapper>
+			<Wrapper>
+				<TestLink to="/testone/adjective" bordercolor="#00bcd4">Test</TestLink>
+				<StyledPracticeBtn bordercolor="#00bcd4" to="/words/adjectives">Adjectives</StyledPracticeBtn>
+			</Wrapper>
+			<Wrapper>
+				<StyledPracticeBtn bordercolor="#00bcd4" to="/words/adverbs">Adverbs</StyledPracticeBtn>
+			</Wrapper>
 		</Container>
 	);
 };

@@ -50,8 +50,13 @@ const Sentences = () => {
                 </StyledPracticeBtn>
             </Wrapper>
             <Wrapper>
+                <StyledPracticeBtn to="/sentences/to-be-at-location" bordercolor="#795548">
+                    To be at location <br /> 있다
+                </StyledPracticeBtn>
+            </Wrapper>
+            <Wrapper>
                 <StyledPracticeBtn to="/sentences/describe-nouns" bordercolor="#795548">
-                    Describing nouns
+                    Describing nouns <br /> ㄴ/은
                 </StyledPracticeBtn>
             </Wrapper>
         </Container>

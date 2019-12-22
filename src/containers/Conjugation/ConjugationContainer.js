@@ -8,7 +8,7 @@ import Helmet from 'react-helmet';
 
 import { getExplanation, getRandomConjugatedWord, clearConjugation } from '../../actions/conjugationAction';
 
-import IrregularInfo from './IrregularInfo';
+import IrregularInfoLink from '../../shared/IrregularInfoLink/IrregularInfoLink';
 
 import PageTitle from '../../shared/PageTitle/PageTitle';
 import PageLoader from '../../shared/PageLoader/PageLoader';
@@ -156,7 +156,7 @@ const ConjugationContainer = ({location, firestore, getExplanation, getRandomCon
                 word ? (
                     <Wrapper>
                         <TopContainer>
-                            <IrregularInfo irregularType={conjugatedWord.info.irregular} />
+                            <IrregularInfoLink irregularType={conjugatedWord.info.irregular} />
                             <StyledNormalBtn onClick={getNextConjugation}>Next</StyledNormalBtn>
                         </TopContainer>
                         <ConjugationList>

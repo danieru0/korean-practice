@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 
 export const handleErrors = (err, component) => {
     return dispatch => {
-        console.log(err.message);
+        console.log(err.code);
         if (err.code) {
             switch(err.code) {
                 case 'auth/invalid-email':
@@ -90,6 +90,11 @@ export const handleErrors = (err, component) => {
                 case 'permission-denied':
                     if (component === 'conjugation-explanation') {
                         window.location.href = '/404';
+                    } else {
+                        dispatch({
+                            type: 'MAIN_LOADER_HIDE'
+                        });
+                        toast.error(err.message);
                     }
                     break;
                 default:                     

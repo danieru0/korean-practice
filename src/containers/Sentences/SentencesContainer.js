@@ -8,6 +8,7 @@ import ReactTooltip from 'react-tooltip'
 
 import { getSentenceData, clearSentenceData} from '../../actions/sentencesAction';
 
+import IrregularInfoLink from '../../shared/IrregularInfoLink/IrregularInfoLink';
 import PageTitle from '../../shared/PageTitle/PageTitle';
 import PageLoader from '../../shared/PageLoader/PageLoader';
 import NormalBtn from '../../shared/NormalBtn/NormalBtn';
@@ -74,11 +75,11 @@ const ConjugationItem = styled.li`
     margin: 10px 5px;
 `;
 
-/*
 const Sentence = styled.p`
     font-size: 40px;
     text-align: center;
-`*/
+    color: #ffeb3b;
+`
 
 const Dot = styled.span`
     width: 10px;
@@ -103,7 +104,7 @@ const ExplanationMore = styled.span`
     }
 `
 
-const Sentences = ({location, firestore, getSentenceData, clearSentenceData, counters, explanation, sentence, translation}) => {
+const Sentences = ({location, firestore, getSentenceData, clearSentenceData, counters, explanation, sentence, translation, irregular}) => {
     useEffect(() => {
         getSentenceData(firestore, location.pathname.split('/')[2], counters);
         //eslint-disable-next-line
@@ -119,21 +120,24 @@ const Sentences = ({location, firestore, getSentenceData, clearSentenceData, cou
         getSentenceData(firestore, location.pathname.split('/')[2], counters);
     }
 
+    console.log(irregular);
+
     return (
         <Container>
             <Helmet>
                 <title>{`${explanation ? explanation.title : 'Loading'} - Korean practice`}</title>
             </Helmet>
-            <PageTitle>{`${explanation ? explanation.title : 'To have'}`}</PageTitle>
+            <PageTitle>{`${explanation ? explanation.title : 'Loading...'}`}</PageTitle>
             {
                 explanation && sentence ? (
                     <Wrapper>
                         <TopContainer>
+                            <IrregularInfoLink irregularType={irregular} />
                             <StyledNormalBtn onClick={getNextSentence}>Next</StyledNormalBtn>
                         </TopContainer>
                         {
                             typeof sentence === 'object' ? (
-                                <SentenceList data-tip={`${translation.korean}: ${translation.english}`}>
+                                <SentenceList data-tip={translation.map(item => `${item.korean}: ${item.english}`)}>
                                     {
                                         sentence.map((item, key) => {
                                             return (
@@ -143,8 +147,9 @@ const Sentences = ({location, firestore, getSentenceData, clearSentenceData, cou
                                     }
                                 </SentenceList>
                             ) : (
-                                <>
-                                </>
+                                <Sentence data-tip={translation.map(item => `${item.korean}: ${item.english}`)}>
+                                    { sentence }
+                                </Sentence>
                             )
                         }
                         <Dot />
@@ -171,7 +176,8 @@ const mapStateToProps = state => {
         counters: state.sentencesReducer.counters,
         explanation: state.sentencesReducer.explanation,
         sentence: state.sentencesReducer.sentence,
-        translation: state.sentencesReducer.translation
+        translation: state.sentencesReducer.translation,
+        irregular: state.sentencesReducer.irregular
     }
 }
 

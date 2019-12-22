@@ -54,6 +54,8 @@ const IrregularInfo = ({irregularType}) => {
         return null;
     }
 
+    console.log(irregular);
+
     return (
         <Irregular to={`/irregular/${irregularType}`}>
             <StyledIcon name="info-circle"/>

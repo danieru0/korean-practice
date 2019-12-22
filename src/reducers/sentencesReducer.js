@@ -2,7 +2,8 @@ const initState = {
     explanation: null,
     sentence: null,
     translation: null,
-    counters: null
+    counters: null,
+    irregular: 0
 }
 
 const sentencesReducer = (state = initState, action) => {
@@ -15,9 +16,10 @@ const sentencesReducer = (state = initState, action) => {
         case 'UPDATE_SENTENCE_DATA':
             return {
                 ...state,
-                explanation: action.explanation,
-                sentence: action.sentence,
-                translation: action.translation
+                explanation: action.explanation || null,
+                sentence: action.sentence || null,
+                translation: action.translation || null,
+                irregular: action.irregular || 0
             }
         case 'CLEAR_SENTENCE_DATA':
             return {
