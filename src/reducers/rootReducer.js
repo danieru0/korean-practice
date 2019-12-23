@@ -13,6 +13,7 @@ import userReducer from './userReducer';
 import adminReducer from './adminReducer';
 import modalReducer from './modalReducer';
 import sentencesReducer from './sentencesReducer';
+import irregularsReducer from './irregularsReducer';
 
 const rootReducer = combineReducers({
 	firebase: firebaseReducer,
@@ -28,7 +29,8 @@ const rootReducer = combineReducers({
 	userReducer: userReducer,
 	adminReducer: adminReducer,
 	modalReducer: modalReducer,
-	sentencesReducer: sentencesReducer
+	sentencesReducer: sentencesReducer,
+	irregularsReducer: irregularsReducer
 });
 
 export default rootReducer;

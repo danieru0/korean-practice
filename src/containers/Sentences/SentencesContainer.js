@@ -120,8 +120,6 @@ const Sentences = ({location, firestore, getSentenceData, clearSentenceData, cou
         getSentenceData(firestore, location.pathname.split('/')[2], counters);
     }
 
-    console.log(irregular);
-
     return (
         <Container>
             <Helmet>

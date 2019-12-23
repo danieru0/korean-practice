@@ -41,6 +41,9 @@ import TestTypeTwo from './components/TestTypeTwo/TestTypeTwo';
 import Sentences from './components/Sentences/Sentences';
 import SentencesContainer from './containers/Sentences/SentencesContainer';
 
+import Irregulars from './components/Irregulars/Irregulars';
+import IrregularsContainer from './containers/Irregulars/IrregularsContainer';
+
 import AdminContainer from './containers/Admin/AdminContainer';
 
 function App({auth, modalActive}) {
@@ -80,7 +83,9 @@ function App({auth, modalActive}) {
 					<Route path="/testtwo/:category" component={TestTypeTwo}/>
 					<Route path="/sentences/:category" component={SentencesContainer}/>
 					<Route path="/sentences/" component={Sentences}/>
-					<Route path="/admin/:page?" component={withAdminAuth(AdminContainer)} />
+					<Route path="/admin/:page?" component={withAdminAuth(AdminContainer)}/>
+					<Route path="/irregulars/:type" component={IrregularsContainer}/>
+					<Route path="/irregulars" component={Irregulars}/>
 					<Route path="/404" component={NotFound}/>
 					<Redirect to="/404" />
 				</Switch>
