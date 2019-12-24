@@ -10,6 +10,10 @@ const Irregular = styled(Link)`
     display: flex;
     align-items: center;
     text-decoration: none;
+
+    &:not(:first-child) {
+        margin-left: 10px;
+    }
 `
 
 const StyledIcon = styled(FontAwesome)`
@@ -23,44 +27,40 @@ const Type = styled.p`
 `;
 
 const IrregularInfo = ({irregularType}) => {
-    let irregular = '';
-
-    switch(irregularType) {
-        case '0':
-            irregular = null;
-            break;
-        case '1':
-            irregular = 'ㅅ';
-            break;
-        case '2':
-            irregular = 'ㄷ';
-            break;
-        case '3':
-            irregular = 'ㅂ';
-            break;
-        case '4':
-            irregular = 'ㅡ';
-            break;
-        case '5':
-            irregular = '르';
-            break;
-        case '6':
-            irregular = 'ㄹ';
-            break;
-        default: return false;
+    const irregularsBase = {
+        1: 'ㅅ',
+        2: 'ㄷ',
+        3: 'ㅂ',
+        4: 'ㅡ',
+        5: '르',
+        6: 'ㄹ'
     }
 
-    if (irregular === null) {
-        return null;
+    if (irregularType === '0') {
+        return false;
     }
-
-    console.log(irregular);
 
     return (
-        <Irregular to={`/irregular/${irregularType}`}>
-            <StyledIcon name="info-circle"/>
-            <Type>{`${irregular} Irregular`}</Type>
-        </Irregular>
+        <>
+            {   
+                typeof irregularType === 'object' ? (
+                    irregularType.map((item, key) => {
+                        return (
+                            <Irregular key={key} to={`/irregular/${item}`}>
+                                <StyledIcon name="info-circle"/>
+                                <Type>{`${irregularsBase[item]} Irregular`}</Type>
+                            </Irregular>
+                        )
+                    })
+                ) : (
+                    <Irregular to={`/irregular/${irregularType}`}>
+                            <StyledIcon name="info-circle"/>
+                            <Type>{`${irregularsBase[irregularType]} Irregular`}</Type>
+                    </Irregular>
+                )             
+            }
+
+        </>
     );
 };
 
