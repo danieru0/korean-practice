@@ -116,7 +116,19 @@ const IrregularsContainer = ({firestore, location, getIrregularData, clearIrregu
                         <TopContainer>
                             <StyledNormalBtn onClick={getNextIrregular}>Next</StyledNormalBtn>
                         </TopContainer>
-                        <IrregularWord data-tip={`${word.word.korean}: ${word.word.english}`}>{word[conjugationNumber]}</IrregularWord>
+                        <IrregularWord data-tip={`${word.word.korean}: ${word.word.english}`}>
+                            {
+                                typeof conjugationNumber === 'object' ? (
+                                    conjugationNumber.map((item, key) => {
+                                        return (
+                                            `${word[item]} `
+                                        )
+                                    })
+                                ) : (
+                                    word[conjugationNumber]
+                                )
+                            }
+                        </IrregularWord>
                         <Dot />
                         <Explanation>
                             {info.text} <br/><br/>

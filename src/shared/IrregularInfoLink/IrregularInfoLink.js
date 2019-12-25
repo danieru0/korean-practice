@@ -36,7 +36,7 @@ const IrregularInfo = ({irregularType}) => {
         6: 'ㄹ'
     }
 
-    if (irregularType === '0') {
+    if (irregularType === '0' || irregularType === 0) {
         return false;
     }
 
