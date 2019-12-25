@@ -59,6 +59,16 @@ const Sentences = () => {
                     Describing nouns <br /> ㄴ/은
                 </StyledPracticeBtn>
             </Wrapper>
+            <Wrapper>
+                <StyledPracticeBtn to="/sentences/negative-sentence-1" bordercolor="#795548">
+                    Negative sentence <br /> 안
+                </StyledPracticeBtn>
+            </Wrapper>
+            <Wrapper>
+                <StyledPracticeBtn to="/sentences/negative-sentence-2" bordercolor="#795548">
+                    Negative sentence <br /> 지 않다
+                </StyledPracticeBtn>
+            </Wrapper>
         </Container>
     );
 };

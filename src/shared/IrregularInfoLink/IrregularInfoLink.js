@@ -46,14 +46,14 @@ const IrregularInfo = ({irregularType}) => {
                 typeof irregularType === 'object' ? (
                     irregularType.map((item, key) => {
                         return (
-                            <Irregular key={key} to={`/irregular/${item}`}>
+                            <Irregular key={key} to={`/irregulars/${item}`}>
                                 <StyledIcon name="info-circle"/>
                                 <Type>{`${irregularsBase[item]} Irregular`}</Type>
                             </Irregular>
                         )
                     })
                 ) : (
-                    <Irregular to={`/irregular/${irregularType}`}>
+                    <Irregular to={`/irregulars/${irregularType}`}>
                             <StyledIcon name="info-circle"/>
                             <Type>{`${irregularsBase[irregularType]} Irregular`}</Type>
                     </Irregular>

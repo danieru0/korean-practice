@@ -2,7 +2,6 @@ import { toast } from 'react-toastify';
 
 export const handleErrors = (err, component) => {
     return dispatch => {
-        console.log(err.code);
         if (err.code) {
             switch(err.code) {
                 case 'auth/invalid-email':
@@ -95,6 +94,7 @@ export const handleErrors = (err, component) => {
                             type: 'MAIN_LOADER_HIDE'
                         });
                         toast.error(err.message);
+                        window.location.href = '/home';
                     }
                     break;
                 default:                     

@@ -30,6 +30,12 @@ export const getSentenceData = (firestore, category, counters) => {
             case 'to-be-at-location':
                 dispatch(getToBeAtLocation(firestore, counters));
                 break;
+            case 'negative-sentence-1':
+                dispatch(getNegativeSentence1(firestore, counters));
+                break;
+            case 'negative-sentence-2':
+                dispatch(getNegativeSentence2(firestore, counters));
+                break;
             default: throw new Error('404');
         }
     }
@@ -141,5 +147,70 @@ export const getToBeAtLocation = (firestore, counters) => {
             dispatch(handleErrors(err));
         }
 
+    }
+}
+
+export const getNegativeSentence1 = (firestore, counters) => {
+    return async dispatch => {
+        try {
+            const wordsBase = {
+                1: 'past-tense',
+                2: 'present-tense',
+                3: 'future-tense-1'
+            }
+
+            const randomBase = wordsBase[Math.floor(Math.random() * Object.keys(wordsBase).length) + 1];
+
+            const explanation = await firestore.collection('negative-sentence-1').doc('explanation').get();
+            const conjugatedWord = await firestore.collection(randomBase).doc(getRandomNumber(counters[randomBase])).get();
+            const wordTranslation = await conjugatedWord.data().word.get();
+
+            dispatch({
+                type: 'UPDATE_SENTENCE_DATA',
+                explanation: explanation.data(),
+                sentence: `안 ${conjugatedWord.data()[2]}`,
+                translation: [wordTranslation.data()]
+            });
+            dispatch({
+                type: 'MAIN_LOADER_HIDE'
+            });
+        } catch (err) {
+            dispatch(handleErrors(err));
+        }
+    }
+}
+
+export const getNegativeSentence2 = (firestore, counters) => {
+    return async dispatch => {
+        try {
+            const wordsBase = {
+                1: 'verbs',
+                2: 'adjectives',
+            }
+            const countersNameBase = {
+                1: 'verb',
+                2: 'adjective'
+            }
+
+            const randomBase = Math.floor(Math.random() * Object.keys(wordsBase).length) + 1;
+
+            const explanation = await firestore.collection('negative-sentence-1').doc('explanation').get();
+            const word = await firestore.collection(wordsBase[randomBase]).doc(getRandomNumber(counters[countersNameBase[randomBase]])).get();
+            const wordArray = hangul.disassemble(word.data().korean);
+            wordArray.splice(wordArray.length - 2, wordArray.length);
+            wordArray.push('지');
+
+            dispatch({
+                type: 'UPDATE_SENTENCE_DATA',
+                explanation: explanation.data(),
+                sentence: `${hangul.assemble(wordArray)} 않아요`,
+                translation: [word.data()]
+            });
+            dispatch({
+                type: 'MAIN_LOADER_HIDE'
+            });
+        } catch (err) {
+            dispatch(handleErrors(err));
+        }
     }
 }
