@@ -21,7 +21,7 @@ export const getTest = (firestore, category, numberOfWords) => {
 
         let number = numberOfWords;
 
-        if (!numberOfWords && category.split('?')[0] !== 'saved') {
+        if (!numberOfWords && category.split('?')[0] !== 'saved' && category.split('?')[0] !== 'categories') {
             const numberFromFirestore = await firestore.collection('settings').doc('counters').get();
             dispatch({
                 type: 'SET_NUMBER_OF_WORDS_TEST_ONE',
@@ -37,8 +37,12 @@ export const getTest = (firestore, category, numberOfWords) => {
                 return dispatch(getVerb(firestore, number));
             case 'adjective':
                 return dispatch(getAdjective(firestore, number));
+            case 'nouns':
+                return dispatch(getNouns(firestore, number));
             case (category.match(/saved/) || {}).input:
                 return dispatch(getSaved(firestore, category.split('=')[1]));
+            case 'adverbs':
+                return dispatch(getAdverbs(firestore, number));
             default: window.location.href = '/404';
         }
     }
@@ -146,5 +150,51 @@ export const getSaved = (firestore, type) => {
                 window.location.href = '/';
             }
         });
+    }
+}
+
+export const getNouns = (firestore, numberOfWords) => {
+    return async dispatch => {
+        try {
+            const doc = await firestore.collection('nouns').doc(getRandomNumber(numberOfWords)).get();
+
+            dispatch({
+                type: 'UPDATE_TEST_ONE_DATA',
+                data: doc.data()
+            });
+            dispatch({
+                type: 'SET_EXP_TEST_ONE',
+                data: 5
+            });
+            dispatch({
+                type: 'LOADING_TEST_ONE',
+                data: false
+            });
+        } catch (err) {
+            dispatch(handleErrors(err));
+        }
+    }
+}
+
+export const getAdverbs = (firestore, numberOfWords) => {
+    return async dispatch => {
+        try {
+            const doc = await firestore.collection('adverbs').doc(getRandomNumber(numberOfWords)).get();
+
+            dispatch({
+                type: 'UPDATE_TEST_ONE_DATA',
+                data: doc.data()
+            });
+            dispatch({
+                type: 'SET_EXP_TEST_ONE',
+                data: 5
+            });
+            dispatch({
+                type: 'LOADING_TEST_ONE',
+                data: false
+            });
+        } catch (err) {
+            dispatch(handleErrors(err));
+        }
     }
 }

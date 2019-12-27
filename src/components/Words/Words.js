@@ -58,6 +58,7 @@ const Words = () => {
 				<title>Words - Korean practice</title>
 			</Helmet>
 			<Wrapper>
+				<TestLink to="/testone/nouns" bordercolor="#00bcd4">Test all</TestLink>
 				<StyledPracticeBtn bordercolor="#00bcd4" to="/words/nouns/categories">Nouns</StyledPracticeBtn>
 			</Wrapper>
 			<Wrapper>
@@ -69,6 +70,7 @@ const Words = () => {
 				<StyledPracticeBtn bordercolor="#00bcd4" to="/words/adjectives">Adjectives</StyledPracticeBtn>
 			</Wrapper>
 			<Wrapper>
+				<TestLink to="/testone/adverbs" bordercolor="#00bcd4">Test</TestLink>
 				<StyledPracticeBtn bordercolor="#00bcd4" to="/words/adverbs">Adverbs</StyledPracticeBtn>
 			</Wrapper>
 		</Container>
