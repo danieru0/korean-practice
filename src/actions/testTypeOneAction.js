@@ -9,8 +9,8 @@ export const clearTest = () => {
     }
 }
 
-export const getTest = (firestore, category, numberOfWords) => {
-    return async dispatch => {
+export const getTest = (firestore, category) => {
+    return async (dispatch, getState) => {
         dispatch({
             type: 'REMOVE_TEST_ONE_DATA'
         });
@@ -19,30 +19,21 @@ export const getTest = (firestore, category, numberOfWords) => {
             data: true
         });
 
-        let number = numberOfWords;
-
-        if (!numberOfWords && category.split('?')[0] !== 'saved' && category.split('?')[0] !== 'categories') {
-            const numberFromFirestore = await firestore.collection('settings').doc('counters').get();
-            dispatch({
-                type: 'SET_NUMBER_OF_WORDS_TEST_ONE',
-                data: numberFromFirestore.data()[category]
-            });
-            number = numberFromFirestore.data()[category]
-        }
+        const {counters} = getState().settingsReducer;
 
         switch(category) {
             case 'letter':
                 return dispatch(getLetter(firestore));
             case 'verb':
-                return dispatch(getVerb(firestore, number));
+                return dispatch(getVerb(firestore, counters[category]));
             case 'adjective':
-                return dispatch(getAdjective(firestore, number));
+                return dispatch(getAdjective(firestore, counters[category]));
             case 'nouns':
-                return dispatch(getNouns(firestore, number));
+                return dispatch(getNouns(firestore, counters[category]));
             case (category.match(/saved/) || {}).input:
                 return dispatch(getSaved(firestore, category.split('=')[1]));
             case 'adverbs':
-                return dispatch(getAdverbs(firestore, number));
+                return dispatch(getAdverbs(firestore, counters[category]));
             default: window.location.href = '/404';
         }
     }

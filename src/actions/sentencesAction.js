@@ -3,23 +3,13 @@ import * as hangul from 'hangul-js';
 import { handleErrors } from './errorsAction';
 
 export const getSentenceData = (firestore, category, counters) => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
         dispatch({
             type: 'MAIN_LOADER_SHOW'
         });
 
-        if (!counters) {
-            try {
-                const countersData = await firestore.collection('settings').doc('counters').get();
-                dispatch({
-                    type: 'UPDATE_SENTENCES_COUNTERS',
-                    data: countersData.data()
-                })
-                counters = countersData.data();
-            } catch (err) {
-                dispatch(handleErrors(err));
-            }
-        }
+        const {counters} = getState().settingsReducer;
+        
         switch(category) {
             case 'to-have':
                 dispatch(getToHave(firestore, counters));

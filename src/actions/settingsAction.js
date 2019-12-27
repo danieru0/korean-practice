@@ -1,6 +1,21 @@
 import { toast } from 'react-toastify';
 import { handleErrors } from './errorsAction';
 
+export const getCounters = (firestore) => {
+	return async dispatch => {
+		try {
+			const counters = await firestore.collection('settings').doc('counters').get();
+
+			dispatch({
+				type: 'UPDATE_COUNTERS',
+				data: counters.data()
+			});
+		} catch (err) {
+			dispatch(handleErrors(err));
+		}
+	}
+}
+
 export const updateAvatar = (firestore, file) => {
 	return async (dispatch, getState, { getFirebase }) => {
 		const firebase = getFirebase();

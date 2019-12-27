@@ -1,8 +1,7 @@
 const initState = {
     testTypeTwoData: null,
     loadingTestTypeTwo: false,
-    exp: 0,
-    numberOfWords: null
+    exp: 0
 }
 
 
@@ -18,11 +17,6 @@ const testTypeTwoReducer = (state = initState, action) => {
                 ...state,
                 exp: action.data
             }
-        case 'SET_NUMBER_OF_WORDS_TEST_TWO':
-            return {
-                ...state,
-                numberOfWords: action.data
-            }
         case 'REMOVE_TEST_TWO_DATA':
             return {
                 ...state,
@@ -33,8 +27,7 @@ const testTypeTwoReducer = (state = initState, action) => {
                 ...state,
                 testTypeTwoData: null,
                 loadingTestTypeTwo: false,
-                exp: 0,
-                numberOfWords: null
+                exp: 0
             }
         case 'LOADING_TEST_TWO':
             return {

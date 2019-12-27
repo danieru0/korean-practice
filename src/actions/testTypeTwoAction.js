@@ -9,8 +9,8 @@ export const clearTest = () => {
     }
 }
 
-export const getTest = (firestore, category, numberOfWords) => {
-    return async dispatch => {
+export const getTest = (firestore, category) => {
+    return async (dispatch, getState) => {
         dispatch({
             type: 'REMOVE_TEST_TWO_DATA'
         });
@@ -19,29 +19,20 @@ export const getTest = (firestore, category, numberOfWords) => {
             data: true
         });
 
-        let number = numberOfWords;
-
-        if (!numberOfWords) {
-            const numberFromFirestore = await firestore.collection('settings').doc('counters').get();
-            dispatch({
-                type: 'SET_NUMBER_OF_WORDS_TEST_TWO',
-                data: numberFromFirestore.data()[category]
-            });
-            number = numberFromFirestore.data()[category]
-        }
+        const {counters} = getState().settingsReducer;
 
         switch(category) {
             case (category.match(/tense/) || {}).input:
-                return dispatch(getTense(category, firestore, number));
+                return dispatch(getTense(category, firestore, counters[category]));
             default: window.location.href ='/404';
         }
     }
 }
 
-export const getTense = (category, firestore, numberOfWords) => {
+export const getTense = (category, firestore, counters) => {
     return async dispatch => {
         try {
-            const doc = await firestore.collection(category).doc(getRandomNumber(numberOfWords)).get();
+            const doc = await firestore.collection(category).doc(getRandomNumber(counters)).get();
             const word = await doc.data().word.get();
 
             dispatch({

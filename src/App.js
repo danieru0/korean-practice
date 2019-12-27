@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import './App.css';
 import { isLoaded } from 'react-redux-firebase';
 import { connect } from 'react-redux';
+import { withFirestore } from 'react-redux-firebase';
+
+import { getCounters } from './actions/settingsAction';
 
 import withAuth from './hocs/withAuth';
 import withoutAuth from './hocs/withoutAuth';
@@ -47,10 +50,14 @@ import IrregularsContainer from './containers/Irregulars/IrregularsContainer';
 
 import AdminContainer from './containers/Admin/AdminContainer';
 
-function App({auth, modalActive}) {
-	if (!isLoaded(auth)) {
+function App({auth, modalActive, getCounters, firestore, counters}) {
+	useEffect(() => {
+		getCounters(firestore);
+	}, [getCounters, firestore])
+	
+	if (!isLoaded(auth) || counters === null) {
 		return <BrowserRouter><MainLoader show /></BrowserRouter>
-	}
+	}  
 	
 	return (
 		<BrowserRouter>
@@ -99,8 +106,9 @@ function App({auth, modalActive}) {
 const mapStateToProps = state => {
 	return {
 		auth: state.firebase.auth,
-		modalActive: state.modalReducer.modalActive
+		modalActive: state.modalReducer.modalActive,
+		counters: state.settingsReducer.counters
 	}
 }
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, { getCounters })(withFirestore(App));

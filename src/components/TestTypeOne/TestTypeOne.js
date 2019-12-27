@@ -254,7 +254,7 @@ class TestTypeOne extends PureComponent {
                         answerInputValue: '',
                         answerFromClick: false
                     }, () => {
-                        this.props.getTest(this.props.firestore, this.state.url, this.props.numberOfWords);
+                        this.props.getTest(this.props.firestore, this.state.url);
                     });
                 } else {
                     this.setState({
@@ -263,7 +263,7 @@ class TestTypeOne extends PureComponent {
                         answerInputValue: '',
                         answerFromClick: false
                     }, () => {
-                        this.props.getTest(this.props.firestore, this.state.url, this.props.numberOfWords);
+                        this.props.getTest(this.props.firestore, this.state.url);
                     });
                 }
         
@@ -318,7 +318,6 @@ const mapStateToProps = state => {
     return {
         testTypeOneData: state.testTypeOneReducer.testTypeOneData,
         loadingTestTypeOne: state.testTypeOneReducer.loadingTestTypeOne,
-        numberOfWords: state.testTypeOneReducer.numberOfWords,
         exp: state.testTypeOneReducer.exp,
         userExpAndAnswerUpdated: state.userReducer.userExpAndAnswerUpdated
     }

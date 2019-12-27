@@ -1,5 +1,6 @@
 const initState = {
-	settingsState: false
+	settingsState: false,
+	counters: null
 }
 
 const settingsReducer = (state = initState, action) => {
@@ -8,6 +9,11 @@ const settingsReducer = (state = initState, action) => {
 			return {
 				...state,
 				settingsState: action.data
+			}
+		case 'UPDATE_COUNTERS':
+			return {
+				...state,
+				counters: action.data
 			}
 		default: return state;
 	}

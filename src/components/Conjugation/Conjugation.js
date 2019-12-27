@@ -81,6 +81,11 @@ const Conjugation = () => {
 					Future tense <br /> 겠다
 				</StyledPracticeBtn>
 			</Wrapper>
+			<Wrapper>
+				<StyledPracticeBtn to="/conjugation/ida-past-tense" bordercolor="#ff9800">
+					이다 <br /> Past tense
+				</StyledPracticeBtn>
+			</Wrapper>
         </Container>
     );
 };

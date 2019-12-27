@@ -148,10 +148,10 @@ const ConjugationContainer = ({location, firestore, getExplanation, getRandomCon
     return (
         <Container>
             <Helmet>
-                <title>{`${explanation ? explanation.info.title : 'Loading'} - Korean practice`}</title>
+                <title>{`${explanation ? explanation.info.title : 'Loading...'} - Korean practice`}</title>
             </Helmet>
             <MainLoader show={loadingNewWorld}/>
-            <PageTitle>{`${explanation ? explanation.info.title : location.pathname.split('/')[2].split('-').join(' ')}`}</PageTitle>
+            <PageTitle>{`${explanation ? explanation.info.title : 'Loading...'}`}</PageTitle>
             {
                 word ? (
                     <Wrapper>
@@ -191,9 +191,7 @@ const ConjugationContainer = ({location, firestore, getExplanation, getRandomCon
                                     if (item === '0') {
                                         return (
                                             <ExplanationItem key={key}>
-                                                <YellowItem>
-                                                    { word.stem }
-                                                </YellowItem>
+                                                { word.stem }
                                                 <ExplanationLine>-</ExplanationLine>
                                                 { `${explanation[item]} (${word.korean} / ${word.english})` }
                                             </ExplanationItem>
@@ -221,7 +219,7 @@ const ConjugationContainer = ({location, firestore, getExplanation, getRandomCon
                                 })
                             }
                             <ExplanationItem>
-                                See more at: <a href="https://www.howtostudykorean.com/unit1/unit-1-lessons-1-8/unit-1-lesson-6/#past">https://www.howtostudykorean.com/unit1/unit-1-lessons-1-8/unit-1-lesson-6/#past</a>
+                                See more at: <a href={explanation.info.link}>{explanation.info.link}</a>
                             </ExplanationItem>
                         </ExplanationList>
                     </Wrapper>

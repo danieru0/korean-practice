@@ -2,17 +2,11 @@ const initState = {
     explanation: null,
     sentence: null,
     translation: null,
-    counters: null,
     irregular: 0
 }
 
 const sentencesReducer = (state = initState, action) => {
     switch(action.type) {
-        case 'UPDATE_SENTENCE_COUNTERS':
-            return {
-                ...state,
-                counters: action.data
-            }
         case 'UPDATE_SENTENCE_DATA':
             return {
                 ...state,
