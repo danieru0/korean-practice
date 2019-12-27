@@ -76,16 +76,16 @@ const WordContainer = ({type, location, firestore, getWords, clearWords, saveWor
 		if (scrollDown === false) return;
 		switch(type) {
 			case 'nouns':
-				getWords(firestore, 'nouns', lastWord, location.pathname.split('/')[3]);
+				getWords(firestore, 'nouns', lastWord, location.pathname.split('/')[3], scrollDown);
 				break;
 			case 'adjectives':
-				getWords(firestore, 'adjectives', lastWord);
+				getWords(firestore, 'adjectives', lastWord, null, scrollDown);
 				break;
 			case 'verbs':
-				getWords(firestore, 'verbs', lastWord);
+				getWords(firestore, 'verbs', lastWord, null, scrollDown);
 				break;
 			case 'adverbs':
-				getWords(firestore, 'adverbs', lastWord);
+				getWords(firestore, 'adverbs', lastWord, null, scrollDown);
 				break;
 			default: return false;
 		}

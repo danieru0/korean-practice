@@ -61,7 +61,7 @@ const Words = () => {
 				<StyledPracticeBtn bordercolor="#00bcd4" to="/words/nouns/categories">Nouns</StyledPracticeBtn>
 			</Wrapper>
 			<Wrapper>
-				<TestLink to="/testone/verbs" bordercolor="#00bcd4">Test</TestLink>
+				<TestLink to="/testone/verb" bordercolor="#00bcd4">Test</TestLink>
 				<StyledPracticeBtn bordercolor="#00bcd4" to="/words/verbs">Verbs</StyledPracticeBtn>
 			</Wrapper>
 			<Wrapper>

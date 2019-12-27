@@ -36,7 +36,10 @@ export const getSentenceData = (firestore, category, counters) => {
             case 'negative-sentence-2':
                 dispatch(getNegativeSentence2(firestore, counters));
                 break;
-            default: throw new Error('404');
+            case 'to-not-have':
+                dispatch(getToNotHave(firestore, counters));
+                break;
+            default: dispatch(handleErrors('404'));
         }
     }
 }
@@ -209,6 +212,36 @@ export const getNegativeSentence2 = (firestore, counters) => {
             dispatch({
                 type: 'MAIN_LOADER_HIDE'
             });
+        } catch (err) {
+            dispatch(handleErrors(err));
+        }
+    }
+}
+
+export const getToNotHave = (firestore, counters) => {
+    return async dispatch => {
+        try {
+            const randomNoun = await firestore.collection('nouns').doc(getRandomNumber(counters.nouns)).get();
+            const explanation = await firestore.collection('to-not-have').doc('explanation').get();
+
+            let nounArray = hangul.disassemble(randomNoun.data().korean);
+
+            if (hangul.isConsonant(nounArray[nounArray.length - 1])) {
+                nounArray.push('이')
+            } else {
+                nounArray.push('가');
+            }
+            let nounWithParticle = hangul.assemble(nounArray);
+
+            dispatch({
+                type: 'UPDATE_SENTENCE_DATA',
+                explanation: explanation.data(),
+                sentence: `${nounWithParticle} 없어요`,
+                translation: [randomNoun.data()]
+            });
+            dispatch({
+                type: 'MAIN_LOADER_HIDE'
+            });            
         } catch (err) {
             dispatch(handleErrors(err));
         }

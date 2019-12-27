@@ -17,11 +17,10 @@ export const getNounsCategories = (firestore) => {
 	}
 }
 
-export const getWords = (firestore, type, lastWord, category) => {
+export const getWords = (firestore, type, lastWord, category, scrollDown) => {
 	return async dispatch => {
 		try {
 			if (lastWord === '01') {
-				console.log('01');
 				const doc = type === 'nouns' ? (
 					await firestore.collection(type).where("type", "==", category).orderBy('__name__').startAt(lastWord).limit(24).get()
 				) : (
@@ -43,6 +42,12 @@ export const getWords = (firestore, type, lastWord, category) => {
 					data: doc.docs[doc.docs.length-1]
 				});
 			} else if (lastWord !== undefined) {
+				if (scrollDown) {
+					dispatch({
+						type: 'INFINITE_LOADER_SHOW'
+					})
+				}
+
 				const doc = type === 'nouns' ? (
 					await firestore.collection(type).where("type", "==", category).orderBy('__name__').startAfter(lastWord).limit(24).get()
 				) : (
@@ -62,6 +67,9 @@ export const getWords = (firestore, type, lastWord, category) => {
 					type: `UPDATE_LAST_WORD`,
 					data: doc.docs[doc.docs.length-1]
 				});
+				dispatch({
+					type: 'INFINITE_LOADER_HIDE'
+				})
 			}
 		} catch (err) {
 			dispatch(handleErrors(err))

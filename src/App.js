@@ -11,6 +11,7 @@ import withoutAuth from './hocs/withoutAuth';
 import withAdminAuth from './hocs/withAdminAuth';
 
 import MainLoader from './shared/MainLoader/MainLoader';
+import InfiniteScrollLoader from './shared/InfiniteScrollLoader/InfiniteScrollLoader';
 import Nav from './components/Nav/Nav';
 import Hello from './components/Hello/Hello';
 import Register from './components/Auth/Register/Register';
@@ -56,6 +57,7 @@ function App({auth, modalActive}) {
 		    <div className="App">
 				<ToastContainer position="bottom-left" autoClose={5000} closeOnClick/>
 				<MainLoader/>
+				<InfiniteScrollLoader />
 				<Nav />
 				{modalActive && <Modal />}
 				<Switch>

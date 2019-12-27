@@ -69,6 +69,11 @@ const Sentences = () => {
                     Negative sentence <br /> 지 않다
                 </StyledPracticeBtn>
             </Wrapper>
+            <Wrapper>
+                <StyledPracticeBtn to="/sentences/to-not-have" bordercolor="#795548">
+                    To not have <br /> 없다
+                </StyledPracticeBtn>
+            </Wrapper>
         </Container>
     );
 };

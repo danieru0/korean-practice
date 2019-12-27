@@ -14,6 +14,7 @@ import adminReducer from './adminReducer';
 import modalReducer from './modalReducer';
 import sentencesReducer from './sentencesReducer';
 import irregularsReducer from './irregularsReducer';
+import infiniteScrollLoaderReducer from './infiniteScrollLoaderReducer';
 
 const rootReducer = combineReducers({
 	firebase: firebaseReducer,
@@ -30,7 +31,8 @@ const rootReducer = combineReducers({
 	adminReducer: adminReducer,
 	modalReducer: modalReducer,
 	sentencesReducer: sentencesReducer,
-	irregularsReducer: irregularsReducer
+	irregularsReducer: irregularsReducer,
+	infiniteScrollLoaderReducer: infiniteScrollLoaderReducer
 });
 
 export default rootReducer;
