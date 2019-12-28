@@ -163,18 +163,21 @@ const ConjugationContainer = ({location, firestore, getExplanation, getRandomCon
                             {
                                 Object.keys(conjugatedWord).map((item, key) => {
                                     if (Number(item)) {
-                                        return (
-                                            <ConjugationItem key={key}>
-                                                {
-                                                    <>
-                                                        {conjugatedWord[item].substring(0, conjugatedWord.info.breakpoint)}
-                                                        <YellowItem>
-                                                            {conjugatedWord[item].substring(conjugatedWord.info.breakpoint)}
-                                                        </YellowItem>
-                                                    </>
-                                                }
-                                            </ConjugationItem>
-                                        )
+                                        if (conjugatedWord[item]) {
+                                            return (
+                                                <ConjugationItem key={key}>
+                                                    {
+                                                        <>
+                                                            {conjugatedWord[item].substring(0, conjugatedWord.info.breakpoint)}
+                                                            <YellowItem>
+                                                                {conjugatedWord[item].substring(conjugatedWord.info.breakpoint)}
+                                                            </YellowItem>
+                                                        </>
+                                                    }
+                                                </ConjugationItem>
+                                            )
+                                        }
+
                                     }
 
                                     return null;
@@ -188,31 +191,33 @@ const ConjugationContainer = ({location, firestore, getExplanation, getRandomCon
                         <ExplanationList activeexplanation={activeExplanation ? 1 : 0}>
                             {
                                 Object.keys(explanation).map((item, key) => {
-                                    if (item === '0') {
-                                        return (
-                                            <ExplanationItem key={key}>
-                                                { word.stem }
-                                                <ExplanationLine>-</ExplanationLine>
-                                                { `${explanation[item]} (${word.korean} / ${word.english})` }
-                                            </ExplanationItem>
-                                        )
-                                    } else if (Number(item)) {
-                                        let subst;
-                                        if (explanation[item].word === 0) {
-                                            subst = conjugatedWord.info.breakpoint;
-                                        } else {
-                                            subst = 0;
-                                        }
+                                    if (explanation[item]) {
+                                        if (item === '0') {
+                                            return (
+                                                <ExplanationItem key={key}>
+                                                    { word.stem }
+                                                    <ExplanationLine>-</ExplanationLine>
+                                                    { `${explanation[item]} (${word.korean} / ${word.english})` }
+                                                </ExplanationItem>
+                                            )
+                                        } else if (Number(item)) {
+                                            let subst;
+                                            if (explanation[item].word === 0) {
+                                                subst = conjugatedWord.info.breakpoint;
+                                            } else {
+                                                subst = 0;
+                                            }
 
-                                        return (
-                                            <ExplanationItem key={key}>
-                                                <YellowItem>
-                                                    { conjugatedWord[item].split(' ')[explanation[item].word].substring(subst) }
-                                                </YellowItem>
-                                                <ExplanationLine>-</ExplanationLine>
-                                                { explanation[item].text }
-                                            </ExplanationItem>
-                                        )
+                                            return (
+                                                <ExplanationItem key={key}>
+                                                    <YellowItem>
+                                                        { conjugatedWord[item].split(' ')[explanation[item].word].substring(subst) }
+                                                    </YellowItem>
+                                                    <ExplanationLine>-</ExplanationLine>
+                                                    { explanation[item].text }
+                                                </ExplanationItem>
+                                            )
+                                        }
                                     }
 
                                     return false;

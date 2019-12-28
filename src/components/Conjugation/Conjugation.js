@@ -82,8 +82,18 @@ const Conjugation = () => {
 				</StyledPracticeBtn>
 			</Wrapper>
 			<Wrapper>
+				<StyledPracticeBtn to="/conjugation/future-tense-2" bordercolor="#ff9800">
+					Future tense <br /> ~ㄹ/을 것
+				</StyledPracticeBtn>
+			</Wrapper>
+			<Wrapper>
 				<StyledPracticeBtn to="/conjugation/ida-past-tense" bordercolor="#ff9800">
 					이다 <br /> Past tense
+				</StyledPracticeBtn>
+			</Wrapper>
+			<Wrapper>
+				<StyledPracticeBtn to="/conjugation/ida-present-tense" bordercolor="#ff9800">
+					이다 <br /> Present tense
 				</StyledPracticeBtn>
 			</Wrapper>
         </Container>
