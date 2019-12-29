@@ -97,6 +97,11 @@ const Conjugation = () => {
 					이다 <br /> Present tense
 				</StyledPracticeBtn>
 			</Wrapper>
+			<Wrapper>
+				<StyledPracticeBtn to="/conjugation/future-tense-3" bordercolor="#ff9800">
+					이다 <br /> Future tense using 되다
+				</StyledPracticeBtn>
+			</Wrapper>
         </Container>
     );
 };

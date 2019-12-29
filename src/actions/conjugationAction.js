@@ -38,6 +38,8 @@ export const getRandomConjugatedWord = (firestore, category) => {
                         return dispatch(getIda(firestore, category, counters));
                     case 'future-tense-2':
                         return dispatch(getFutureTense2(firestore, category, counters));
+                    case 'future-tense-3':
+                        return dispatch(getFutureTense3(firestore, category, counters));
                     default: window.location.href = '/404';
                 }
                 return;
@@ -182,6 +184,43 @@ export const getFutureTense2 = (firestore, category, counters) => {
             });
         } catch (err) {
             throw err;
+        }
+    }
+}
+
+export const getFutureTense3 = (firestore, category, counters) => {
+    return async dispatch => {
+        try {
+            const randomNoun = await firestore.collection('nouns').doc(getRandomNumber(counters.nouns)).get()
+            let nounArray = hangul.disassemble(randomNoun.data().korean);
+            if (hangul.isConsonant(nounArray[nounArray.length - 1])) {
+                nounArray.push('이')
+            } else {
+                nounArray.push('가');
+            }
+
+            const conjugatedWords = {
+                1: `${hangul.assemble(nounArray)} 될 것이에요`,
+                info: {
+                    breakpoint: randomNoun.data().korean.length,
+                    irregular: 0
+                }
+            }
+
+            dispatch({
+                type: 'UPDATE_CONJUGATED_WORD',
+                data: conjugatedWords
+            });
+            dispatch({
+                type: 'UPDATE_WORD',
+                data: {...randomNoun.data(), stem: randomNoun.data().korean}
+            });
+            dispatch({
+                type: 'UPDATE_LOADING_WORD',
+                data: false
+            });
+        } catch (err) {
+            dispatch(handleErrors(err));
         }
     }
 }

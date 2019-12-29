@@ -11,24 +11,24 @@ export const getSentenceData = (firestore, category, counters) => {
         const {counters} = getState().settingsReducer;
         
         switch(category) {
+            case 'ida':
+                return dispatch(getIda(firestore, counters));
             case 'to-have':
-                dispatch(getToHave(firestore, counters));
-                break;
+                return dispatch(getToHave(firestore, counters));
             case 'describe-nouns':
-                dispatch(getDescribeNouns(firestore, counters));
-                break;
+                return dispatch(getDescribeNouns(firestore, counters));
+            case 'possessive':
+                return dispatch(getPossessive(firestore, counters));
             case 'to-be-at-location':
-                dispatch(getToBeAtLocation(firestore, counters));
-                break;
+                return dispatch(getToBeAtLocation(firestore, counters));
             case 'negative-sentence-1':
-                dispatch(getNegativeSentence1(firestore, counters));
-                break;
+                return dispatch(getNegativeSentence1(firestore, counters));
             case 'negative-sentence-2':
-                dispatch(getNegativeSentence2(firestore, counters));
-                break;
+                return dispatch(getNegativeSentence2(firestore, counters));
             case 'to-not-have':
-                dispatch(getToNotHave(firestore, counters));
-                break;
+                return dispatch(getToNotHave(firestore, counters));
+            case 'to-not-be':
+                return dispatch(getToNotBe(firestore, counters));
             default: dispatch(handleErrors('404'));
         }
     }
@@ -39,6 +39,30 @@ export const clearSentenceData = () => {
         dispatch({
             type: 'CLEAR_SENTENCE_DATA'
         });
+    }
+}
+
+export const getIda = (firestore, counters) => {
+    return async dispatch => {
+        try {
+            const randomNoun = await firestore.collection('nouns').doc(getRandomNumber(counters.nouns)).get();
+            const explanation = await firestore.collection('ida').doc('explanation').get();
+
+            let nounArray = hangul.disassemble(randomNoun.data().korean);
+            nounArray.push('이다');
+            
+            dispatch({
+                type: 'UPDATE_SENTENCE_DATA',
+                explanation: explanation.data(),
+                sentence: `나는 ${hangul.assemble(nounArray)}`,
+                translation: [randomNoun.data()]
+            });
+            dispatch({
+                type: 'MAIN_LOADER_HIDE'
+            });
+        } catch (err) {
+            throw err;
+        }
     }
 }
 
@@ -104,6 +128,31 @@ export const getDescribeNouns = (firestore, counters) => {
                 sentence: `${hangul.assemble(adjectiveArray)} ${randomNoun.data().korean}`,
                 translation: [randomAdjective.data(), randomNoun.data()],
                 irregular: isIrregular
+            });
+            dispatch({
+                type: 'MAIN_LOADER_HIDE'
+            });
+        } catch (err) {
+            dispatch(handleErrors(err));
+        }
+    }
+}
+
+export const getPossessive = (firestore, counters) => {
+    return async dispatch => {
+        try {
+            const explanation = await firestore.collection('possessive').doc('explanation').get();
+            const randomNoun1 = await firestore.collection('nouns').doc(getRandomNumber(counters.nouns)).get();
+            const randomNoun2 = await firestore.collection('nouns').doc(getRandomNumber(counters.nouns)).get();
+
+            let randomNoun1Array = hangul.disassemble(randomNoun1.data().korean);
+            randomNoun1Array.push('의');
+
+            dispatch({
+                type: 'UPDATE_SENTENCE_DATA',
+                explanation: explanation.data(),
+                sentence: `${hangul.assemble(randomNoun1Array)} ${randomNoun2.data().korean}`,
+                translation: [randomNoun1.data(), randomNoun2.data()]
             });
             dispatch({
                 type: 'MAIN_LOADER_HIDE'
@@ -232,6 +281,34 @@ export const getToNotHave = (firestore, counters) => {
             dispatch({
                 type: 'MAIN_LOADER_HIDE'
             });            
+        } catch (err) {
+            dispatch(handleErrors(err));
+        }
+    }
+}
+
+export const getToNotBe = (firestore, counters) => {
+    return async dispatch => {
+        try {
+            const randomNoun = await firestore.collection('nouns').doc(getRandomNumber(counters.nouns)).get();
+            const explanation = await firestore.collection('to-not-have').doc('explanation').get();
+
+            let nounArray = hangul.disassemble(randomNoun.data().korean);
+            if (hangul.isConsonant(nounArray[nounArray.length - 1])) {
+                nounArray.push('이')
+            } else {
+                nounArray.push('가');
+            }
+
+            dispatch({
+                type: 'UPDATE_SENTENCE_DATA',
+                explanation: explanation.data(),
+                sentence: `${hangul.assemble(nounArray)} 아니다`,
+                translation: [randomNoun.data()]
+            });
+            dispatch({
+                type: 'MAIN_LOADER_HIDE'
+            });  
         } catch (err) {
             dispatch(handleErrors(err));
         }

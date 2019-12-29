@@ -45,6 +45,11 @@ const Sentences = () => {
             </Helmet>
             <PageTitle>Sentences</PageTitle>
             <Wrapper>
+                <StyledPracticeBtn to="/sentences/ida" bordercolor="#795548">
+                    To be <br /> 이다
+                </StyledPracticeBtn>
+            </Wrapper>
+            <Wrapper>
                 <StyledPracticeBtn to="/sentences/to-have" bordercolor="#795548">
                     To have <br /> 있다
                 </StyledPracticeBtn>
@@ -52,6 +57,11 @@ const Sentences = () => {
             <Wrapper>
                 <StyledPracticeBtn to="/sentences/to-be-at-location" bordercolor="#795548">
                     To be at location <br /> 있다
+                </StyledPracticeBtn>
+            </Wrapper>
+            <Wrapper>
+                <StyledPracticeBtn to="/sentences/possessive" bordercolor="#795548">
+                    Possessive particle <br /> 의
                 </StyledPracticeBtn>
             </Wrapper>
             <Wrapper>
@@ -72,6 +82,11 @@ const Sentences = () => {
             <Wrapper>
                 <StyledPracticeBtn to="/sentences/to-not-have" bordercolor="#795548">
                     To not have <br /> 없다
+                </StyledPracticeBtn>
+            </Wrapper>
+            <Wrapper>
+                <StyledPracticeBtn to="/sentences/to-not-be" bordercolor="#795548">
+                    To not be <br /> 아니다
                 </StyledPracticeBtn>
             </Wrapper>
         </Container>
