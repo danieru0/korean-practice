@@ -82,6 +82,7 @@ const Conjugation = () => {
 				</StyledPracticeBtn>
 			</Wrapper>
 			<Wrapper>
+				<TestLink to="/testtwo/future-tense-2">Test</TestLink>
 				<StyledPracticeBtn to="/conjugation/future-tense-2" bordercolor="#ff9800">
 					Future tense <br /> ~ㄹ/을 것
 				</StyledPracticeBtn>

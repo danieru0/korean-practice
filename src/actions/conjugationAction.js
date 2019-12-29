@@ -158,7 +158,7 @@ export const getFutureTense2 = (firestore, category, counters) => {
             verbArray = hangul.assemble(verbArray);
 
             const conjugatedWords = {
-                1: `${verbArray}`,
+                1: `${verbArray} ${conjugation.data()[1]}`,
                 2: `${verbArray} ${conjugation.data()[2]}`,
                 3: `${verbArray} ${conjugation.data()[3]}`,
                 4: `${verbArray} ${conjugation.data()[4]}`,
