@@ -1,108 +1,44 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import Helmet from 'react-helmet';
 
-import PracticeBtn from '../../shared/PracticeBtn/PracticeBtn';
-import PageTitle from '../../shared/PageTitle/PageTitle';
-
-const Container = styled.div`
-	width: calc(100% - 200px);
-	min-height: 100vh;
-	margin-left: 200px;
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-    align-content: flex-start;
-	align-content: center;
-    position: relative;
-    padding-top: 100px;
-
-	@media (max-width: 600px) {
-		width: 100%;
-		margin-left: 0px;
-	}
-`
-
-const Wrapper = styled.div`
-	position: relative;
-	width: auto;
-	height: auto;
-	margin: 20px;
-`
-
-const StyledPracticeBtn = styled(PracticeBtn)`
-	display: flex;
-	flex-direction: column;
-`
-
-const TestLink = styled(Link)`
-    position: absolute;
-	left: 0px;
-	top: 0px;
-	border: 0px;
-	background: transparent;
-	color: #fff;
-	font-family: ${props => props.theme.mainFont};
-	padding: 10px 15px;
-	font-size: 16px;
-	border-bottom: 3px solid #ff9800;
-	border-right: 3px solid #ff9800;
-	text-transform: uppercase;
-    text-decoration: none;
-
-	&:hover {
-		color: #ccc;
-	}
-`
+import LinksContainer from '../../shared/LinksContainer/LinksContainer';
 
 const Conjugation = () => {
+	const links = {
+		0: {
+			testLink: '/testtwo/past-tense',
+			sectionLink: '/conjugation/past-tense',
+			sectionText: 'Past tense'
+        },
+        1: {
+			testLink: '/testtwo/present-tense',
+			sectionLink: '/conjugation/present-tense',
+			sectionText: 'Present tense'
+        },
+        2: {
+			testLink: '/testtwo/future-tense-1',
+			sectionLink: '/conjugation/future-tense-1',
+			sectionText: 'Future tense <br /> 겠다'
+        },
+        3: {
+			testLink: '/testtwo/future-tense-2',
+			sectionLink: '/conjugation/future-tense-2',
+			sectionText: 'Future tense <br /> ~ㄹ/을 것'
+        }, 
+        4: {
+			sectionLink: '/conjugation/ida-past-tense',
+			sectionText: '이다 <br /> Past tense'
+        },
+        5: {
+			sectionLink: '/conjugation/ida-present-tense',
+			sectionText: '이다 <br /> Present tense'
+        },
+        6: {
+			sectionLink: '/conjugation/future-tense-3',
+			sectionText: '이다 <br /> Future tense using 되다'
+        }
+	}
     return (
-        <Container>
-			<Helmet>
-				<title>Conjugation - Korean practice</title>
-			</Helmet>
-            <PageTitle>Conjugation</PageTitle>
-			<Wrapper>
-				<TestLink to="/testtwo/past-tense">Test</TestLink>
-				<StyledPracticeBtn to="/conjugation/past-tense" bordercolor="#ff9800">
-					Past tense
-				</StyledPracticeBtn> 
-			</Wrapper>
-			<Wrapper>
-				<TestLink to="/testtwo/present-tense">Test</TestLink>
-				<StyledPracticeBtn to="/conjugation/present-tense" bordercolor="#ff9800">
-					Present tense
-				</StyledPracticeBtn>
-			</Wrapper>
-			<Wrapper>
-				<TestLink to="/testtwo/future-tense-1">Test</TestLink>
-				<StyledPracticeBtn to="/conjugation/future-tense-1" bordercolor="#ff9800">
-					Future tense <br /> 겠다
-				</StyledPracticeBtn>
-			</Wrapper>
-			<Wrapper>
-				<TestLink to="/testtwo/future-tense-2">Test</TestLink>
-				<StyledPracticeBtn to="/conjugation/future-tense-2" bordercolor="#ff9800">
-					Future tense <br /> ~ㄹ/을 것
-				</StyledPracticeBtn>
-			</Wrapper>
-			<Wrapper>
-				<StyledPracticeBtn to="/conjugation/ida-past-tense" bordercolor="#ff9800">
-					이다 <br /> Past tense
-				</StyledPracticeBtn>
-			</Wrapper>
-			<Wrapper>
-				<StyledPracticeBtn to="/conjugation/ida-present-tense" bordercolor="#ff9800">
-					이다 <br /> Present tense
-				</StyledPracticeBtn>
-			</Wrapper>
-			<Wrapper>
-				<StyledPracticeBtn to="/conjugation/future-tense-3" bordercolor="#ff9800">
-					이다 <br /> Future tense using 되다
-				</StyledPracticeBtn>
-			</Wrapper>
-        </Container>
+		<LinksContainer linksObject={links} title="Conjugation" bordercolor="#ff9800" />
     );
 };
 

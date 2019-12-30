@@ -1,95 +1,48 @@
 import React from 'react';
-import styled from 'styled-components';
-//eslint-disable-next-line
-import { Link } from 'react-router-dom';
-import Helmet from 'react-helmet';
 
-import PracticeBtn from '../../shared/PracticeBtn/PracticeBtn';
-import PageTitle from '../../shared/PageTitle/PageTitle';
-
-const Container = styled.div`
-	width: calc(100% - 200px);
-	min-height: 100vh;
-	margin-left: 200px;
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-    align-content: flex-start;
-	align-content: center;
-    position: relative;
-    padding-top: 100px;
-
-	@media (max-width: 600px) {
-		width: 100%;
-		margin-left: 0px;
-	}
-`
-
-const Wrapper = styled.div`
-	position: relative;
-	width: auto;
-	height: auto;
-	margin: 20px;
-`
-
-const StyledPracticeBtn = styled(PracticeBtn)`
-	display: flex;
-	flex-direction: column;
-`
+import LinksContainer from '../../shared/LinksContainer/LinksContainer';
 
 const Sentences = () => {
+    const links = {
+        0: {
+			sectionLink: '/sentences/ida',
+			sectionText: `To be <br /> 이다`
+        },
+        1: {
+			sectionLink: '/sentences/to-have',
+			sectionText: 'To have <br /> 있다'
+        },
+        2: {
+			sectionLink: '/sentences/to-be-at-location',
+			sectionText: 'To be at location <br /> 있다'
+        },
+        3: {
+			sectionLink: '/sentences/possessive',
+			sectionText: 'Possessive particle <br /> 의'
+        }, 
+        4: {
+			sectionLink: '/sentences/describe-nouns',
+			sectionText: 'Describing nouns <br /> ㄴ/은'
+        },
+        5: {
+			sectionLink: '/sentences/negative-sentence-1',
+			sectionText: 'Negative sentence <br /> 안'
+        },
+        6: {
+			sectionLink: '/sentences/negative-sentence-2',
+			sectionText: 'Negative sentence <br /> 지 않다'
+        },
+        7: {
+            sectionLink: '/sentences/to-not-have',
+            sectionText: 'To not have <br /> 없다'
+        },
+        8: {
+            sectionLink: '/sentences/to-not-be',
+            sectionText: 'To not be <br /> 아니다'
+        }
+    }
     return (
-        <Container>
-            <Helmet>
-                <title>Sentences - Korean practice</title>
-            </Helmet>
-            <PageTitle>Sentences</PageTitle>
-            <Wrapper>
-                <StyledPracticeBtn to="/sentences/ida" bordercolor="#795548">
-                    To be <br /> 이다
-                </StyledPracticeBtn>
-            </Wrapper>
-            <Wrapper>
-                <StyledPracticeBtn to="/sentences/to-have" bordercolor="#795548">
-                    To have <br /> 있다
-                </StyledPracticeBtn>
-            </Wrapper>
-            <Wrapper>
-                <StyledPracticeBtn to="/sentences/to-be-at-location" bordercolor="#795548">
-                    To be at location <br /> 있다
-                </StyledPracticeBtn>
-            </Wrapper>
-            <Wrapper>
-                <StyledPracticeBtn to="/sentences/possessive" bordercolor="#795548">
-                    Possessive particle <br /> 의
-                </StyledPracticeBtn>
-            </Wrapper>
-            <Wrapper>
-                <StyledPracticeBtn to="/sentences/describe-nouns" bordercolor="#795548">
-                    Describing nouns <br /> ㄴ/은
-                </StyledPracticeBtn>
-            </Wrapper>
-            <Wrapper>
-                <StyledPracticeBtn to="/sentences/negative-sentence-1" bordercolor="#795548">
-                    Negative sentence <br /> 안
-                </StyledPracticeBtn>
-            </Wrapper>
-            <Wrapper>
-                <StyledPracticeBtn to="/sentences/negative-sentence-2" bordercolor="#795548">
-                    Negative sentence <br /> 지 않다
-                </StyledPracticeBtn>
-            </Wrapper>
-            <Wrapper>
-                <StyledPracticeBtn to="/sentences/to-not-have" bordercolor="#795548">
-                    To not have <br /> 없다
-                </StyledPracticeBtn>
-            </Wrapper>
-            <Wrapper>
-                <StyledPracticeBtn to="/sentences/to-not-be" bordercolor="#795548">
-                    To not be <br /> 아니다
-                </StyledPracticeBtn>
-            </Wrapper>
-        </Container>
+        <LinksContainer linksObject={links} title="Sentences" bordercolor="#795548" />
     );
 };
 
