@@ -48,6 +48,8 @@ import SentencesContainer from './containers/Sentences/SentencesContainer';
 import Irregulars from './components/Irregulars/Irregulars';
 import IrregularsContainer from './containers/Irregulars/IrregularsContainer';
 
+import Numbers from './components/Numbers/Numbers';
+
 import AdminContainer from './containers/Admin/AdminContainer';
 
 function App({auth, modalActive, getCounters, firestore, counters}) {
@@ -95,6 +97,7 @@ function App({auth, modalActive, getCounters, firestore, counters}) {
 					<Route path="/admin/:page?" component={withAdminAuth(AdminContainer)}/>
 					<Route path="/irregulars/:type" component={IrregularsContainer}/>
 					<Route path="/irregulars" component={Irregulars}/>
+					<Route path="/numbers/:type?" component={Numbers}/>
 					<Route path="/404" component={NotFound}/>
 					<Redirect to="/404" />
 				</Switch>

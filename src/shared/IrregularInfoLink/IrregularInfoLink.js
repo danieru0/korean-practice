@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 const Irregular = styled(Link)`
     font-family: ${props => props.theme.mainFont};
@@ -64,9 +63,5 @@ const IrregularInfo = ({irregularType}) => {
         </>
     );
 };
-
-IrregularInfo.propTypes = {
-    irregularType: PropTypes.string.isRequired
-}
 
 export default IrregularInfo;

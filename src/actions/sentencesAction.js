@@ -291,7 +291,7 @@ export const getToNotBe = (firestore, counters) => {
     return async dispatch => {
         try {
             const randomNoun = await firestore.collection('nouns').doc(getRandomNumber(counters.nouns)).get();
-            const explanation = await firestore.collection('to-not-have').doc('explanation').get();
+            const explanation = await firestore.collection('to-not-be').doc('explanation').get();
 
             let nounArray = hangul.disassemble(randomNoun.data().korean);
             if (hangul.isConsonant(nounArray[nounArray.length - 1])) {

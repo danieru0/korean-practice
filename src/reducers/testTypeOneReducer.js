@@ -1,7 +1,9 @@
 const initState = {
     testTypeOneData: null,
     loadingTestTypeOne: false,
-    exp: 0
+    exp: 0,
+    title: 'Loading...',
+    task: 'Loading...',
 }
 
 const testTypeOneReducer = (state = initState, action) => {
@@ -9,7 +11,9 @@ const testTypeOneReducer = (state = initState, action) => {
         case 'UPDATE_TEST_ONE_DATA':
             return {
                 ...state,
-                testTypeOneData: action.data
+                testTypeOneData: action.data,
+                title: action.title,
+                task: action.task
             }
         case 'SET_EXP_TEST_ONE':
             return {
@@ -27,6 +31,8 @@ const testTypeOneReducer = (state = initState, action) => {
                 testTypeOneData: null,
                 loadingTestTypeOne: false,
                 exp: 0,
+                title: 'Loading...',
+                task: 'Loading...'
             }
         case 'LOADING_TEST_ONE':
             return {

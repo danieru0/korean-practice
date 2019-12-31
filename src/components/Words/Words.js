@@ -12,7 +12,7 @@ const Words = () => {
 		},
 		1: {
 			testLink: '/testone/verb',
-			sectionLink: '/words/verb',
+			sectionLink: '/words/verbs',
 			sectionText: 'Verbs'
 		},
 		2: {
@@ -24,6 +24,10 @@ const Words = () => {
 			testLink: '/testone/adverbs',
 			sectionLink: '/words/adverbs',
 			sectionText: 'Adverbs'
+		},
+		4: {
+			sectionLink: '/numbers',
+			sectionText: 'Numbers'
 		}
 	}
 

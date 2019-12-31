@@ -34,6 +34,8 @@ export const getTest = (firestore, category) => {
                 return dispatch(getSaved(firestore, category.split('=')[1]));
             case 'adverbs':
                 return dispatch(getAdverbs(firestore, counters[category]));
+            case (category.match(/numbers/) || {}).input:
+                return dispatch(getNumbers(firestore, category.split('=')[1], counters[category.split('=')[1]]));
             default: window.location.href = '/404';
         }
     }
@@ -46,7 +48,9 @@ export const getLetter = (firestore) => {
 
             dispatch({
                 type: 'UPDATE_TEST_ONE_DATA',
-                data: doc.data()
+                data: doc.data(),
+                title: 'Letter',
+                task: 'Translate this letter'
             });
             dispatch({
                 type: 'SET_EXP_TEST_ONE',
@@ -69,7 +73,9 @@ export const getVerb = (firestore, numberOfWords) => {
 
             dispatch({
                 type: 'UPDATE_TEST_ONE_DATA',
-                data: doc.data()
+                data: doc.data(),
+                title: 'Verb',
+                task: 'Translate this verb'
             });
             dispatch({
                 type: 'SET_EXP_TEST_ONE',
@@ -92,7 +98,9 @@ export const getAdjective = (firestore, numberOfWords) => {
 
             dispatch({
                 type: 'UPDATE_TEST_ONE_DATA',
-                data: doc.data()
+                data: doc.data(),
+                title: 'Adjective',
+                task: 'Translate this adjective'
             });
             dispatch({
                 type: 'SET_EXP_TEST_ONE',
@@ -120,7 +128,9 @@ export const getSaved = (firestore, type) => {
                         if (doc.exists) {
                             dispatch({
                                 type: 'UPDATE_TEST_ONE_DATA',
-                                data: doc.data()
+                                data: doc.data(),
+                                title: `${type}`,
+                                task: `Translate this ${type}`
                             });
                             dispatch({
                                 type: 'SET_EXP_TEST_ONE',
@@ -151,7 +161,9 @@ export const getNouns = (firestore, numberOfWords) => {
 
             dispatch({
                 type: 'UPDATE_TEST_ONE_DATA',
-                data: doc.data()
+                data: doc.data(),
+                title: 'Noun',
+                task: 'Translate this noun'
             });
             dispatch({
                 type: 'SET_EXP_TEST_ONE',
@@ -174,11 +186,38 @@ export const getAdverbs = (firestore, numberOfWords) => {
 
             dispatch({
                 type: 'UPDATE_TEST_ONE_DATA',
-                data: doc.data()
+                data: doc.data(),
+                title: 'Adverbs',
+                task: 'Translate this adverb'
             });
             dispatch({
                 type: 'SET_EXP_TEST_ONE',
                 data: 5
+            });
+            dispatch({
+                type: 'LOADING_TEST_ONE',
+                data: false
+            });
+        } catch (err) {
+            dispatch(handleErrors(err));
+        }
+    }
+}
+
+export const getNumbers = (firestore, type, counter) => {
+    return async dispatch => {
+        try {
+            const doc = await firestore.collection(type).doc(getRandomNumber(counter)).get();
+
+            dispatch({
+                type: 'UPDATE_TEST_ONE_DATA',
+                data: doc.data(),
+                title: 'Numbers',
+                task: 'Translate this number'
+            });
+            dispatch({
+                type: 'SET_EXP_TEST_ONE',
+                data: 1
             });
             dispatch({
                 type: 'LOADING_TEST_ONE',

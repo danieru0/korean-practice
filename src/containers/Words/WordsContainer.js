@@ -70,7 +70,7 @@ const Line = styled.hr`
 
 const Text = styled.p``
 
-const WordContainer = ({type, location, firestore, getWords, clearWords, saveWord, wordSaving, words, auth, lastWord}) => {
+const WordContainer = ({type, location, firestore, getWords, clearWords, saveWord, wordSaving, words, auth, lastWord, profile}) => {
 	const [scrollDown, setScrollDown] = useState(null);
 	useEffect(() => {
 		if (scrollDown === false) return;
@@ -121,7 +121,7 @@ const WordContainer = ({type, location, firestore, getWords, clearWords, saveWor
 	const containerRef = useRef(null);
 
 	const handleWordSave = item => {
-		saveWord(firestore, type, item);
+		saveWord(firestore, type, item, profile);
 	}
 
 	return (
@@ -156,7 +156,8 @@ const mapStateToProps = state => {
 		words: state.wordsReducer.words,
 		wordSaving: state.wordsReducer.wordSaving,
 		lastWord: state.wordsReducer.lastWord,
-		auth: state.firebase.auth
+		auth: state.firebase.auth,
+		profile: state.firebase.profile
 	}
 }
 

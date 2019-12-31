@@ -274,19 +274,19 @@ class TestTypeOne extends PureComponent {
     }
 
     render() {
-        const { testTypeOneData, loadingTestTypeOne, location, userExpAndAnswerUpdated } = this.props;
+        const { testTypeOneData, loadingTestTypeOne, userExpAndAnswerUpdated, task, title } = this.props;
 
         return (
             <Container>
                 <Helmet>
                     <title>Test - Korean practice</title>
                 </Helmet>
-                <PageTitle>{`Test / ${location.pathname.split('/')[2]} ${location.search.split('=')[1] || ''}`}</PageTitle>
+                <PageTitle>{`Test / ${title}`}</PageTitle>
                 {
                     testTypeOneData ? (
                         <Test>
                             <TopWrapper>
-                                <TestTitle>{`Translate this ${location.pathname.split('/')[2]}`}</TestTitle>
+                                <TestTitle>{task}</TestTitle>
                                 <ReverseButton reversed={this.state.reverseOnNextTask ? 'reverseInit' : this.state.reverse && 'active'} onClick={this.handleReverseClick}>Reverse</ReverseButton>
                             </TopWrapper>
                             <TestTask correctanswer={this.state.correct ? 1 : 0}>
@@ -319,6 +319,8 @@ const mapStateToProps = state => {
         testTypeOneData: state.testTypeOneReducer.testTypeOneData,
         loadingTestTypeOne: state.testTypeOneReducer.loadingTestTypeOne,
         exp: state.testTypeOneReducer.exp,
+        title: state.testTypeOneReducer.title,
+        task: state.testTypeOneReducer.task,
         userExpAndAnswerUpdated: state.userReducer.userExpAndAnswerUpdated
     }
 }

@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 import { handleErrors } from './errorsAction';
+import createIdFromCounter from '../utils/createIdFromCounter';
 
 export const getNounsCategories = (firestore) => {
 	return async dispatch => {
@@ -77,7 +78,7 @@ export const getWords = (firestore, type, lastWord, category, scrollDown) => {
 	}
 }
 
-export const saveWord = (firestore, category, item) => {
+export const saveWord = (firestore, category, item, profile) => {
 	return async (dispatch, getState, { getFirebase }) => {
 		const firebase = getFirebase();
 
@@ -93,10 +94,10 @@ export const saveWord = (firestore, category, item) => {
 					type: 'SAVING_WORD_STATE',
 					data: true
 				});
-
+				
 				firestore.collection('users').doc(user.uid).collection(category).where("english", "==", item.english).limit(1).get().then(snapshot => {
 					if (snapshot.empty) {
-						firestore.collection('users').doc(user.uid).collection(category).doc(item.id).set({ english: item.english, korean: item.korean }).then(() => {
+						firestore.collection('users').doc(user.uid).collection(category).doc(createIdFromCounter(profile.saved[category])).set({ english: item.english, korean: item.korean }).then(() => {
 							firestore.collection('users').doc(user.uid).update({
 								[`saved.${category}`]: firebase.firestore.FieldValue.increment(1)
 							}).then(() => {
@@ -199,6 +200,25 @@ export const removeSavedWord = (firestore, type, id) => {
 				});
 			}
 		})
+	}
+}
+
+export const getNumbers = (firestore, type) => {
+	return async dispatch => {
+		try {
+			const numbers = await firestore.collection(type).get();
+			let numbersArray = [];
+			numbers.docs.forEach(item => {
+				numbersArray.push(item.data());
+			});
+
+			dispatch({
+				type: `UPDATE_WORDS`,
+				data: numbersArray
+			});
+		} catch (err) {
+			dispatch(handleErrors(err));
+		}
 	}
 }
 
