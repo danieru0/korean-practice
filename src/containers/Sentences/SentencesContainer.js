@@ -104,7 +104,7 @@ const ExplanationMore = styled.span`
     }
 `
 
-const Sentences = ({location, firestore, getSentenceData, clearSentenceData, counters, explanation, sentence, translation, irregular}) => {
+const Sentences = ({location, firestore, getSentenceData, clearSentenceData, counters, explanation, sentence, translation, irregular, nextButton}) => {
     useEffect(() => {
         getSentenceData(firestore, location.pathname.split('/')[2], counters);
         //eslint-disable-next-line
@@ -131,7 +131,7 @@ const Sentences = ({location, firestore, getSentenceData, clearSentenceData, cou
                     <Wrapper>
                         <TopContainer>
                             <IrregularInfoLink irregularType={irregular} />
-                            <StyledNormalBtn onClick={getNextSentence}>Next</StyledNormalBtn>
+                            {nextButton && <StyledNormalBtn onClick={getNextSentence}>Next</StyledNormalBtn>}
                         </TopContainer>
                         {
                             typeof sentence === 'object' ? (
@@ -175,7 +175,8 @@ const mapStateToProps = state => {
         explanation: state.sentencesReducer.explanation,
         sentence: state.sentencesReducer.sentence,
         translation: state.sentencesReducer.translation,
-        irregular: state.sentencesReducer.irregular
+        irregular: state.sentencesReducer.irregular,
+        nextButton: state.sentencesReducer.nextButton
     }
 }
 

@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 
+import * as linksObject from '../../constants/linksObject';
+
 import PracticeBtn from '../../shared/PracticeBtn/PracticeBtn';
 import PageTitle from '../../shared/PageTitle/PageTitle';
 
@@ -59,7 +61,7 @@ const TestLink = styled(Link)`
 	}
 `
 
-const LinksContainer = ({linksObject, title, bordercolor}) => {
+const LinksContainer = ({type, bordercolor, title}) => {
     return (
         <Container>
             <Helmet>
@@ -67,16 +69,16 @@ const LinksContainer = ({linksObject, title, bordercolor}) => {
             </Helmet>
             <PageTitle>{title}</PageTitle>
             {
-                Object.keys(linksObject).map((id, key) => {
-                    const item = linksObject[id];
+                Object.keys(linksObject.LINKS[type]).map((id, key) => {
+                    const item = linksObject.LINKS[type][id];
                     return (
                         <Wrapper key={key}>
                             {
                                 item.testLink !== undefined && (
-                                    <TestLink to={item.testLink} bordercolor={bordercolor}>{item.testText ? item.testText : 'Test'}</TestLink>
+                                    <TestLink to={item.testLink} bordercolor={item.bordercolor ? item.bordercolor: bordercolor}>{item.testText ? item.testText : 'Test'}</TestLink>
                                )
                             }
-                            <StyledPracticeBtn to={item.sectionLink} bordercolor={bordercolor}>
+                            <StyledPracticeBtn to={item.sectionLink} bordercolor={item.bordercolor ? item.bordercolor : bordercolor}>
                                 {item.sectionText.replace('<br />', '\n')}
                             </StyledPracticeBtn>
                         </Wrapper>
@@ -88,7 +90,7 @@ const LinksContainer = ({linksObject, title, bordercolor}) => {
 };
 
 LinksContainer.propTypes = {
-	linksObject: PropTypes.object,
+	type: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
 	bordercolor: PropTypes.string.isRequired
 }

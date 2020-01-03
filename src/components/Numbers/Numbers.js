@@ -5,11 +5,11 @@ import { withFirestore } from 'react-redux-firebase';
 import styled from 'styled-components';
 
 import { getNumbers, clearWords } from '../../actions/wordsAction';
+import LinksContainer from '../../containers/LinksContainer/LinksContainer';
 
 import PracticeBtn from '../../shared/PracticeBtn/PracticeBtn';
 import PageTitle from '../../shared/PageTitle/PageTitle';
 import PageLoader from '../../shared/PageLoader/PageLoader';
-import LinksContainer from '../../shared/LinksContainer/LinksContainer';
 
 const Container = styled.div`
 	width: calc(100% - 200px);
@@ -53,20 +53,7 @@ const Numbers = ({location, getNumbers, firestore, words, clearWords}) => {
             clearWords();
         }
     }, [location, getNumbers, firestore, clearWords]);
-
-    const links = {
-        0: {
-            testLink: '/testone/numbers?=sino-numbers',
-            sectionLink: '/numbers/sino-numbers',
-            sectionText: 'Sino-korean numbers'
-        },
-        1: {
-            testLink: '/testone/numbers?=pure-numbers',
-            sectionLink: '/numbers/pure-numbers',
-            sectionText: 'Pure numbers'
-        }
-    }
-
+    
     if (location.pathname.split('/')[2]) {
         return (
             <Container>
@@ -89,7 +76,7 @@ const Numbers = ({location, getNumbers, firestore, words, clearWords}) => {
             </Container>
         )
     } else {
-        return <LinksContainer linksObject={links} bordercolor="#7134eb" title="Numbers"/>;
+        return <LinksContainer type="numbers" bordercolor="#7134eb" title="Numbers"/>;
     }
 };
 

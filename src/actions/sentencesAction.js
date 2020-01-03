@@ -29,6 +29,8 @@ export const getSentenceData = (firestore, category, counters) => {
                 return dispatch(getToNotHave(firestore, counters));
             case 'to-not-be':
                 return dispatch(getToNotBe(firestore, counters));
+            case 'telling-time':
+                return dispatch(getTellingTime(firestore, counters));
             default: dispatch(handleErrors('404'));
         }
     }
@@ -305,6 +307,27 @@ export const getToNotBe = (firestore, counters) => {
                 explanation: explanation.data(),
                 sentence: `${hangul.assemble(nounArray)} 아니다`,
                 translation: [randomNoun.data()]
+            });
+            dispatch({
+                type: 'MAIN_LOADER_HIDE'
+            });  
+        } catch (err) {
+            dispatch(handleErrors(err));
+        }
+    }
+}
+
+export const getTellingTime = (firestore, counters) => {
+    return async dispatch => {
+        try {
+            const explanation = await firestore.collection('telling-time').doc('explanation').get();
+
+            dispatch({
+                type: 'UPDATE_SENTENCE_DATA',
+                explanation: explanation.data(),
+                sentence: `2시 30분`,
+                translation: [{korean: '도 시 삼십 분', english: '2:30'}],
+                nextButton: false
             });
             dispatch({
                 type: 'MAIN_LOADER_HIDE'
