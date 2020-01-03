@@ -137,6 +137,10 @@ export const LINKS = {
         9: {
             sectionLink: '/sentences/telling-time',
             sectionText: 'Telling korean time'
+        },
+        10: {
+            sectionLink: '/sentences/for-amount',
+            sectionText: '"For" a certain amount of time <br /> 동안'
         }
     },
     words: {

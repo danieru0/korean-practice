@@ -31,6 +31,8 @@ export const getSentenceData = (firestore, category, counters) => {
                 return dispatch(getToNotBe(firestore, counters));
             case 'telling-time':
                 return dispatch(getTellingTime(firestore, counters));
+            case 'for-amount':
+                return dispatch(getForAmount(firestore, counters));
             default: dispatch(handleErrors('404'));
         }
     }
@@ -334,6 +336,30 @@ export const getTellingTime = (firestore, counters) => {
             });  
         } catch (err) {
             dispatch(handleErrors(err));
+        }
+    }
+}
+
+export const getForAmount = (firestore, counters) => {
+    return async dispatch => {
+        try {
+            const explanation = await firestore.collection('for-amount').doc('explanation').get();
+            const randomPastTense = await firestore.collection('past-tense').doc(getRandomNumber(counters['past-tense'])).get();
+            const word = await randomPastTense.data().word.get();
+            const randomCounter = await firestore.collection('counters').doc(getRandomNumber(counters.counters)).get();
+            const randomNumber = await firestore.collection(randomCounter.data().numbers).doc(getRandomNumber(counters[randomCounter.data().numbers] - 4)).get();
+
+            dispatch({
+                type: 'UPDATE_SENTENCE_DATA',
+                explanation: explanation.data(),
+                sentence: `${randomNumber.data()[randomCounter.data().type]}${randomCounter.data().numbers === 'sino-numbers' ? '' : ' '}${randomCounter.data().korean} ${randomPastTense.data()[2]}`,
+                translation: [randomNumber.data(), randomCounter.data(), word.data()]
+            });
+            dispatch({
+                type: 'MAIN_LOADER_HIDE'
+            }); 
+        } catch (err) {
+           dispatch(handleErrors(err));
         }
     }
 }
