@@ -168,6 +168,10 @@ export const LINKS = {
 		4: {
 			sectionLink: '/numbers',
 			sectionText: 'Numbers'
-		}
+        },
+        5: {
+            sectionLink: '/words/months',
+            sectionText: 'Months of the year'
+        }
     }
 }

@@ -106,7 +106,7 @@ const ExplanationMore = styled.span`
 
 const Sentences = ({location, firestore, getSentenceData, clearSentenceData, counters, explanation, sentence, translation, irregular, nextButton}) => {
     useEffect(() => {
-        getSentenceData(firestore, location.pathname.split('/')[2], counters);
+        getSentenceData(firestore, location.pathname.split('/')[2]);
         //eslint-disable-next-line
     }, [firestore, location, getSentenceData])
 
@@ -117,7 +117,7 @@ const Sentences = ({location, firestore, getSentenceData, clearSentenceData, cou
     }, [clearSentenceData])
 
     const getNextSentence = () => {
-        getSentenceData(firestore, location.pathname.split('/')[2], counters);
+        getSentenceData(firestore, location.pathname.split('/')[2], explanation);
     }
 
     return (

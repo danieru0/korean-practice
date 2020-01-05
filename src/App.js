@@ -73,6 +73,7 @@ function App({auth, modalActive, getCounters, firestore, counters}) {
 					<Route path="/words/adjectives" render={props => <WordsContainer type="adjectives" {...props}/>}/>
 					<Route path="/words/verbs" render={props => <WordsContainer type="verbs" {...props}/>}/>
 					<Route path="/words/adverbs" render={props => <WordsContainer type="adverbs" {...props}/>}/>
+					<Route path="/words/months" render={props => <WordsContainer type="months" {...props}/>}/>
 					<Route path="/words/nouns/categories" component={Categories}/>
 					<Route path="/words/nouns/:category" render={props => <WordsContainer type="nouns" {...props}/>}/>
 					<Route path="/words" render={props => <LinksContainer type="words" bordercolor="#00bcd4" title="Words" {...props} />}/>

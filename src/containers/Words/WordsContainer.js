@@ -87,6 +87,9 @@ const WordContainer = ({type, location, firestore, getWords, clearWords, saveWor
 			case 'adverbs':
 				getWords(firestore, 'adverbs', lastWord, null, scrollDown);
 				break;
+			case 'months':
+				getWords(firestore, 'months', lastWord, null, scrollDown);
+				break;
 			default: return false;
 		}
 		// eslint-disable-next-line

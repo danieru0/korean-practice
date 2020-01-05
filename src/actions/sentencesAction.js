@@ -2,37 +2,45 @@ import getRandomNumber from '../utils/getRandomNumber';
 import * as hangul from 'hangul-js';
 import { handleErrors } from './errorsAction';
 
-export const getSentenceData = (firestore, category, counters) => {
+export const getSentenceData = (firestore, category, explanation) => {
     return async (dispatch, getState) => {
         dispatch({
             type: 'MAIN_LOADER_SHOW'
         });
 
         const {counters} = getState().settingsReducer;
-        
+        let data;
+
+        if (!explanation) {
+            data = await firestore.collection('sentences').doc(category).get();
+            data = data.data();
+        } else {
+            data = explanation;
+        }
+
         switch(category) {
             case 'ida':
-                return dispatch(getIda(firestore, counters));
+                return dispatch(getIda(firestore, counters, data));
             case 'to-have':
-                return dispatch(getToHave(firestore, counters));
+                return dispatch(getToHave(firestore, counters, data));
             case 'describe-nouns':
-                return dispatch(getDescribeNouns(firestore, counters));
+                return dispatch(getDescribeNouns(firestore, counters, data.data()));
             case 'possessive':
-                return dispatch(getPossessive(firestore, counters));
+                return dispatch(getPossessive(firestore, counters, data));
             case 'to-be-at-location':
-                return dispatch(getToBeAtLocation(firestore, counters));
+                return dispatch(getToBeAtLocation(firestore, counters, data));
             case 'negative-sentence-1':
-                return dispatch(getNegativeSentence1(firestore, counters));
+                return dispatch(getNegativeSentence1(firestore, counters, data));
             case 'negative-sentence-2':
-                return dispatch(getNegativeSentence2(firestore, counters));
+                return dispatch(getNegativeSentence2(firestore, counters, data));
             case 'to-not-have':
-                return dispatch(getToNotHave(firestore, counters));
+                return dispatch(getToNotHave(firestore, counters, data));
             case 'to-not-be':
-                return dispatch(getToNotBe(firestore, counters));
+                return dispatch(getToNotBe(firestore, counters, data));
             case 'telling-time':
-                return dispatch(getTellingTime(firestore, counters));
+                return dispatch(getTellingTime(firestore, counters, data));
             case 'for-amount':
-                return dispatch(getForAmount(firestore, counters));
+                return dispatch(getForAmount(firestore, counters, data));
             default: dispatch(handleErrors('404'));
         }
     }
@@ -46,18 +54,17 @@ export const clearSentenceData = () => {
     }
 }
 
-export const getIda = (firestore, counters) => {
+export const getIda = (firestore, counters, data) => {
     return async dispatch => {
-        try {
+        try {;
             const randomNoun = await firestore.collection('nouns').doc(getRandomNumber(counters.nouns)).get();
-            const explanation = await firestore.collection('ida').doc('explanation').get();
 
             let nounArray = hangul.disassemble(randomNoun.data().korean);
             nounArray.push('이다');
             
             dispatch({
                 type: 'UPDATE_SENTENCE_DATA',
-                explanation: explanation.data(),
+                explanation: data,
                 sentence: `나는 ${hangul.assemble(nounArray)}`,
                 translation: [randomNoun.data()]
             });
@@ -70,13 +77,10 @@ export const getIda = (firestore, counters) => {
     }
 }
 
-export const getToHave = (firestore, counters) => {
+export const getToHave = (firestore, counters, data) => {
     return async dispatch => {
         try {
             const randomNoun = await firestore.collection('nouns').doc(getRandomNumber(counters.nouns)).get();
-            const conjugation = await firestore.collection('to-have').doc('conjugation').get();
-            const explanation = await firestore.collection('to-have').doc('explanation').get();
-
             let nounArray = hangul.disassemble(randomNoun.data().korean);
 
             if (hangul.isConsonant(nounArray[nounArray.length - 1])) {
@@ -86,11 +90,11 @@ export const getToHave = (firestore, counters) => {
             }
             let nounWithParticle = hangul.assemble(nounArray);
             
-            const sentence = Object.keys(conjugation.data()).map(key => `${nounWithParticle} ${conjugation.data()[key]}`);
+            const sentence = Object.keys(data.conjugation).map(key => `${nounWithParticle} ${data.conjugation[key]}`);    
 
             dispatch({
                 type: 'UPDATE_SENTENCE_DATA',
-                explanation: explanation.data(),
+                explanation: data,
                 sentence: sentence,
                 translation: [randomNoun.data()]
             });
@@ -103,12 +107,11 @@ export const getToHave = (firestore, counters) => {
     }
 }
 
-export const getDescribeNouns = (firestore, counters) => {
+export const getDescribeNouns = (firestore, counters, data) => {
     return async dispatch => {
         try {
             const randomAdjective = await firestore.collection('adjectives').doc(getRandomNumber(counters.adjective)).get();
             const randomNoun = await firestore.collection('nouns').doc(getRandomNumber(counters.nouns)).get();
-            const explanation = await firestore.collection('describe-nouns').doc('explanation').get();
 
             let adjectiveArray = hangul.disassemble(randomAdjective.data().korean);
             let isIrregular = 0;
@@ -128,7 +131,7 @@ export const getDescribeNouns = (firestore, counters) => {
 
             dispatch({
                 type: 'UPDATE_SENTENCE_DATA',
-                explanation: explanation.data(),
+                explanation: data,
                 sentence: `${hangul.assemble(adjectiveArray)} ${randomNoun.data().korean}`,
                 translation: [randomAdjective.data(), randomNoun.data()],
                 irregular: isIrregular
@@ -142,10 +145,9 @@ export const getDescribeNouns = (firestore, counters) => {
     }
 }
 
-export const getPossessive = (firestore, counters) => {
+export const getPossessive = (firestore, counters, data) => {
     return async dispatch => {
         try {
-            const explanation = await firestore.collection('possessive').doc('explanation').get();
             const randomNoun1 = await firestore.collection('nouns').doc(getRandomNumber(counters.nouns)).get();
             const randomNoun2 = await firestore.collection('nouns').doc(getRandomNumber(counters.nouns)).get();
 
@@ -154,7 +156,7 @@ export const getPossessive = (firestore, counters) => {
 
             dispatch({
                 type: 'UPDATE_SENTENCE_DATA',
-                explanation: explanation.data(),
+                explanation: data,
                 sentence: `${hangul.assemble(randomNoun1Array)} ${randomNoun2.data().korean}`,
                 translation: [randomNoun1.data(), randomNoun2.data()]
             });
@@ -167,22 +169,20 @@ export const getPossessive = (firestore, counters) => {
     }
 }
 
-export const getToBeAtLocation = (firestore, counters) => {
+export const getToBeAtLocation = (firestore, counters, data) => {
     return async dispatch => {
         try {
-            const explanation = await firestore.collection('to-be-at-location').doc('explanation').get();
-            const conjugation = await firestore.collection('to-be-at-location').doc('conjugation').get();
             const randomNoun = await firestore.collection('nouns').doc(getRandomNumber(counters.nouns)).get();
     
             let nounArray = hangul.disassemble(randomNoun.data().korean);
             nounArray.push('에');
             nounArray = hangul.assemble(nounArray);
     
-            const sentence = Object.keys(conjugation.data()).map(key => `${nounArray} ${conjugation.data()[key]}`);
+            const sentence = Object.keys(data.conjugation).map(key => `${nounArray} ${data.conjugation[key]}`);
     
             dispatch({
                 type: 'UPDATE_SENTENCE_DATA',
-                explanation: explanation.data(),
+                explanation: data,
                 sentence: sentence,
                 translation: [randomNoun.data()]
             });
@@ -196,7 +196,7 @@ export const getToBeAtLocation = (firestore, counters) => {
     }
 }
 
-export const getNegativeSentence1 = (firestore, counters) => {
+export const getNegativeSentence1 = (firestore, counters, data) => {
     return async dispatch => {
         try {
             const wordsBase = {
@@ -207,13 +207,12 @@ export const getNegativeSentence1 = (firestore, counters) => {
 
             const randomBase = wordsBase[Math.floor(Math.random() * Object.keys(wordsBase).length) + 1];
 
-            const explanation = await firestore.collection('negative-sentence-1').doc('explanation').get();
             const conjugatedWord = await firestore.collection(randomBase).doc(getRandomNumber(counters[randomBase])).get();
             const wordTranslation = await conjugatedWord.data().word.get();
 
             dispatch({
                 type: 'UPDATE_SENTENCE_DATA',
-                explanation: explanation.data(),
+                explanation: data,
                 sentence: `안 ${conjugatedWord.data()[2]}`,
                 translation: [wordTranslation.data()]
             });
@@ -226,7 +225,7 @@ export const getNegativeSentence1 = (firestore, counters) => {
     }
 }
 
-export const getNegativeSentence2 = (firestore, counters) => {
+export const getNegativeSentence2 = (firestore, counters, data) => {
     return async dispatch => {
         try {
             const wordsBase = {
@@ -240,7 +239,6 @@ export const getNegativeSentence2 = (firestore, counters) => {
 
             const randomBase = Math.floor(Math.random() * Object.keys(wordsBase).length) + 1;
 
-            const explanation = await firestore.collection('negative-sentence-1').doc('explanation').get();
             const word = await firestore.collection(wordsBase[randomBase]).doc(getRandomNumber(counters[countersNameBase[randomBase]])).get();
             const wordArray = hangul.disassemble(word.data().korean);
             wordArray.splice(wordArray.length - 2, wordArray.length);
@@ -248,7 +246,7 @@ export const getNegativeSentence2 = (firestore, counters) => {
 
             dispatch({
                 type: 'UPDATE_SENTENCE_DATA',
-                explanation: explanation.data(),
+                explanation: data,
                 sentence: `${hangul.assemble(wordArray)} 않아요`,
                 translation: [word.data()]
             });
@@ -261,11 +259,10 @@ export const getNegativeSentence2 = (firestore, counters) => {
     }
 }
 
-export const getToNotHave = (firestore, counters) => {
+export const getToNotHave = (firestore, counters, data) => {
     return async dispatch => {
         try {
             const randomNoun = await firestore.collection('nouns').doc(getRandomNumber(counters.nouns)).get();
-            const explanation = await firestore.collection('to-not-have').doc('explanation').get();
 
             let nounArray = hangul.disassemble(randomNoun.data().korean);
 
@@ -278,7 +275,7 @@ export const getToNotHave = (firestore, counters) => {
 
             dispatch({
                 type: 'UPDATE_SENTENCE_DATA',
-                explanation: explanation.data(),
+                explanation: data,
                 sentence: `${nounWithParticle} 없어요`,
                 translation: [randomNoun.data()]
             });
@@ -291,11 +288,10 @@ export const getToNotHave = (firestore, counters) => {
     }
 }
 
-export const getToNotBe = (firestore, counters) => {
+export const getToNotBe = (firestore, counters, data) => {
     return async dispatch => {
         try {
             const randomNoun = await firestore.collection('nouns').doc(getRandomNumber(counters.nouns)).get();
-            const explanation = await firestore.collection('to-not-be').doc('explanation').get();
 
             let nounArray = hangul.disassemble(randomNoun.data().korean);
             if (hangul.isConsonant(nounArray[nounArray.length - 1])) {
@@ -306,7 +302,7 @@ export const getToNotBe = (firestore, counters) => {
 
             dispatch({
                 type: 'UPDATE_SENTENCE_DATA',
-                explanation: explanation.data(),
+                explanation: data,
                 sentence: `${hangul.assemble(nounArray)} 아니다`,
                 translation: [randomNoun.data()]
             });
@@ -319,14 +315,12 @@ export const getToNotBe = (firestore, counters) => {
     }
 }
 
-export const getTellingTime = (firestore, counters) => {
+export const getTellingTime = (firestore, counters, data) => {
     return async dispatch => {
         try {
-            const explanation = await firestore.collection('telling-time').doc('explanation').get();
-
             dispatch({
                 type: 'UPDATE_SENTENCE_DATA',
-                explanation: explanation.data(),
+                explanation: data,
                 sentence: `2시 30분`,
                 translation: [{korean: '도 시 삼십 분', english: '2:30'}],
                 nextButton: false
@@ -340,10 +334,9 @@ export const getTellingTime = (firestore, counters) => {
     }
 }
 
-export const getForAmount = (firestore, counters) => {
+export const getForAmount = (firestore, counters, data) => {
     return async dispatch => {
         try {
-            const explanation = await firestore.collection('for-amount').doc('explanation').get();
             const randomPastTense = await firestore.collection('past-tense').doc(getRandomNumber(counters['past-tense'])).get();
             const word = await randomPastTense.data().word.get();
             const randomCounter = await firestore.collection('counters').doc(getRandomNumber(counters.counters)).get();
@@ -351,8 +344,8 @@ export const getForAmount = (firestore, counters) => {
 
             dispatch({
                 type: 'UPDATE_SENTENCE_DATA',
-                explanation: explanation.data(),
-                sentence: `${randomNumber.data()[randomCounter.data().type]}${randomCounter.data().numbers === 'sino-numbers' ? '' : ' '}${randomCounter.data().korean} ${randomPastTense.data()[2]}`,
+                explanation: data,
+                sentence: `${randomNumber.data()[randomCounter.data().type]}${randomCounter.data().numbers === 'sino-numbers' ? '' : ' '}${randomCounter.data().korean} 동안 ${randomPastTense.data()[2]}`,
                 translation: [randomNumber.data(), randomCounter.data(), word.data()]
             });
             dispatch({
