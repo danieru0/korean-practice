@@ -10,6 +10,26 @@ export const addIka = (wordArray) => {
     return wordArray;
 }
 
+export const addAnd = (wordArray) => {
+    if (hangul.isConsonant(wordArray[wordArray.length - 1])) {
+        wordArray.push('과');
+    } else {
+        wordArray.push('와');
+    }
+
+    return wordArray;
+}
+
+export const addRyr = (wordArray) => {
+    if (hangul.isConsonant(wordArray[wordArray.length - 1])) {
+        wordArray.push('을');
+    } else {
+        wordArray.push('를');
+    }
+
+    return wordArray;
+}
+
 export const addDescribeNouns = (wordArray) => {
     wordArray.splice(wordArray.length - 2, wordArray.length);
     let irregular = 0;

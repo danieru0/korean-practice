@@ -105,6 +105,12 @@ export const processData = (firestore, counters, data) => {
                                             case '-dzi':
                                                 getWords[id]['wordHanguljs'] = helpers.addDzi(getWords[id]['wordHanguljs']);
                                                 break;
+                                            case '-and':
+                                                getWords[id]['wordHanguljs'] = helpers.addAnd(getWords[id]['wordHanguljs']);
+                                                break;
+                                            case '-ryr':
+                                                getWords[id]['wordHanguljs'] = helpers.addRyr(getWords[id]['wordHanguljs']);
+                                                break;
                                             default: throw new Error('404');
                                         }
                                     }
@@ -151,6 +157,8 @@ export const processData = (firestore, counters, data) => {
                         data.translation.forEach((item, id) => {
                             if (item === 'word') {
                                 translation.push(getWords[id][item])
+                            } else if (item === null) {
+                                translation.push(getWords[id]);
                             } else {
                                 translation.push(item);
                             }

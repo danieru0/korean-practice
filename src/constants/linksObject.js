@@ -141,6 +141,38 @@ export const LINKS = {
         10: {
             sectionLink: '/sentences/for-amount',
             sectionText: '"For" a certain amount of time <br /> 동안'
+        },
+        11: {
+            sectionLink: '/sentences/eso01',
+            sectionText: 'Denote places 에서'
+        },
+        12: {
+            sectionLink: '/sentences/eso02',
+            sectionText: 'From 에서'
+        },
+        13: {
+            sectionLink: '/sentences/and',
+            sectionText: 'And 과/와'
+        },
+        14: {
+            sectionLink: '/sentences/with',
+            sectionText: 'With 과/와'
+        },
+        15: {
+            sectionLink: '/sentences/to-somebody',
+            sectionText: 'To 에게/한테/께'
+        },
+        16: {
+            sectionLink: '/sentences/from-somebody',
+            sectionText: 'From 에게서/한테서/(으)로부터'
+        },
+        17: {
+            sectionLink: '/sentences/for-somebody',
+            sectionText: 'Do something for somebody 을/를 위해(서)'
+        },
+        18: {
+            sectionLink: '/sentences/about-something',
+            sectionText: 'About something 에 대해'
         }
     },
     words: {
