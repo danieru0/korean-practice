@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, BrowserRouter, Switch, Redirect, HashRouter } from 'react-router-dom';
+import { Route, Switch, Redirect, HashRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import './App.css';
@@ -51,7 +51,7 @@ function App({auth, modalActive, getCounters, firestore, counters}) {
 	}  
 	
 	return (
-		<HashRouter>
+		<HashRouter basename={process.env.PUBLIC_URL>
 		    <div className="App">
 				<ToastContainer position="bottom-left" autoClose={5000} closeOnClick/>
 				<MainLoader/>
