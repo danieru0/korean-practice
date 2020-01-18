@@ -51,7 +51,7 @@ function App({auth, modalActive, getCounters, firestore, counters}) {
 	}  
 	
 	return (
-		<HashRouter basename={process.env.PUBLIC_URL>
+		<HashRouter basename={process.env.PUBLIC_URL}>
 		    <div className="App">
 				<ToastContainer position="bottom-left" autoClose={5000} closeOnClick/>
 				<MainLoader/>
