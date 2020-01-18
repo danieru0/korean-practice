@@ -13,7 +13,13 @@ export const getIrregularData = (firestore, type) => {
             case '2':
                 dispatch(getIrregular(firestore, { 1: 'past-tense', 2: 'present-tense' }, type, 3));
                 break;
+            case '3':
+                dispatch(getIrregular(firestore, { 1: 'past-tense'}, type, 3))
+                break;
             case '4':
+                dispatch(getIrregular(firestore, { 1: 'past-tense' }, type, 3));
+                break;
+            case '5':
                 dispatch(getIrregular(firestore, { 1: 'past-tense' }, type, 3));
                 break;
             case '6':
