@@ -47,7 +47,7 @@ function App({auth, modalActive, getCounters, firestore, counters}) {
 	}, [getCounters, firestore])
 	
 	if (!isLoaded(auth) || counters === null) {
-		return <BrowserRouter><MainLoader show /></BrowserRouter>
+		return <HashRouter><MainLoader show /></HashRouter>
 	}  
 	
 	return (
