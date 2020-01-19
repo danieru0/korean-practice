@@ -4,7 +4,8 @@ const initState = {
 	saved: [],
 	wordSaving: false,
 	wordDeleting: false,
-	lastWord: '01'
+	lastWord: '01',
+	searchNotFound: false
 }
 
 const wordsReducer = (state = initState, action) => {
@@ -13,6 +14,11 @@ const wordsReducer = (state = initState, action) => {
 			return {
 				...state,
 				nounsCategories: action.data
+			}
+		case 'UPDATE_SEARCH_NOT_FOUND':
+			return {
+				...state,
+				searchNotFound: action.data
 			}
 		case 'UPDATE_WORDS':
 			return {

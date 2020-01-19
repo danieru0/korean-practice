@@ -14,7 +14,8 @@ import TestBtn from '../../shared/TestBtn/TestBtn';
 
 const Container = styled.div`
 	width: calc(100% - 200px);
-	height: 100vh;
+	min-height: 100vh;
+    padding-top: 80px;
 	margin-left: 200px;
 	display: flex;
 	justify-content: center;
@@ -135,6 +136,13 @@ const ButtonsWrapper = styled.div`
         flex-direction: column;
         margin-left: 0;
         align-items: center;
+
+        button:nth-of-type(1) {
+            order: 3;
+        }
+        button:nth-of-type(2) {
+            order: 2;
+        }
     }
 `
 
@@ -301,8 +309,8 @@ class TestTypeOne extends PureComponent {
                             <TestAnswerInput autoComplete="off" ref={this.answerInputRef} wronganswer={this.state.wrong ? 1 : 0} disabled={this.state.correct} correctanswer={this.state.correct ? 1 : 0} onKeyDown={(e) => e.key === 'Enter' && this.handleCheck(e)} onChange={this.handleAnswerInputChange} value={this.state.answerInputValue} placeholder="Your answer..."/>
                             <ButtonsWrapper>
                                 <StyledTestBtn onClick={this.handleAnswerClick} correctanswer={this.state.correct} bordercolor="#f44336">Answer</StyledTestBtn>
-                                <StyledTestBtn correctanswer={this.state.correct} disabled={this.state.correct} onClick={this.handleCheck}>Check</StyledTestBtn>
                                 <StyledTestBtn correctanswer={userExpAndAnswerUpdated === 'loading' ? 1 : 0} onClick={this.handleNext} bordercolor="#03a9f4">Next</StyledTestBtn>
+                                <StyledTestBtn correctanswer={this.state.correct} disabled={this.state.correct} onClick={this.handleCheck}>Check</StyledTestBtn>
                             </ButtonsWrapper>
                         </Test>
                     ) : (

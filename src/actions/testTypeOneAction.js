@@ -23,88 +23,38 @@ export const getTest = (firestore, category) => {
 
         switch(category) {
             case 'letter':
-                return dispatch(getLetter(firestore));
+                return dispatch(getData(firestore, 'letters', 40, 'Letter', 'Translate this letter', 0.5));
             case 'verb':
-                return dispatch(getVerb(firestore, counters[category]));
+                return dispatch(getData(firestore, 'verbs', counters[category], 'Verb', 'Translate this verb'));
             case 'adjective':
-                return dispatch(getAdjective(firestore, counters[category]));
+                return dispatch(getData(firestore, 'adjectives', counters[category], 'Adjective', 'Translate this adjective'));
             case 'nouns':
-                return dispatch(getNouns(firestore, counters[category]));
+                return dispatch(getData(firestore, 'nouns', counters[category], 'Noun', 'Translate this noun'));
             case (category.match(/saved/) || {}).input:
                 return dispatch(getSaved(firestore, category.split('=')[1]));
             case 'adverbs':
-                return dispatch(getAdverbs(firestore, counters[category]));
+                return dispatch(getData(firestore, 'adverbs', counters[category], 'Adverb', 'Translate this adverb'));
             case (category.match(/numbers/) || {}).input:
-                return dispatch(getNumbers(firestore, category.split('=')[1], counters[category.split('=')[1]]));
+                return dispatch(getData(firestore, category.split('=')[1], counters[category.split('=')[1]], 'Number', 'Translate this number', 1));
             default: window.location.href = '/404';
         }
     }
 }
 
-export const getLetter = (firestore) => {
+export const getData = (firestore, type, counter, title, task, exp) => {
     return async dispatch => {
         try {
-            const doc = await firestore.collection('letters').doc(getRandomNumber(40)).get();
+            const doc = await firestore.collection(type).doc(getRandomNumber(counter)).get();
 
             dispatch({
                 type: 'UPDATE_TEST_ONE_DATA',
                 data: doc.data(),
-                title: 'Letter',
-                task: 'Translate this letter'
+                title: title,
+                task: task
             });
             dispatch({
                 type: 'SET_EXP_TEST_ONE',
-                data: 1
-            });
-            dispatch({
-                type: 'LOADING_TEST_ONE',
-                data: false
-            });
-        } catch (err) {
-            dispatch(handleErrors(err));
-        }
-    }
-}
-
-export const getVerb = (firestore, numberOfWords) => {
-    return async dispatch => {
-        try {
-            const doc = await firestore.collection('verbs').doc(getRandomNumber(numberOfWords)).get();
-
-            dispatch({
-                type: 'UPDATE_TEST_ONE_DATA',
-                data: doc.data(),
-                title: 'Verb',
-                task: 'Translate this verb'
-            });
-            dispatch({
-                type: 'SET_EXP_TEST_ONE',
-                data: 5
-            });
-            dispatch({
-                type: 'LOADING_TEST_ONE',
-                data: false
-            });
-        } catch (err) {
-            dispatch(handleErrors(err));
-        }
-    }
-}
-
-export const getAdjective = (firestore, numberOfWords) => {
-    return async dispatch => {
-        try {
-            const doc = await firestore.collection('adjectives').doc(getRandomNumber(numberOfWords)).get();
-
-            dispatch({
-                type: 'UPDATE_TEST_ONE_DATA',
-                data: doc.data(),
-                title: 'Adjective',
-                task: 'Translate this adjective'
-            });
-            dispatch({
-                type: 'SET_EXP_TEST_ONE',
-                data: 5
+                data: exp || 5
             });
             dispatch({
                 type: 'LOADING_TEST_ONE',
@@ -134,7 +84,7 @@ export const getSaved = (firestore, type) => {
                             });
                             dispatch({
                                 type: 'SET_EXP_TEST_ONE',
-                                data: 5
+                                data: 0.5
                             });
                             dispatch({
                                 type: 'LOADING_TEST_ONE',
@@ -151,80 +101,5 @@ export const getSaved = (firestore, type) => {
                 window.location.href = '/';
             }
         });
-    }
-}
-
-export const getNouns = (firestore, numberOfWords) => {
-    return async dispatch => {
-        try {
-            const doc = await firestore.collection('nouns').doc(getRandomNumber(numberOfWords)).get();
-
-            dispatch({
-                type: 'UPDATE_TEST_ONE_DATA',
-                data: doc.data(),
-                title: 'Noun',
-                task: 'Translate this noun'
-            });
-            dispatch({
-                type: 'SET_EXP_TEST_ONE',
-                data: 5
-            });
-            dispatch({
-                type: 'LOADING_TEST_ONE',
-                data: false
-            });
-        } catch (err) {
-            dispatch(handleErrors(err));
-        }
-    }
-}
-
-export const getAdverbs = (firestore, numberOfWords) => {
-    return async dispatch => {
-        try {
-            const doc = await firestore.collection('adverbs').doc(getRandomNumber(numberOfWords)).get();
-
-            dispatch({
-                type: 'UPDATE_TEST_ONE_DATA',
-                data: doc.data(),
-                title: 'Adverbs',
-                task: 'Translate this adverb'
-            });
-            dispatch({
-                type: 'SET_EXP_TEST_ONE',
-                data: 5
-            });
-            dispatch({
-                type: 'LOADING_TEST_ONE',
-                data: false
-            });
-        } catch (err) {
-            dispatch(handleErrors(err));
-        }
-    }
-}
-
-export const getNumbers = (firestore, type, counter) => {
-    return async dispatch => {
-        try {
-            const doc = await firestore.collection(type).doc(getRandomNumber(counter)).get();
-
-            dispatch({
-                type: 'UPDATE_TEST_ONE_DATA',
-                data: doc.data(),
-                title: 'Numbers',
-                task: 'Translate this number'
-            });
-            dispatch({
-                type: 'SET_EXP_TEST_ONE',
-                data: 1
-            });
-            dispatch({
-                type: 'LOADING_TEST_ONE',
-                data: false
-            });
-        } catch (err) {
-            dispatch(handleErrors(err));
-        }
     }
 }

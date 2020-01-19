@@ -78,6 +78,44 @@ export const getWords = (firestore, type, lastWord, category, scrollDown) => {
 	}
 }
 
+export const getSearchWord = (firestore, type, term, searchType, nounCategory) => {
+	return async dispatch => {
+		dispatch({
+			type: 'CLEAR_WORDS'
+		});
+		dispatch({
+			type: 'CLEAR_LAST_WORD'
+		});
+		dispatch({
+			type: 'UPDATE_SEARCH_NOT_FOUND',
+			data: false
+		});
+
+		if (term) {
+			const doc = await firestore.collection(type).where(searchType, "==", term).get();
+			
+			if (!doc.exists) {
+				dispatch({
+					type: 'UPDATE_SEARCH_NOT_FOUND',
+					data: true
+				})
+			}
+
+			const words = [];
+			doc.forEach(snapshot => {
+				words.push(snapshot.data());
+			})
+
+			dispatch({
+				type: `UPDATE_WORDS`,
+				data: words
+			});
+		} else {
+			dispatch(getWords(firestore, type, '01', type === 'nouns' ? nounCategory : null, null));
+		}
+	}
+}
+
 export const saveWord = (firestore, category, item, profile) => {
 	return async (dispatch, getState, { getFirebase }) => {
 		const firebase = getFirebase();

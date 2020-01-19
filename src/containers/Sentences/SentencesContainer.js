@@ -59,6 +59,10 @@ const TopContainer = styled.div`
 
 const StyledNormalBtn = styled(NormalBtn)`
     margin-left: auto;
+    
+    @media (max-width: 700px) {
+        margin-bottom: 30px;
+    }
 `
 
 const SentenceList = styled.ul`

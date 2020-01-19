@@ -23,12 +23,12 @@ const Container = styled.div`
 
 const MobileBtnContainer = styled.div`
 	width: 100px;
-	height: 150px;
+	height: 60px;
 	position: absolute;
 	right: -40px;
 	background-color: ${props => props.theme.navColor};
-	top: -50px;
-	border-radius: 50%;
+	top: -4px;
+	border-radius: 20%;
 	display: none;
 	justify-content: flex-end;
 	align-items: center;

@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
 import Helmet from 'react-helmet';
+import ReactTooltip from 'react-tooltip'
 
 import { getTest, clearTest } from '../../actions/testTypeTwoAction';
 import { giveExpAndAnswers, clearUserExpAnswerStatus } from '../../actions/userAction';
@@ -112,7 +113,19 @@ const ButtonsWrapper = styled.div`
 
     @media (max-width: 364px) {
         flex-direction: column;
+
+        button:nth-of-type(1) {
+            order: 3;
+        }
+        button:nth-of-type(2) {
+            order: 2;
+        }
     }
+`
+
+const StyledTooltip = styled(ReactTooltip)`
+	font-size: 18px !important;
+	font-family: ${props => props.theme.mainFont} !important;
 `
 
 const StyledTestBtn = styled(TestBtn)`
@@ -281,6 +294,9 @@ class TestTypeTwo extends Component {
 
         return (
             <Container>
+                {
+                    loadingTestTypeTwo || <StyledTooltip type="info" effect="solid"/>
+                }
                 <Helmet>
                     <title>Test - Korean practice</title>
                 </Helmet>
@@ -288,7 +304,7 @@ class TestTypeTwo extends Component {
                 {
                     testTypeTwoData ? (
                         <Test>
-                            <TestWordToConjugate>
+                            <TestWordToConjugate data-tip={loadingTestTypeTwo || testTypeTwoData[1].english}>
                                 {
                                     loadingTestTypeTwo ? (
                                         <PageLoader />
@@ -315,8 +331,8 @@ class TestTypeTwo extends Component {
                             </TestWrapper>
                             <ButtonsWrapper>
                                 <StyledTestBtn correctanswer={this.state.allCorrect} onClick={this.handleAnswerClick} bordercolor="#f44336">Answer</StyledTestBtn>
-                                <StyledTestBtn correctanswer={this.state.allCorrect} onClick={this.handleCheck} disabled={this.state.allCorrect}>Check</StyledTestBtn>
                                 <StyledTestBtn correctanswer={userExpAndAnswerUpdated === 'loading' ? 1 : 0} onClick={this.handleNext} bordercolor="#03a9f4">Next</StyledTestBtn>
+                                <StyledTestBtn correctanswer={this.state.allCorrect} onClick={this.handleCheck} disabled={this.state.allCorrect}>Check</StyledTestBtn>
                             </ButtonsWrapper>
                         </Test>
                     ) : (

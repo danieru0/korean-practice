@@ -5,7 +5,7 @@ import { withFirestore } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 
-import { getWords, clearWords, saveWord } from '../../actions/wordsAction';
+import { getWords, clearWords, saveWord, getSearchWord } from '../../actions/wordsAction';
 
 import PracticeBtn from '../../shared/PracticeBtn/PracticeBtn';
 import PageTitle from '../../shared/PageTitle/PageTitle';
@@ -70,8 +70,46 @@ const Line = styled.hr`
 
 const Text = styled.p``
 
-const WordContainer = ({type, location, firestore, getWords, clearWords, saveWord, wordSaving, words, auth, lastWord, profile}) => {
+const SearchWrapper = styled.div`
+	width: auto;
+	display: flex;
+	position: absolute;
+	top: 70px;
+
+	@media (max-width: 352px) {
+		width: 90%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+`
+
+const SearchInput = styled.input`
+	background: none;
+	border: none;
+	border-bottom: 2px solid #000;
+	color: #fff;
+	font-size: 20px;
+	padding: 0px 4px;
+
+	@media (max-width: 352px) {
+		width: 85%;
+	}
+`
+
+const SearchSelect = styled.select``
+const SearchOption = styled.option``
+
+const NotFound = styled.p`
+	font-size: 24px;
+	color: #fff;
+	font-family: ${props => props.theme.mainFont};
+	margin-top: 40px;
+
+`
+
+const WordContainer = ({type, location, firestore, getWords, clearWords, getSearchWord, saveWord, wordSaving, words, auth, lastWord, profile, searchNotFound}) => {
 	const [scrollDown, setScrollDown] = useState(null);
+	const [searchType, setSearchType] = useState('english');
 	useEffect(() => {
 		if (scrollDown === false) return;
 		switch(type) {
@@ -127,12 +165,29 @@ const WordContainer = ({type, location, firestore, getWords, clearWords, saveWor
 		saveWord(firestore, type, item, profile);
 	}
 
+	const handleSearchWord = e => {
+		if (e.key === 'Enter') {
+			getSearchWord(firestore, type, e.target.value, searchType, location.pathname.split('/')[3]);
+		}
+	}
+
+	const handleSearchTypeChange = e => {
+		setSearchType(e.target.value);
+	}
+
 	return (
 		<Container ref={containerRef}>
 			<Helmet>
 				<title>{`${type === 'nouns' ? `Nouns / ${location.pathname.split('/')[3]}` : type.charAt(0).toUpperCase() + type.slice(1)} - Korean practice`}</title>
 			</Helmet>
 			<PageTitle>{type === 'nouns' ? `Nouns / ${location.pathname.split('/')[3]}` : type}</PageTitle>
+			<SearchWrapper>
+				<SearchInput onKeyDown={handleSearchWord} placeholder="Search..."/>
+				<SearchSelect onChange={handleSearchTypeChange}>
+					<SearchOption value="english">English</SearchOption>
+					<SearchOption value="korean">Korean</SearchOption>
+				</SearchSelect>
+			</SearchWrapper>
 			<MainLoader show={wordSaving} />
 			{
 				words.length !== 0 ? (
@@ -147,7 +202,12 @@ const WordContainer = ({type, location, firestore, getWords, clearWords, saveWor
 						)
 					})
 				) : (
-					<StyledPageLoader />
+					searchNotFound ? (
+						<NotFound>Nothing ;(</NotFound>
+					) : (
+						<StyledPageLoader />
+					)
+
 				)
 			}
 		</Container>
@@ -160,8 +220,9 @@ const mapStateToProps = state => {
 		wordSaving: state.wordsReducer.wordSaving,
 		lastWord: state.wordsReducer.lastWord,
 		auth: state.firebase.auth,
-		profile: state.firebase.profile
+		profile: state.firebase.profile,
+		searchNotFound: state.wordsReducer.searchNotFound
 	}
 }
 
-export default connect(mapStateToProps, { getWords, clearWords, saveWord })(withFirestore(withRouter(WordContainer)));
+export default connect(mapStateToProps, { getWords, clearWords, saveWord, getSearchWord })(withFirestore(withRouter(WordContainer)));

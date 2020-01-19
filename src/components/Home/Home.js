@@ -76,6 +76,7 @@ const Saved = styled.div`
 	@media (max-width: 800px) {
 		width: 300px;
 		padding-top: 10px;
+		justify-content: center;
 	}
 `
 
