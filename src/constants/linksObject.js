@@ -173,6 +173,14 @@ export const LINKS = {
         18: {
             sectionLink: '/sentences/about-something',
             sectionText: 'About something 에 대해'
+        },
+        19: {
+            sectionLink: '/sentences/only',
+            sectionText: 'Only 만'
+        },
+        20: {
+            sectionLink: '/sentences/to-want',
+            sectionText: 'To want 고 싶다'
         }
     },
     words: {

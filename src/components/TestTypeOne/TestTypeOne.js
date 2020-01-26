@@ -207,7 +207,7 @@ class TestTypeOne extends PureComponent {
     }
 
     handleCheck = () => {
-        if (!this.state.answerFromClick && this.props.testTypeOneData.english) {
+        if (!this.state.answerFromClick && this.props.testTypeOneData.english && !this.state.correct) {
             const correctAnswer = this.state.reverse ? this.props.testTypeOneData.korean : this.props.testTypeOneData.english.toLowerCase();
             if (this.state.answerInputValue.toLowerCase() === correctAnswer) {
                 this.setState({

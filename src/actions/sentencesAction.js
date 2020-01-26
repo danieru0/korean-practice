@@ -111,6 +111,9 @@ export const processData = (firestore, counters, data) => {
                                             case '-ryr':
                                                 getWords[id]['wordHanguljs'] = helpers.addRyr(getWords[id]['wordHanguljs']);
                                                 break;
+                                            case '-ko':
+                                                getWords[id]['wordHanguljs'] = helpers.addRo(getWords[id]['wordHanguljs']);
+                                                break;
                                             default: throw new Error('404');
                                         }
                                     }

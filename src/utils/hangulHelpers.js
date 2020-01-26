@@ -54,3 +54,10 @@ export const addDzi = (wordArray) => {
     wordArray.push('지');
     return wordArray;
 }
+
+
+export const addRo = (wordArray) => {
+    wordArray.splice(wordArray.length - 2, wordArray.length);
+    wordArray.push('고');
+    return wordArray;
+}

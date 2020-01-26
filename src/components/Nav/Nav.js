@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
@@ -8,7 +8,7 @@ import Logo from '../../shared/Logo/Logo';
 import NavUserMenu from './NavUserMenu';
 import NavAdminMenu from './NavAdminMenu';
 
-const Container = styled.div`
+const Container = styled.nav`
 	width: 200px;
 	height: auto;
 	position: fixed;
@@ -135,6 +135,25 @@ const StyledIcon = styled(FontAwesome)`
 const Nav = ({profile, auth, location, adminStatus}) => {
 	const [activeMenu, setActiveMenu] = useState(false);
 
+	useEffect(() => {
+		window.addEventListener('click', handleOutsideClick);
+
+		return (() => {
+			window.removeEventListener('click', handleInsideClick);
+		})
+	})
+
+	const handleOutsideClick = () => {
+		if (activeMenu && window.innerWidth < 600) {
+			setActiveMenu(false);
+		}
+	}
+
+	const handleInsideClick = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+	}
+
 	const handleMobileNav = () => {
 		if (activeMenu) {
 			setActiveMenu(false);
@@ -144,7 +163,7 @@ const Nav = ({profile, auth, location, adminStatus}) => {
 	}
 
 	return (
-		<Container isMenuActive={activeMenu ? 1 : 0}>
+		<Container onClick={handleInsideClick} isMenuActive={activeMenu ? 1 : 0}>
 			<MobileBtnContainer>
 				<MobileBtn onClick={handleMobileNav}>
 					<StyledIconMobile name="bars"/>

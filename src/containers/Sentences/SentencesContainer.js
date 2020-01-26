@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Helmet from 'react-helmet';
 import { withRouter } from 'react-router-dom';
@@ -93,7 +93,7 @@ const Dot = styled.span`
     background: #161515;
 `
 
-const Explanation = styled.p`
+const Explanation = styled.span`
     width: 100%;
     height: auto;
     font-size: 18px;
@@ -108,7 +108,30 @@ const ExplanationMore = styled.span`
     }
 `
 
+const ButtonShowExamples = styled.button`
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    font-family: ${props => props.theme.mainFont};
+    padding: 0;
+`
+
+const Examples = styled.ul`
+    width: 100%;
+    height: ${({isActive}) => isActive ? 'auto' : '0px'};
+    list-style: none;
+    padding-left: 10px;
+    overflow: hidden;
+`
+
+const ExamplesItem = styled.li`
+    margin: 7px 0px;
+`
+
 const Sentences = ({location, firestore, getSentenceData, clearSentenceData, counters, explanation, sentence, translation, irregular, nextButton}) => {
+    const [examplesActive, setExamplesActive] = useState(false);
+
     useEffect(() => {
         getSentenceData(firestore, location.pathname.split('/')[2]);
         //eslint-disable-next-line
@@ -122,6 +145,10 @@ const Sentences = ({location, firestore, getSentenceData, clearSentenceData, cou
 
     const getNextSentence = () => {
         getSentenceData(firestore, location.pathname.split('/')[2], explanation);
+    }
+
+    const handleExamplesBtn = () => {
+        setExamplesActive(!examplesActive);
     }
 
     return (
@@ -156,11 +183,26 @@ const Sentences = ({location, firestore, getSentenceData, clearSentenceData, cou
                         }
                         <Dot />
                         <Explanation>
-                            {explanation.text} <br/><br/>
+                            {explanation.text} 
+                            <br/><br/>
+                            <ButtonShowExamples onClick={handleExamplesBtn}>
+                                {`[ ${examplesActive ? 'Hide' : 'Show'} examples ]`}
+                            </ButtonShowExamples>
+                            <Examples isActive={examplesActive}>
+                                {
+                                    explanation.examples.map((item, key) => {
+                                        return (
+                                            <ExamplesItem key={key}>{item}</ExamplesItem>
+                                        )
+                                    })
+                                }
+                            </Examples>
+                            <br/>
                             <ExplanationMore>
                                 See more at: <a href={explanation.link}>{explanation.link}</a>
                             </ExplanationMore>
                         </Explanation>
+
                     </Wrapper>
                 ) : (
                     <PageLoader />
