@@ -3,6 +3,21 @@ import * as hangul from 'hangul-js';
 import { handleErrors } from './errorsAction';
 import * as helpers from '../utils/hangulHelpers';
 
+export const getLinks = (firestore) => {
+    return async dispatch => {
+        try {
+            const result = await firestore.collection('sentences').doc('links').get();
+
+            dispatch({
+                type: 'UPDATE_SENTENCE_LINKS',
+                data: result.data().links
+            })
+        } catch (err) {
+            dispatch(handleErrors(err));
+        }
+    }
+}
+
 export const getSentenceData = (firestore, category, explanation) => {
     return async (dispatch, getState) => {
         try {

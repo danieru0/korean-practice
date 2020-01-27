@@ -3,11 +3,17 @@ const initState = {
     sentence: null,
     translation: null,
     irregular: 0,
-    nextButton: true
+    nextButton: true,
+    links: null
 }
 
 const sentencesReducer = (state = initState, action) => {
     switch(action.type) {
+        case 'UPDATE_SENTENCE_LINKS':
+            return {
+                ...state,
+                links: action.data
+            }
         case 'UPDATE_SENTENCE_DATA':
             return {
                 ...state,
@@ -24,7 +30,7 @@ const sentencesReducer = (state = initState, action) => {
                 sentence: null,
                 translation: null,
                 nextButton: true,
-                irregular: 0
+                irregular: 0,
             }
         default: return state;
     }

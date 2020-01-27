@@ -141,7 +141,8 @@ const Nav = ({profile, auth, location, adminStatus}) => {
 		return (() => {
 			window.removeEventListener('click', handleInsideClick);
 		})
-	})
+		//eslint-disable-next-line
+	}, []);
 
 	const handleOutsideClick = () => {
 		if (activeMenu && window.innerWidth < 600) {
