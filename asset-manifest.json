@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/korean-practice/static/css/main.7e6f9f05.chunk.css",
-    "main.js": "/korean-practice/static/js/main.fa4b0a02.chunk.js",
+    "main.css": "/korean-practice/static/css/main.309e727c.chunk.css",
+    "main.js": "/korean-practice/static/js/main.e15631c1.chunk.js",
     "runtime-main.js": "/korean-practice/static/js/runtime-main.908e324b.js",
     "static/css/2.dd20c0da.chunk.css": "/korean-practice/static/css/2.dd20c0da.chunk.css",
-    "static/js/2.548b4f80.chunk.js": "/korean-practice/static/js/2.548b4f80.chunk.js",
+    "static/js/2.a8546cba.chunk.js": "/korean-practice/static/js/2.a8546cba.chunk.js",
     "index.html": "/korean-practice/index.html",
-    "precache-manifest.83149f0262a2d054988fe40b5d0fa6b7.js": "/korean-practice/precache-manifest.83149f0262a2d054988fe40b5d0fa6b7.js",
+    "precache-manifest.a88086e8df9c2a250fe6595757c415ad.js": "/korean-practice/precache-manifest.a88086e8df9c2a250fe6595757c415ad.js",
     "service-worker.js": "/korean-practice/service-worker.js"
   },
   "entrypoints": [
     "static/js/runtime-main.908e324b.js",
     "static/css/2.dd20c0da.chunk.css",
-    "static/js/2.548b4f80.chunk.js",
-    "static/css/main.7e6f9f05.chunk.css",
-    "static/js/main.fa4b0a02.chunk.js"
+    "static/js/2.a8546cba.chunk.js",
+    "static/css/main.309e727c.chunk.css",
+    "static/js/main.e15631c1.chunk.js"
   ]
 }
