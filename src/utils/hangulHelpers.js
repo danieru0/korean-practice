@@ -36,6 +36,8 @@ export const addNyn = (wordArray) => {
     } else {
         wordArray.push('는');
     }
+
+    return wordArray;
 }
 
 export const addDescribeNouns = (wordArray) => {
