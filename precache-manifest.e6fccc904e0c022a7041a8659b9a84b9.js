@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "18f13d3eb72ba77d7087d224923b9898",
+    "revision": "4e774605553cf85bd88dd346b0fd566c",
     "url": "/korean-practice/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/korean-practice/static/css/2.dd20c0da.chunk.css"
   },
   {
-    "revision": "24e84cc841d3b280ffa4",
+    "revision": "729b79668a92ed88556b",
     "url": "/korean-practice/static/css/main.309e727c.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/korean-practice/static/js/2.a8546cba.chunk.js"
   },
   {
-    "revision": "24e84cc841d3b280ffa4",
-    "url": "/korean-practice/static/js/main.f9ba1963.chunk.js"
+    "revision": "729b79668a92ed88556b",
+    "url": "/korean-practice/static/js/main.a8d9be95.chunk.js"
   },
   {
     "revision": "0c21e06fc8a93a1f361c",

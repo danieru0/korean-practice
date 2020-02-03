@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/korean-practice/precache-manifest.5aa9caa1fe4a5b8b426c74a25352f02e.js"
+  "/korean-practice/precache-manifest.e6fccc904e0c022a7041a8659b9a84b9.js"
 );
 
 self.addEventListener('message', (event) => {
