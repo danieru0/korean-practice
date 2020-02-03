@@ -30,6 +30,14 @@ export const addRyr = (wordArray) => {
     return wordArray;
 }
 
+export const addNyn = (wordArray) => {
+    if (hangul.isConsonant(wordArray[wordArray.length - 1])) {
+        wordArray.push('은');
+    } else {
+        wordArray.push('는');
+    }
+}
+
 export const addDescribeNouns = (wordArray) => {
     wordArray.splice(wordArray.length - 2, wordArray.length);
     let irregular = 0;

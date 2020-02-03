@@ -108,28 +108,15 @@ export const processData = (firestore, counters, data) => {
                                     if (value.split('')[0] !== '-') {
                                         getWords[id]['wordHanguljs'].push(value);
                                     } else {
-                                        switch(value) {
-                                            case '-ika':
-                                                getWords[id]['wordHanguljs'] = helpers.addIka(getWords[id]['wordHanguljs']);
-                                                break;
-                                            case '-describeNouns':
-                                                const conjugated = helpers.addDescribeNouns(getWords[id]['wordHanguljs']);
-                                                getWords[id]['wordHanguljs'] = conjugated[0];
-                                                irregular = conjugated[1];
-                                                break;
-                                            case '-dzi':
-                                                getWords[id]['wordHanguljs'] = helpers.addDzi(getWords[id]['wordHanguljs']);
-                                                break;
-                                            case '-and':
-                                                getWords[id]['wordHanguljs'] = helpers.addAnd(getWords[id]['wordHanguljs']);
-                                                break;
-                                            case '-ryr':
-                                                getWords[id]['wordHanguljs'] = helpers.addRyr(getWords[id]['wordHanguljs']);
-                                                break;
-                                            case '-ko':
-                                                getWords[id]['wordHanguljs'] = helpers.addRo(getWords[id]['wordHanguljs']);
-                                                break;
-                                            default: throw new Error('404');
+                                        if (value !== '-describeNouns') {
+                                            const functionName = `add${value.split('-')[1].charAt(0).toUpperCase() + value.split('-')[1].slice(1).toLowerCase()}`
+                                            getWords[id]['wordHanguljs'] = helpers[functionName](getWords[id]['wordHanguljs']);
+                                        } else if (value === '-describeNouns') {
+                                            const conjugated = helpers.addDescribeNouns(getWords[id]['wordHanguljs']);
+                                            getWords[id]['wordHanguljs'] = conjugated[0];
+                                            irregular = conjugated[1];
+                                        } else {
+                                            throw new Error('404');
                                         }
                                     }
                                     break;

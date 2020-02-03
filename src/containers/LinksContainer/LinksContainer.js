@@ -37,8 +37,6 @@ const LinksContainer = ({type, bordercolor, title, links, getLinks, firestore}) 
 	useEffect(() => {
 		if (type === 'sentences' && links === null) {
 			getLinks(firestore);
-
-			console.log('yo');
 		}
 	}, [firestore, getLinks, type, links]);
 
