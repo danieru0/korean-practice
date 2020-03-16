@@ -109,7 +109,7 @@ const NotFound = styled.p`
 
 const WordContainer = ({type, location, firestore, getWords, clearWords, getSearchWord, saveWord, wordSaving, words, auth, lastWord, profile, searchNotFound}) => {
 	const [scrollDown, setScrollDown] = useState(null);
-	const [searchType, setSearchType] = useState('english');
+	const [searchType, setSearchType] = useState('queryArray');
 	useEffect(() => {
 		if (scrollDown === false) return;
 		switch(type) {
@@ -184,7 +184,7 @@ const WordContainer = ({type, location, firestore, getWords, clearWords, getSear
 			<SearchWrapper>
 				<SearchInput onKeyDown={handleSearchWord} placeholder="Search..."/>
 				<SearchSelect onChange={handleSearchTypeChange}>
-					<SearchOption value="english">English</SearchOption>
+					<SearchOption value="queryArray">English</SearchOption>
 					<SearchOption value="korean">Korean</SearchOption>
 				</SearchSelect>
 			</SearchWrapper>

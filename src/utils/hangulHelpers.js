@@ -66,8 +66,9 @@ export const addDzi = (wordArray) => {
 }
 
 
-export const addRo = (wordArray) => {
+export const addKo = (wordArray) => {
     wordArray.splice(wordArray.length - 2, wordArray.length);
     wordArray.push('고');
+    console.log('yo');
     return wordArray;
 }

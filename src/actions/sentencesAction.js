@@ -109,8 +109,7 @@ export const processData = (firestore, counters, data) => {
                                         getWords[id]['wordHanguljs'].push(value);
                                     } else {
                                         if (value !== '-describeNouns') {
-                                            const functionName = `add${value.split('-')[1].charAt(0).toUpperCase() + value.split('-')[1].slice(1).toLowerCase()}`
-                                            console.log(functionName);
+                                            const functionName = `add${value.split('-')[1].charAt(0).toUpperCase() + value.split('-')[1].slice(1).toLowerCase()}`;
                                             getWords[id]['wordHanguljs'] = helpers[functionName](getWords[id]['wordHanguljs']);
                                         } else if (value === '-describeNouns') {
                                             const conjugated = helpers.addDescribeNouns(getWords[id]['wordHanguljs']);

@@ -31,11 +31,11 @@ const StyledInput = styled.input`
 	}
 `
 
-const Input = ({label, placeholder, type, className, onChange}) => {
+const Input = ({label, placeholder, type, className, onChange, name}) => {
 	return (
 		<Label className={className}>
 			<Text>{label}</Text>
-			<StyledInput onChange={(e) => onChange(e.target.value)} placeholder={placeholder} type={type}/>
+			<StyledInput onChange={(e) => onChange(e.target.value)} name={name} placeholder={placeholder} type={type}/>
 		</Label>
 	);
 };
@@ -43,7 +43,8 @@ const Input = ({label, placeholder, type, className, onChange}) => {
 Input.propTypes = {
 	label: PropTypes.string.isRequired,
 	placeholder: PropTypes.string.isRequired,
-	type: PropTypes.string
+	type: PropTypes.string,
+	name: PropTypes.string
 }
 
 export default Input;

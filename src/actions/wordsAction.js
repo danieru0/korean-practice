@@ -92,8 +92,10 @@ export const getSearchWord = (firestore, type, term, searchType, nounCategory) =
 		});
 
 		if (term) {
-			const doc = await firestore.collection(type).where(searchType, "==", term).get();
-			
+			const doc = searchType === 'queryArray'
+				? await firestore.collection(type).where('queryArray', 'array-contains-any', term.split(' ')).get()
+				: await firestore.collection(type).where('korean', '==', term).get();
+
 			if (!doc.exists) {
 				dispatch({
 					type: 'UPDATE_SEARCH_NOT_FOUND',
