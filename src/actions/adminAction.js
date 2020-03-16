@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify';
+ import { toast } from 'react-toastify';
 import createIdFromCounter from '../utils/createIdFromCounter';
 
 export const checkAdminStatus = (firestore, clear) => {

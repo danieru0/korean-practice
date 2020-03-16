@@ -15,6 +15,8 @@ import withAuth from './hocs/withAuth';
 import withoutAuth from './hocs/withoutAuth';
 import withAdminAuth from './hocs/withAdminAuth';
 
+import ScrollToTop from './shared/ScrollToTop/ScrollTopTop';
+
 import MainLoader from './shared/MainLoader/MainLoader';
 import InfiniteScrollLoader from './shared/InfiniteScrollLoader/InfiniteScrollLoader';
 import Nav from './components/Nav/Nav';
@@ -52,46 +54,48 @@ function App({auth, modalActive, getCounters, firestore, counters}) {
 	
 	return (
 		<HashRouter basename={process.env.PUBLIC_URL}>
-		    <div className="App">
-				<ToastContainer position="bottom-left" autoClose={5000} closeOnClick/>
-				<MainLoader/>
-				<InfiniteScrollLoader />
-				<Nav />
-				{modalActive && <Modal />}
-				<Switch>
-					<Route exact path="/" component={Hello}/>
-					<Route path="/register" component={withoutAuth(Register)}/>
-					<Route path="/login" component={withoutAuth(Login)}/>
-					<Route path="/faq" component={Faq}/>
-					<Route path="/home" component={withAuth(Home)}/>
-					<Route path="/settings" component={withAuth(Settings)}/>
-					<Route path="/alphabet/blocks" component={Blocks}/>
-					<Route path="/alphabet/letters/vowels" component={Vowels}/>
-					<Route path="/alphabet/letters/consonants" component={Consonants}/>
-					<Route path="/alphabet/letters" render={props => <LinksContainer type="letters" bordercolor="#00bcd4" title="Letters" {...props} />}/>
-					<Route path="/alphabet" render={props => <LinksContainer type="alphabet" bordercolor="#ffeb3b" title="Alphabet" {...props} />}/>
-					<Route path="/words/adjectives" render={props => <WordsContainer type="adjectives" {...props}/>}/>
-					<Route path="/words/verbs" render={props => <WordsContainer type="verbs" {...props}/>}/>
-					<Route path="/words/adverbs" render={props => <WordsContainer type="adverbs" {...props}/>}/>
-					<Route path="/words/months" render={props => <WordsContainer type="months" {...props}/>}/>
-					<Route path="/words/nouns/categories" component={Categories}/>
-					<Route path="/words/nouns/:category" render={props => <WordsContainer type="nouns" {...props}/>}/>
-					<Route path="/words" render={props => <LinksContainer type="words" bordercolor="#00bcd4" title="Words" {...props} />}/>
-					<Route path="/saved/:category" component={withAuth(Saved)}/>
-					<Route path="/conjugation/:category" component={ConjugationContainer}/>
-					<Route path="/conjugation" render={props => <LinksContainer type="conjugation" bordercolor="#ff9800" title="Conjugation" {...props} />}/>
-					<Route path="/testone/:category" component={TestTypeOne}/>
-					<Route path="/testtwo/:category" component={TestTypeTwo}/>
-					<Route path="/sentences/:category" component={SentencesContainer}/>
-					<Route path="/sentences/" render={props => <LinksContainer type="sentences" bordercolor="#795548" title="Sentences" {...props} />}/>
-					<Route path="/admin/:page?" component={withAdminAuth(AdminContainer)}/>
-					<Route path="/irregulars/:type" component={IrregularsContainer}/>
-					<Route path="/irregulars" render={props => <LinksContainer type="irregulars" bordercolor="#50d890" title="Irregulars" {...props} />}/>
-					<Route path="/numbers/:type?" component={Numbers}/>
-					<Route path="/404" component={NotFound}/>
-					<Redirect to="/404" />
-				</Switch>
-			</div>
+			<ScrollToTop>
+				<div className="App">
+					<ToastContainer position="bottom-left" autoClose={5000} closeOnClick/>
+					<MainLoader/>
+					<InfiniteScrollLoader />
+					<Nav />
+					{modalActive && <Modal />}
+					<Switch>
+						<Route exact path="/" component={Hello}/>
+						<Route path="/register" component={withoutAuth(Register)}/>
+						<Route path="/login" component={withoutAuth(Login)}/>
+						<Route path="/faq" component={Faq}/>
+						<Route path="/home" component={withAuth(Home)}/>
+						<Route path="/settings" component={withAuth(Settings)}/>
+						<Route path="/alphabet/blocks" component={Blocks}/>
+						<Route path="/alphabet/letters/vowels" component={Vowels}/>
+						<Route path="/alphabet/letters/consonants" component={Consonants}/>
+						<Route path="/alphabet/letters" render={props => <LinksContainer type="letters" bordercolor="#00bcd4" title="Letters" {...props} />}/>
+						<Route path="/alphabet" render={props => <LinksContainer type="alphabet" bordercolor="#ffeb3b" title="Alphabet" {...props} />}/>
+						<Route path="/words/adjectives" render={props => <WordsContainer type="adjectives" {...props}/>}/>
+						<Route path="/words/verbs" render={props => <WordsContainer type="verbs" {...props}/>}/>
+						<Route path="/words/adverbs" render={props => <WordsContainer type="adverbs" {...props}/>}/>
+						<Route path="/words/months" render={props => <WordsContainer type="months" {...props}/>}/>
+						<Route path="/words/nouns/categories" component={Categories}/>
+						<Route path="/words/nouns/:category" render={props => <WordsContainer type="nouns" {...props}/>}/>
+						<Route path="/words" render={props => <LinksContainer type="words" bordercolor="#00bcd4" title="Words" {...props} />}/>
+						<Route path="/saved/:category" component={withAuth(Saved)}/>
+						<Route path="/conjugation/:category" component={ConjugationContainer}/>
+						<Route path="/conjugation" render={props => <LinksContainer type="conjugation" bordercolor="#ff9800" title="Conjugation" {...props} />}/>
+						<Route path="/testone/:category" component={TestTypeOne}/>
+						<Route path="/testtwo/:category" component={TestTypeTwo}/>
+						<Route path="/sentences/:category" component={SentencesContainer}/>
+						<Route path="/sentences/" render={props => <LinksContainer type="sentences" bordercolor="#795548" title="Sentences" {...props} />}/>
+						<Route path="/admin/:page?" component={withAdminAuth(AdminContainer)}/>
+						<Route path="/irregulars/:type" component={IrregularsContainer}/>
+						<Route path="/irregulars" render={props => <LinksContainer type="irregulars" bordercolor="#50d890" title="Irregulars" {...props} />}/>
+						<Route path="/numbers/:type?" component={Numbers}/>
+						<Route path="/404" component={NotFound}/>
+						<Redirect to="/404" />
+					</Switch>
+				</div>
+			</ScrollToTop>
 		</HashRouter>
   	);
 }

@@ -139,13 +139,13 @@ const Nav = ({profile, auth, location, adminStatus}) => {
 		window.addEventListener('click', handleOutsideClick);
 
 		return (() => {
-			window.removeEventListener('click', handleInsideClick);
+			window.removeEventListener('click', handleOutsideClick);
 		})
 		//eslint-disable-next-line
 	}, []);
 
 	const handleOutsideClick = () => {
-		if (activeMenu && window.innerWidth < 600) {
+		if (window.innerWidth < 600) {
 			setActiveMenu(false);
 		}
 	}

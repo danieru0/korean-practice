@@ -1,10 +1,10 @@
 export default {
-	apiKey: "AIzaSyBWuxy6IXtVp6eDP4h4YHLuzSt-7JI2gVI",
-	authDomain: "korean-28cac.firebaseapp.com",
-	databaseURL: "https://korean-28cac.firebaseio.com",
-	projectId: "korean-28cac",
-	storageBucket: "korean-28cac.appspot.com",
-	messagingSenderId: "629390821193",
-	appId: "1:629390821193:web:be64404732edcdc703fc98",
-	measurementId: "G-L5TFCJ7DX3"
+	apiKey: process.env.REACT_APP_API_KEY,
+	authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+	databaseURL: process.env.REACT_APP_DATABASE_URL,
+	projectId: process.env.REACT_APP_PROJECT_ID,
+	storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+	messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+	appId: process.env.REACT_APP_APP_ID,
+	measurementId: process.env.REACT_APP_MEASUREMENT_ID
 }

@@ -76,6 +76,7 @@ const Word = ({addNewWord, firestore}) => {
         korean: '',
         type: '',
         stem: '',
+        queryArray: ''
     })
 
     const handleSelectChange = e => {
@@ -89,6 +90,8 @@ const Word = ({addNewWord, firestore}) => {
     }
 
     const handleSaveBtn = () => {
+        setWord({...word, queryArray: word.english.split(' ')});
+        console.log(word);
         if (word.english && word.korean) {
             if (word.type || word.stem) {
                 addNewWord(firestore, word, type, forCounter)
