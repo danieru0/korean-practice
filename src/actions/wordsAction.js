@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import { handleErrors } from './errorsAction';
 import createIdFromCounter from '../utils/createIdFromCounter';
+import getRandomNumber from '../utils/getRandomNumber';
 
 export const getNounsCategories = (firestore) => {
 	return async dispatch => {
@@ -15,6 +16,50 @@ export const getNounsCategories = (firestore) => {
 		} catch (err) {
 			dispatch(handleErrors(err));
 		}
+	}
+}
+
+export const getRandomWord = (firestore, type) => {
+	return async (dispatch, getState) => {
+		dispatch({
+			type: 'SET_LOADING_ONE_WORD',
+			data: true
+		});
+
+		const {counters} = getState().settingsReducer;
+		let counterName = '';
+		if (type === 'verbs') {
+			counterName = 'verb';
+		} else if (type === 'adjectives') {
+			counterName = 'adjective';
+		} else {
+			counterName = type;
+		}
+
+		try {
+			const doc = await firestore.collection(type).doc(getRandomNumber(counters[counterName])).get();
+
+			if (doc.exists) {
+				dispatch({
+					type: 'UPDATE_ONE_WORD',
+					data: doc.data()
+				});
+				dispatch({
+					type: 'SET_LOADING_ONE_WORD',
+					data: false
+				})
+			}
+		} catch (err) {
+			dispatch(handleErrors(err))
+		}
+	}
+}
+
+export const clearRandomWord = () => {
+	return dispatch => {
+		dispatch({
+			type: 'CLEAR_ONE_WORD'
+		});
 	}
 }
 

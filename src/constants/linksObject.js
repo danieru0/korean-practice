@@ -88,11 +88,13 @@ export const LINKS = {
     numbers: {
         0: {
             testLink: '/testone/numbers?=sino-numbers',
+            typingLink: '/typing/sino-numbers',
             sectionLink: '/numbers/sino-numbers',
             sectionText: 'Sino-korean numbers'
         },
         1: {
             testLink: '/testone/numbers?=pure-numbers',
+            typingLink: '/typing/pure-numbers',
             sectionLink: '/numbers/pure-numbers',
             sectionText: 'Pure numbers'
         }  
@@ -100,27 +102,31 @@ export const LINKS = {
     words: {
         0: {
 			testLink: '/testone/nouns',
-			testText: 'Test all',
+            testText: 'Test all',
+            typingLink: '/typing/nouns',
 			sectionLink: '/words/nouns/categories',
 			sectionText: 'Nouns'
 		},
 		1: {
-			testLink: '/testone/verb',
+            testLink: '/testone/verb',
+            typingLink: '/typing/verbs',
 			sectionLink: '/words/verbs',
 			sectionText: 'Verbs'
 		},
 		2: {
-			testLink: '/testone/adjective',
+            testLink: '/testone/adjective',
+            typingLink: '/typing/adjectives',
 			sectionLink: '/words/adjectives',
 			sectionText: 'Adjectives'
 		},
 		3: {
-			testLink: '/testone/adverbs',
+            testLink: '/testone/adverbs',
+            typingLink: '/typing/adverbs',
 			sectionLink: '/words/adverbs',
 			sectionText: 'Adverbs'
 		},
 		4: {
-			sectionLink: '/numbers',
+            sectionLink: '/numbers',
 			sectionText: 'Numbers'
         },
         5: {

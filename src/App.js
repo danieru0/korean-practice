@@ -38,6 +38,7 @@ import WordsContainer from './containers/Words/WordsContainer';
 import ConjugationContainer from './containers/Conjugation/ConjugationContainer';
 import TestTypeOne from './components/TestTypeOne/TestTypeOne';
 import TestTypeTwo from './components/TestTypeTwo/TestTypeTwo';
+import Typing from './components/Typing/Typing';
 import SentencesContainer from './containers/Sentences/SentencesContainer';
 import IrregularsContainer from './containers/Irregulars/IrregularsContainer';
 import Numbers from './components/Numbers/Numbers';
@@ -85,6 +86,7 @@ function App({auth, modalActive, getCounters, firestore, counters}) {
 						<Route path="/conjugation" render={props => <LinksContainer type="conjugation" bordercolor="#ff9800" title="Conjugation" {...props} />}/>
 						<Route path="/testone/:category" component={TestTypeOne}/>
 						<Route path="/testtwo/:category" component={TestTypeTwo}/>
+						<Route path="/typing/:category" component={Typing}/>
 						<Route path="/sentences/:category" component={SentencesContainer}/>
 						<Route path="/sentences/" render={props => <LinksContainer type="sentences" bordercolor="#795548" title="Sentences" {...props} />}/>
 						<Route path="/admin/:page?" component={withAdminAuth(AdminContainer)}/>

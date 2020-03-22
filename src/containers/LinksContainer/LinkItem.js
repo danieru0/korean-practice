@@ -11,6 +11,14 @@ const Wrapper = styled.div`
 	margin: 20px;
 `
 
+const ButtonsGroup = styled.div`
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	position: absolute;
+	top: 0;
+`
+
 const StyledPracticeBtn = styled(PracticeBtn)`
 	display: flex;
 	flex-direction: column;
@@ -18,19 +26,24 @@ const StyledPracticeBtn = styled(PracticeBtn)`
 `
 
 const TestLink = styled(Link)`
-    position: absolute;
-	left: 0px;
-	top: 0px;
-	border: 0px;
 	background: transparent;
 	color: #fff;
 	font-family: ${props => props.theme.mainFont};
 	padding: 10px 15px;
 	font-size: 16px;
 	border-bottom: 3px solid ${({bordercolor}) => bordercolor};
-	border-right: 3px solid ${({bordercolor}) => bordercolor};
 	text-transform: uppercase;
     text-decoration: none;
+
+	${props => {
+		switch(props.direction) {
+			case 'left':
+				return `border-right: 3px solid ${props.bordercolor};`;
+			case 'right':
+				return `border-left: 3px solid ${props.bordercolor};`
+			default: return null;
+		}
+	}}
 
 	&:hover {
 		color: #ccc;
@@ -40,11 +53,18 @@ const TestLink = styled(Link)`
 const LinkItem = ({item, bordercolor}) => {
     return (
         <Wrapper>
-            {
-                item.testLink !== undefined && (
-                    <TestLink to={item.testLink} bordercolor={item.bordercolor ? item.bordercolor : bordercolor}>{item.testText ? item.testText : 'Test'}</TestLink>
-                )
-            }
+			<ButtonsGroup>
+				{
+					item.testLink !== undefined && (
+						<TestLink to={item.testLink} direction="left" bordercolor={item.bordercolor ? item.bordercolor : bordercolor}>{item.testText ? item.testText : 'Test'}</TestLink>
+					)
+				}
+				{
+					item.typingLink !== undefined && (
+						<TestLink to={item.typingLink} direction="right" bordercolor={item.bordercolor ? item.bordercolor : bordercolor}>Typing</TestLink>
+					)
+				}
+			</ButtonsGroup>
             <StyledPracticeBtn to={item.sectionLink} bordercolor={item.bordercolor ? item.bordercolor : bordercolor}>
                 {item.sectionText.replace('<br />', '\n')}
             </StyledPracticeBtn>

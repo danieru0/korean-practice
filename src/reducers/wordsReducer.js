@@ -5,7 +5,9 @@ const initState = {
 	wordSaving: false,
 	wordDeleting: false,
 	lastWord: '01',
-	searchNotFound: false
+	searchNotFound: false,
+	oneWord: null,
+	loadingOneWord: false
 }
 
 const wordsReducer = (state = initState, action) => {
@@ -60,6 +62,21 @@ const wordsReducer = (state = initState, action) => {
 			return {
 				...state, 
 				saved: [state.saved[0].filter(item => item.id !== action.data)]
+			}
+		case 'UPDATE_ONE_WORD':
+			return {
+				...state,
+				oneWord: action.data
+			}
+		case 'SET_LOADING_ONE_WORD':
+			return {
+				...state,
+				loadingOneWord: action.data
+			}
+		case 'CLEAR_ONE_WORD':
+			return {
+				...state,
+				oneWord: action.data
 			}
 		default: return state;
 	}
